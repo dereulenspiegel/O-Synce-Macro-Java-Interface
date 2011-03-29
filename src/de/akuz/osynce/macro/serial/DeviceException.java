@@ -1,4 +1,4 @@
-package de.akuz.osynce.macro.serial.interfaces;
+package de.akuz.osynce.macro.serial;
 
 public class DeviceException extends Exception{
 	

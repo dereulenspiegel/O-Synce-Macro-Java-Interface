@@ -1,4 +1,4 @@
-package de.akuz.osynce.macro;
+package de.akuz.osynce.macro.serial;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -15,7 +15,6 @@ import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
 import gnu.io.UnsupportedCommOperationException;
 import de.akuz.osynce.macro.serial.interfaces.Command;
-import de.akuz.osynce.macro.serial.interfaces.DeviceException;
 import de.akuz.osynce.macro.serial.interfaces.MacroDevice;
 import de.akuz.osynce.macro.serial.interfaces.Packet;
 import de.akuz.osynce.macro.serial.interfaces.PacketListener;

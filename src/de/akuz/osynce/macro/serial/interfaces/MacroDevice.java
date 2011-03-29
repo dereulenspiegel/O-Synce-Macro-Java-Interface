@@ -1,5 +1,6 @@
 package de.akuz.osynce.macro.serial.interfaces;
 
+import de.akuz.osynce.macro.serial.DeviceException;
 import de.akuz.osynce.macro.serial.packet.PacketException;
 
 /**
