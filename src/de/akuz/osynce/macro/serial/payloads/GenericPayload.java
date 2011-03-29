@@ -1,4 +1,4 @@
-package de.akuz.osynce.macro.payloads;
+package de.akuz.osynce.macro.serial.payloads;
 
 /**
  * This class represents a generic payload. It is essentially 

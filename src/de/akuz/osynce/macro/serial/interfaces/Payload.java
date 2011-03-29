@@ -1,4 +1,4 @@
-package de.akuz.osynce.macro.interfaces;
+package de.akuz.osynce.macro.serial.interfaces;
 
 public interface Payload {
 	

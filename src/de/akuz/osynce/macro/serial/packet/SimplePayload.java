@@ -1,6 +1,6 @@
-package de.akuz.osynce.macro.packet;
+package de.akuz.osynce.macro.serial.packet;
 
-import de.akuz.osynce.macro.payloads.AbstractFixedLengthPayload;
+import de.akuz.osynce.macro.serial.payloads.AbstractFixedLengthPayload;
 
 public class SimplePayload extends AbstractFixedLengthPayload {
 	

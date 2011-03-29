@@ -1,9 +1,9 @@
-package de.akuz.osynce.macro.packet;
+package de.akuz.osynce.macro.serial.packet;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import de.akuz.osynce.macro.interfaces.Packet;
+import de.akuz.osynce.macro.serial.interfaces.Packet;
 
 /**
  * The ProviderManager manages the PacketProvider.

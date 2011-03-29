@@ -1,4 +1,4 @@
-package de.akuz.osynce.macro.payloads;
+package de.akuz.osynce.macro.serial.payloads;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

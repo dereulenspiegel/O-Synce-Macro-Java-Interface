@@ -1,4 +1,4 @@
-package de.akuz.osynce.macro.packet;
+package de.akuz.osynce.macro.serial.packet;
 
 import java.util.HashMap;
 import java.util.Map;

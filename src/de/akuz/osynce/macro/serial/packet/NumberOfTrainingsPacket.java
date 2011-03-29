@@ -1,9 +1,9 @@
-package de.akuz.osynce.macro.packet;
+package de.akuz.osynce.macro.serial.packet;
 
 import java.util.List;
 
-import de.akuz.osynce.macro.payloads.TrainingsList;
-import de.akuz.osynce.macro.payloads.TrainingsList.Training;
+import de.akuz.osynce.macro.serial.payloads.TrainingsList;
+import de.akuz.osynce.macro.serial.payloads.TrainingsList.Training;
 
 public class NumberOfTrainingsPacket extends AbstractPacket {
 	

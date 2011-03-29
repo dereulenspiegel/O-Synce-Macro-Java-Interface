@@ -1,4 +1,4 @@
-package de.akuz.osynce.macro.payloads;
+package de.akuz.osynce.macro.serial.payloads;
 
 import de.akuz.osynce.macro.utils.Utils;
 

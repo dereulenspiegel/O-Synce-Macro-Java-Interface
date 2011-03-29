@@ -1,6 +1,6 @@
-package de.akuz.osynce.macro.packet;
+package de.akuz.osynce.macro.serial.packet;
 
-import de.akuz.osynce.macro.payloads.GenericPayload;
+import de.akuz.osynce.macro.serial.payloads.GenericPayload;
 
 /**
  * This class represents a generic packet without interpretation of the data.

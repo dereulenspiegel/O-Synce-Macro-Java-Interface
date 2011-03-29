@@ -1,7 +1,7 @@
-package de.akuz.osynce.macro.packet;
+package de.akuz.osynce.macro.serial.packet;
 
-import de.akuz.osynce.macro.interfaces.Command;
-import de.akuz.osynce.macro.payloads.PersonalData;
+import de.akuz.osynce.macro.serial.interfaces.Command;
+import de.akuz.osynce.macro.serial.payloads.PersonalData;
 
 public class SetPersonalData extends AbstractPacket implements Command {
 	

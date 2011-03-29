@@ -1,4 +1,4 @@
-package de.akuz.osynce.macro.payloads;
+package de.akuz.osynce.macro.serial.payloads;
 
 import java.util.LinkedList;
 import java.util.List;

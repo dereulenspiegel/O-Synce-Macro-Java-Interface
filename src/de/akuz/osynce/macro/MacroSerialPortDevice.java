@@ -14,13 +14,14 @@ import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
 import gnu.io.UnsupportedCommOperationException;
-import de.akuz.osynce.macro.interfaces.Command;
-import de.akuz.osynce.macro.interfaces.MacroDevice;
-import de.akuz.osynce.macro.interfaces.Packet;
-import de.akuz.osynce.macro.interfaces.PacketListener;
-import de.akuz.osynce.macro.packet.Acknowledge;
-import de.akuz.osynce.macro.packet.PacketException;
-import de.akuz.osynce.macro.packet.ProviderManager;
+import de.akuz.osynce.macro.serial.interfaces.Command;
+import de.akuz.osynce.macro.serial.interfaces.DeviceException;
+import de.akuz.osynce.macro.serial.interfaces.MacroDevice;
+import de.akuz.osynce.macro.serial.interfaces.Packet;
+import de.akuz.osynce.macro.serial.interfaces.PacketListener;
+import de.akuz.osynce.macro.serial.packet.Acknowledge;
+import de.akuz.osynce.macro.serial.packet.PacketException;
+import de.akuz.osynce.macro.serial.packet.ProviderManager;
 
 public class MacroSerialPortDevice implements MacroDevice, SerialPortEventListener{
 	
@@ -132,7 +133,7 @@ public class MacroSerialPortDevice implements MacroDevice, SerialPortEventListen
 	}
 
 	@Override
-	public void open() {
+	public void open() throws DeviceException{
 		try {
 			CommPortIdentifier portId = 
 				CommPortIdentifier.getPortIdentifier(portName);
@@ -140,17 +141,13 @@ public class MacroSerialPortDevice implements MacroDevice, SerialPortEventListen
 			port.setSerialPortParams(baudrate, dataBits, stopBits, parity);
 			port.addEventListener(this);
 		} catch (NoSuchPortException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new DeviceException(e);
 		} catch (PortInUseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new DeviceException(e);
 		} catch (UnsupportedCommOperationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new DeviceException(e);
 		} catch (TooManyListenersException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new DeviceException(e);
 		}
 	}
 

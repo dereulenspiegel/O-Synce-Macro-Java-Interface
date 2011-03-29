@@ -1,6 +1,6 @@
-package de.akuz.osynce.macro.interfaces;
+package de.akuz.osynce.macro.serial.interfaces;
 
-import de.akuz.osynce.macro.packet.Commands;
+import de.akuz.osynce.macro.serial.packet.Commands;
 
 /**
  * Class which represents data packets exchanged between computer and

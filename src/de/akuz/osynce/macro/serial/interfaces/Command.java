@@ -1,4 +1,4 @@
-package de.akuz.osynce.macro.interfaces;
+package de.akuz.osynce.macro.serial.interfaces;
 
 /**
  * Special class that represents commands send from PC to computer

@@ -1,7 +1,7 @@
-package de.akuz.osynce.macro.packet;
+package de.akuz.osynce.macro.serial.packet;
 
-import de.akuz.osynce.macro.interfaces.Packet;
-import de.akuz.osynce.macro.interfaces.Payload;
+import de.akuz.osynce.macro.serial.interfaces.Packet;
+import de.akuz.osynce.macro.serial.interfaces.Payload;
 import de.akuz.osynce.macro.utils.Utils;
 
 public abstract class AbstractPacket implements Packet {

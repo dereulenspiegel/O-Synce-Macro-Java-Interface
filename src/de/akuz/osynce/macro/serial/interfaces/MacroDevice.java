@@ -1,6 +1,6 @@
-package de.akuz.osynce.macro.interfaces;
+package de.akuz.osynce.macro.serial.interfaces;
 
-import de.akuz.osynce.macro.packet.PacketException;
+import de.akuz.osynce.macro.serial.packet.PacketException;
 
 /**
  * This is an interface to bicycle computer of the Macro series
@@ -25,7 +25,7 @@ public interface MacroDevice {
 	/**
 	 * Initializes the device and claims necessary resources;
 	 */
-	public void open();
+	public void open() throws DeviceException;
 	/**
 	 * Closes the device and releases claimed resources
 	 */

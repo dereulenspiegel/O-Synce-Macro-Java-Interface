@@ -1,6 +1,6 @@
-package de.akuz.osynce.macro.packet;
+package de.akuz.osynce.macro.serial.packet;
 
-import de.akuz.osynce.macro.interfaces.Command;
+import de.akuz.osynce.macro.serial.interfaces.Command;
 
 public class TrainingDetailRequest extends AbstractPacket implements Command {
 	

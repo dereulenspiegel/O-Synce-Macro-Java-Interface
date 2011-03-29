@@ -1,4 +1,4 @@
-package de.akuz.osynce.macro.packet;
+package de.akuz.osynce.macro.serial.packet;
 
 public class PacketException extends Exception {
 

@@ -1,6 +1,6 @@
-package de.akuz.osynce.macro.payloads;
+package de.akuz.osynce.macro.serial.payloads;
 
-import de.akuz.osynce.macro.interfaces.Payload;
+import de.akuz.osynce.macro.serial.interfaces.Payload;
 
 /**
  * Abstract class which represents Payloads contained in packets.
