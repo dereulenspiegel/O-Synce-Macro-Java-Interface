@@ -18,12 +18,20 @@ public abstract class AbstractPacket implements Packet {
 
 	@Override
 	public byte[] getBytes() {
-		byte[] allBytes = new byte[payload.getLength()+2];
-		allBytes[0] = command.toByte();
-		System.arraycopy(payload.getBytes(), 0, 
-				allBytes, 1, payload.getLength());
+		byte[] allBytes = getRawBytes();
 		if(checksum == 0){
 			checksum = calculateChecksum();
+		}
+		allBytes[allBytes.length-1] = checksum;
+		return allBytes;
+	}
+	
+	private byte[] getRawBytes(){
+		byte[] allBytes = new byte[payload.getLength()+2];
+		allBytes[0] = command.toByte();
+		byte[] payloadBytes = payload.getBytes();
+		for(int i=1;i<payloadBytes.length+1;i++){
+			allBytes[i] = payloadBytes[i-1];
 		}
 		allBytes[allBytes.length-1] = checksum;
 		return allBytes;
@@ -40,18 +48,12 @@ public abstract class AbstractPacket implements Packet {
 	 * @return
 	 */
 	protected byte calculateChecksum(){
-		byte[] packet = getBytes();
+		byte[] packet = getRawBytes();
 		int sum = 0;
 		for(int i = 0;i<packet.length-1;i++){
 			sum = sum + Utils.byteToInt(packet[i]);
 		}
-		int checksum = 0;
-		while(sum > 10){
-			checksum = checksum + (sum % 10);
-			sum = sum / 10;
-		}
-		checksum = checksum + sum;
-		return (byte)checksum;
+		return (byte)sum;
 	}
 
 	@Override
@@ -70,12 +72,24 @@ public abstract class AbstractPacket implements Packet {
 
 	@Override
 	public void addReceivedByte(byte b) {
-		if(counter > 0){
-			this.payload.addByte(this.checksum);
-		}
-		this.checksum = b;
-		counter++;
 		
+		if(counter == 0){
+			this.command = Commands.fromByte(b);
+		} else if(counter == 1){
+			this.checksum = b;
+		} else {
+			this.payload.addByte(this.checksum);
+			this.checksum = b;
+		}
+		counter++;
+	}
+
+	@Override
+	public byte getChecksum() {
+		if(checksum == 0){
+			checksum = calculateChecksum();
+		}
+		return checksum;
 	}
 
 }

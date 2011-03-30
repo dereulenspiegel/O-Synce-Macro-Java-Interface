@@ -90,5 +90,15 @@ public class Utils {
 		
 		return value;
 	}
+	
+	public static int sumOfDigits(int i){
+		int sum = 0;
+		while(i>10){
+			sum = sum + (i%10);
+			i = i/10;
+		}
+		sum = sum+i;
+		return sum;
+	}
 
 }

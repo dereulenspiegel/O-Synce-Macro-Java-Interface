@@ -16,7 +16,7 @@ public class TrainingsList extends AbstractPayload {
 		private final static SimpleDateFormat dateFormat =
 			new SimpleDateFormat("HH:mm:ss dd.MM.yy");
 		
-		private byte[] data = new byte[8];
+		private byte[] data = new byte[TRAINING_LENGTH];
 		private int byteCount = 0;
 		
 		public void addByte(byte b){
@@ -77,34 +77,44 @@ public class TrainingsList extends AbstractPayload {
 		}
 	}
 	
+	private final static int TRAINING_LENGTH = 7;
+	
 	private List<Training> trainings = new LinkedList<Training>();
 	
 	private int byteCount = 0;
+	
+	private byte trainingCount = 0;
 
 	@Override
 	public byte[] getBytes() {
-		byte[] array = new byte[trainings.size()];
+		byte[] array = new byte[(trainings.size()*TRAINING_LENGTH)+1];
+		array[0] = trainingCount;
 		int i=0;
 		for(Training t : trainings){
 			byte[] data = t.getBytes();
-			for(int j=i;j<i+8;j++){
-				array[j] = data[j-i];
+			for(int j=i*TRAINING_LENGTH;j<(i*TRAINING_LENGTH)+7;j++){
+				array[j+1] = data[j-(i*TRAINING_LENGTH)];
 			}
+			i++;
 		}
 		return array;
 	}
 
 	@Override
 	public int getLength() {
-		return byteCount;
+		return (trainings.size()*TRAINING_LENGTH)+1;
 	}
 
 	@Override
 	public void addByte(byte b) {
-		if(byteCount == 0 || byteCount%8==0){
-			trainings.add(new Training());
+		if(byteCount == 0){
+			 trainingCount = b;
+		} else {
+			if(byteCount == 0 || (byteCount-1)%TRAINING_LENGTH==0){
+				trainings.add(new Training());
+			}
+			trainings.get(trainings.size()-1).addByte(b);
 		}
-		trainings.get(trainings.size()-1).addByte(b);
 		byteCount++;
 	}
 	

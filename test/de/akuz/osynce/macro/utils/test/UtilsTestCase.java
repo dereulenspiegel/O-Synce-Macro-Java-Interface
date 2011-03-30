@@ -106,5 +106,16 @@ public class UtilsTestCase {
 		in = Utils.convertIntToBCD(i);
 		Assert.assertEquals(i, Utils.convertBCDToInt(in));
 	}
+	
+	@Test
+	public void testSumOfDigits(){
+		int i = 833;
+		int sumOfDigits = 14;
+		Assert.assertEquals(sumOfDigits, Utils.sumOfDigits(i));
+		
+		i = 5;
+		sumOfDigits = 5;
+		Assert.assertEquals(sumOfDigits, Utils.sumOfDigits(i));
+	}
 
 }

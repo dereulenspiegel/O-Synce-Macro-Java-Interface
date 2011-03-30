@@ -4,12 +4,6 @@ import de.akuz.osynce.macro.serial.interfaces.Packet;
 import de.akuz.osynce.macro.serial.packet.ProviderManager.PacketProvider;
 
 public class NumberOfTrainingsProvider implements PacketProvider {
-	
-	static{
-		ProviderManager.getInstance()
-			.registerPacketProvider(Commands.NUMBER_OF_TRAININGS, 
-					new NumberOfTrainingsProvider());
-	}
 
 	@Override
 	public Packet parse(byte[] array) {
@@ -24,8 +18,10 @@ public class NumberOfTrainingsProvider implements PacketProvider {
 	}
 
 	@Override
-	public Packet getEmptyPacket(Commands command) {
-		return new NumberOfTrainingsPacket();
+	public Packet getEmptyPacket(byte command) {
+		NumberOfTrainingsPacket packet = new NumberOfTrainingsPacket();
+		packet.addReceivedByte(command);
+		return packet;
 	}
 
 }

@@ -34,5 +34,7 @@ public interface Packet {
 	 * @param b
 	 */
 	public void addReceivedByte(byte b);
+	
+	public byte getChecksum();
 
 }

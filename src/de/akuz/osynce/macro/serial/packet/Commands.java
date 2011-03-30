@@ -3,6 +3,8 @@ package de.akuz.osynce.macro.serial.packet;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.akuz.osynce.macro.utils.Utils;
+
 /**
  * Enum with all commands send from PC to computer
  * @author Till Klocke
@@ -86,6 +88,9 @@ public enum Commands {
 	}
 	
 	public static Commands fromByte(byte b){
+		if(!commandMap.containsKey(b)){
+			System.out.println("Getting unknown byte: "+Integer.toHexString(Utils.byteToInt(b)));
+		}
 		return commandMap.get(b);
 	}
 

@@ -9,7 +9,7 @@ import de.akuz.osynce.macro.serial.packet.PacketException;
  * @author Till Klocke
  *
  */
-public interface MacroDevice {
+public interface SerialPortDevice {
 	
 	/**
 	 * Blocking method to send a command to the computer

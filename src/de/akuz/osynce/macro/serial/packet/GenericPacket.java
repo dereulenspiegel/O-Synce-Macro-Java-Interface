@@ -30,22 +30,7 @@ public class GenericPacket extends AbstractPacket {
 		}
 	}
 	
-	/**
-	 * Adds a byte to this packet. If it is the first byte it is interpreted
-	 * as the command byte. Every following byte is first interpreted as
-	 * checksum and will be moved to the payload if another byte is added
-	 * @param b byte to be added
-	 */
-	public void addReceivedByte(byte b){
-		if(counter == 0){
-			this.command = Commands.fromByte(b);
-		} else if(counter > 1){
-			((GenericPayload)this.payload).addByte(this.checksum);
-			this.checksum = b;
-		} else {
-			this.checksum = b;
-		}
-		counter++;
+	public byte getCalculatedChecksum(){
+		return calculateChecksum();
 	}
-
 }

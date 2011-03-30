@@ -32,11 +32,11 @@ public class ProviderManager {
 		 * @param command Command which specifies the type of the packet
 		 * @return empty packet, ready to be fed with data
 		 */
-		public Packet getEmptyPacket(Commands command);
+		public Packet getEmptyPacket(byte command);
 	}
 	
-	private final Map<Commands,PacketProvider> providers =
-		new HashMap<Commands,PacketProvider>();
+	private final Map<Byte,PacketProvider> providers =
+		new HashMap<Byte,PacketProvider>();
 	
 	private final static ProviderManager instance = new ProviderManager();
 	
@@ -59,7 +59,7 @@ public class ProviderManager {
 	 * The default packet provider. This provider generates GenericPackets
 	 * and is used when no other provider does match
 	 */
-	private final static PacketProvider defaultProvider = 
+	private final PacketProvider defaultProvider = 
 		new DefaultPacketProvider();
 	
 	/**
@@ -67,7 +67,7 @@ public class ProviderManager {
 	 * @param command
 	 * @param provider
 	 */
-	public void registerPacketProvider(Commands command, 
+	public void registerPacketProvider(byte command, 
 			PacketProvider provider){
 		providers.put(command, provider);
 	}
@@ -86,10 +86,10 @@ public class ProviderManager {
 	 * @param command
 	 * @return
 	 */
-	public PacketProvider getProvider(Commands command){
+	public PacketProvider getProvider(byte command){
 		if(providers.containsKey(command)){
 			return providers.get(command); 
-		} 
+		}
 		return defaultProvider;
 	}
 	
@@ -99,10 +99,10 @@ public class ProviderManager {
 	 * @return
 	 */
 	public Packet parsePacket(byte[] array){
-		return getProvider(Commands.fromByte(array[0])).parse(array);
+		return getProvider(array[0]).parse(array);
 	}
 	
-	public Packet getEmptyPacket(Commands command){
+	public Packet getEmptyPacket(byte command){
 		return getProvider(command).getEmptyPacket(command);
 	}
 
