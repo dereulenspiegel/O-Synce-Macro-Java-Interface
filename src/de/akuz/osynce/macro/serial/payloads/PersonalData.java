@@ -148,7 +148,115 @@ public class PersonalData extends AbstractFixedLengthPayload {
 	public void setUserFlags(int flags){
 		writeByteToData((byte)flags,26);
 	}
-
+	
+	private void addFlag(int flag){
+		int flags = this.getByteFromPosition(26);
+		flags = flags | flag;
+		this.writeByteToData((byte)flags, 26);
+	}
+	
+	/**
+	 * Sets a flag in user flags by using exclusive or.
+	 * @param flag
+	 */
+	private void removeFlag(int flag){
+		int flags = this.getByteFromPosition(26);
+		flags = flags ^ flag;
+		this.writeByteToData((byte)flags, 26);
+	}
+	
+	/**
+	 * Set to true if user is female and to false if user
+	 * is male
+	 * @param gender
+	 */
+	public void setFemale(boolean gender){
+		if(gender){
+			addFlag(0x02);
+		} else {
+			removeFlag(0x02);
+		}
+	}
+	
+	/**
+	 * Set to true for bike 2.
+	 * @param bike2
+	 */
+	public void setBike2(boolean bike2){
+		if(bike2){
+			addFlag(0x01);
+		} else {
+			removeFlag(0x01);
+		}
+	}
+	
+	/**
+	 * Set to true for speed scale in miles per hour, to false
+	 * for speed scale in kilometers per hour
+	 * @param mph
+	 */
+	public void setSpeedScaleMpH(boolean mph){
+		if(mph){
+			addFlag(0x04);
+		} else {
+			removeFlag(0x04);
+		}
+	}
+	
+	/**
+	 * Set to true for weight scale in kilogramm and to false 
+	 * for weight scale in pounds.
+	 * @param kg
+	 */
+	public void setWeightScaleToKg(boolean kg){
+		if(kg){
+			addFlag(0x08);
+		} else {
+			removeFlag(0x08);
+		}
+	}
+	
+	/**
+	 * Set to true for Fahrenheit, to false for Celsius scale
+	 * @param fahrenheit
+	 */
+	public void setTemperatureScaleToFahrenheit(boolean fahrenheit){
+		if(fahrenheit){
+			addFlag(0x10);
+		} else {
+			removeFlag(0x10);
+		}
+	}
+	
+	/**
+	 * Set to true if user wants to use 24h format, otherwise to false
+	 * @param h
+	 */
+	public void set24hFormat(boolean h){
+		if(h){
+			addFlag(0x20);
+		} else {
+			removeFlag(0x20);
+		}
+	}
+	
+	/**
+	 * Set data rate to 5, 10 or 20 seconds. This method simply divides
+	 * the given integer by 10 and shifts all bits by six to get the
+	 * necessary flag. No Exception will be thrown if given rate is not 5,10
+	 * or 20, but strange things could happen.
+	 * @param rate
+	 */
+	public void setDataRate(int rate){
+		int flag = rate/10;
+		flag = flag << 6;
+		addFlag(flag);
+	}
+	
+	/**
+	 * This method exists only due to compatibility reasons, but isn't
+	 * implemented here.
+	 */
 	@Override
 	public void addByte(byte b) {
 		// Ignore
