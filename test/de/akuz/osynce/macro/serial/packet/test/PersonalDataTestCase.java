@@ -1,8 +1,11 @@
 package de.akuz.osynce.macro.serial.packet.test;
 
 
+import junit.framework.Assert;
+
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Test;
 
 import de.akuz.osynce.macro.serial.packet.SetPersonalData;
 import de.akuz.osynce.macro.serial.payloads.PersonalData;
@@ -14,7 +17,7 @@ public class PersonalDataTestCase {
 	
 	private final boolean format24h = true;
 	private final int bike1Odo = 90000;
-	private final int bik2Odo = 5000;
+	private final int bike2Odo = 5000;
 	private final int bike1Ws = 2100;
 	private final int bike2Ws = 2114;
 	private final boolean bike2 = false;
@@ -42,10 +45,41 @@ public class PersonalDataTestCase {
 	public void setUp() throws Exception {
 		payload = new PersonalData();
 		payload.set24hFormat(format24h);
+		payload.setBike1ODO(bike1Odo);
+		payload.setBike1WS(bike1Ws);
+		payload.setBike2(bike2);
+		payload.setBike2ODO(bike2Odo);
+		payload.setBike2WS(bike2Ws);
+		payload.setDataRate(dataRate);
+		payload.setFemale(female);
+		payload.setHomeAlti(homeAlti);
+		payload.setLowerHeartRateLimit(lowerHeartRateLimit);
+		payload.setUpperHeartRateLimit(upperHeartRateLimit);
+		payload.setRTCDay(rtcDay);
+		payload.setRTChour(rtcHour);
+		payload.setRTCmin(rtcMin);
+		payload.setRTCMonth(rtcMonth);
+		payload.setRTCYear(rtcYear);
+		payload.setSpeedScaleMpH(speedScaleMpH);
+		payload.setStopwatchDistance(stopwatchDistance);
+		payload.setStopwatchMode(stopwatchMode);
+		payload.setStopwatchTimeHour(stopwatchHour);
+		payload.setStopwatchTimeMinute(stopwatchMinute);
+		payload.setWeight(weight);
+		payload.setWeightScaleToKg(weightScaleKg);
+		payload.setTemperatureScaleToFahrenheit(temperatureScaleFahrenheit);
+		
+		packet = new SetPersonalData(payload);
 	}
 
 	@After
 	public void tearDown() throws Exception {
+	}
+	
+	@Test
+	public void testLength(){
+		int expectedLength = 29;
+		Assert.assertEquals(expectedLength, packet.getBytes().length);
 	}
 
 }

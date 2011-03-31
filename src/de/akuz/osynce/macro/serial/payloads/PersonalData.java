@@ -5,7 +5,7 @@ import de.akuz.osynce.macro.utils.Utils;
 public class PersonalData extends AbstractFixedLengthPayload {
 	
 	public PersonalData(){
-		super(28);
+		super(27);
 	}
 	
 	public void setBike1ODO(int km){
