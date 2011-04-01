@@ -92,6 +92,7 @@
 		<junit printsummary="yes" haltonfailure="yes">
 			<classpath>
 				<pathelement location="${junit.jar}"/>
+				<pathelement location="${test-src}"/>
 			</classpath>
 			
 			<batchtest fork="yes" todir="${junit.output.dir}">
