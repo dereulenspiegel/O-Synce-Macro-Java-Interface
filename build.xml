@@ -50,9 +50,9 @@
     </target>
 	
 	<target name="build-tests" depends="init">
-		<javac debug="true" debuglevel="${debuglevel}" destdir="test-bin" source="${source}" target="${target}">
+		<javac debug="true" debuglevel="${debuglevel}" destdir="${test-bin}" source="${source}" target="${target}">
         	<src path="${test-src}"/>
-        	<classpath refid="O-Synce Macro Lib.classpath">
+        	<classpath>
         		<pathelement refid="O-Synce Macro Lib.classpath"/>
         		<pathelement refid="junit.classpath"/>
 			</classpath>
