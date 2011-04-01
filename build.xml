@@ -21,6 +21,7 @@
 	
     <target name="init">
         <mkdir dir="bin"/>
+    	<mkdir dir="${junit.output.dir}"/>
         <copy includeemptydirs="false" todir="bin">
             <fileset dir="${src}">
                 <exclude name="**/*.launch"/>
@@ -31,6 +32,7 @@
 	
     <target name="clean">
         <delete dir="bin"/>
+    	<delete dir="${junit.output.dir}"/>
     </target>
 	
     <target depends="clean" name="cleanall"/>
@@ -85,7 +87,7 @@
         </junitreport>
     </target>
 	
-	<target name="unittests">
+	<target name="unittests" depends="init">
 		<echo>Junit.jar location: ${junit.jar}</echo>
 		<junit printsummary="yes" haltonfailure="yes">
 			<classpath>
