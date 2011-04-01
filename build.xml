@@ -89,7 +89,7 @@
 		<echo>Junit.jar location: ${junit.jar}</echo>
 		<junit printsummary="yes" haltonfailure="yes">
 			<classpath>
-				<pathelement path="${junit.classpath}"/>
+				<pathelement location="${junit.jar}"/>
 			</classpath>
 			<formatter type="xml"/>
 			<batchtest fork="yes" todir="${junit.output.dir}">
