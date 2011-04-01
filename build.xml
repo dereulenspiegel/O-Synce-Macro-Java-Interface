@@ -50,7 +50,7 @@
         </javac>
     </target>
 	
-	<target name="build-tests" depends="init">
+	<target name="build-tests" depends="init,build-project">
 		<javac debug="true" debuglevel="${debuglevel}" destdir="${test-bin}" source="${source}" target="${target}">
         	<src path="${test-src}"/>
         	<classpath>
