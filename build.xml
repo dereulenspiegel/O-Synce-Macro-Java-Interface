@@ -87,6 +87,9 @@
 	
 	<target name="unittests">
 		<junit printsummary="yes" haltonfailure="yes">
+			<classpath>
+				<pathelement path="${junit.classpath}"/>
+			</classpath>
 			<formatter type="xml"/>
 			<batchtest fork="yes" todir="${junit.output.dir}">
 				<fileset dir="${test-src}">
