@@ -100,5 +100,14 @@ public class Utils {
 		sum = sum+i;
 		return sum;
 	}
+	
+	public static byte[] invertByteArray(byte[] in){
+		byte[] array = new byte[in.length];
+		
+		for(int i=0;i<in.length;i++){
+			array[in.length-(i+1)] = in[i];
+		}
+		return array;
+	}
 
 }

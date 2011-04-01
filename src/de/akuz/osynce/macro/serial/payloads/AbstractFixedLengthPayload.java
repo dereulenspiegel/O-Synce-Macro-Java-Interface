@@ -11,6 +11,7 @@ package de.akuz.osynce.macro.serial.payloads;
 public abstract class AbstractFixedLengthPayload extends AbstractPayload{
 	
 	protected byte[] dataBytes;
+	private int counter=0;
 	
 	public AbstractFixedLengthPayload(int length){
 		dataBytes = new byte[length];
@@ -26,5 +27,12 @@ public abstract class AbstractFixedLengthPayload extends AbstractPayload{
 	@Override
 	public int getLength() {
 		return dataBytes.length;
+	}
+
+	@Override
+	public void addByte(byte b) {
+		dataBytes[counter] = b;
+		counter++;
+		
 	}
 }

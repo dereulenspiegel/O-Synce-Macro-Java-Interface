@@ -36,5 +36,16 @@ public class RawData {
 		numberOfTrainings[29] = (byte)0x11;
 		numberOfTrainings[30] = (byte)0x41;
 	}
+	
+	public static byte[] trainingDetail = new byte[260];
+	static{
+		for(int i=0;i<trainingDetail.length;i++){
+			trainingDetail[i] = 0;
+		}
+		trainingDetail[0] = (byte)0x89;
+		trainingDetail[1] = (byte)0x01;
+		trainingDetail[2] = (byte)0x00;
+		trainingDetail[3] = (byte)0x08;
+	}
 
 }

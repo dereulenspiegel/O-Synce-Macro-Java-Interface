@@ -117,5 +117,23 @@ public class UtilsTestCase {
 		sumOfDigits = 5;
 		Assert.assertEquals(sumOfDigits, Utils.sumOfDigits(i));
 	}
+	
+	@Test
+	public void testInvertByteArray(){
+		byte[] array = new byte[4];
+		array[0] = 0;
+		array[1] = 1;
+		array[2] = 2;
+		array[3] = 3;
+		byte[] newArray = Utils.invertByteArray(array);
+		Assert.assertEquals(3,newArray[0]);
+		Assert.assertEquals(2, newArray[1]);
+		Assert.assertEquals(1, newArray[2]);
+		Assert.assertEquals(0, newArray[3]);
+		
+		array = new byte[1];
+		array[0] = 5;
+		Assert.assertEquals(array[0], Utils.invertByteArray(array)[0]);
+	}
 
 }

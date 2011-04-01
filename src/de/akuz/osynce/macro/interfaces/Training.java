@@ -1,6 +1,7 @@
 package de.akuz.osynce.macro.interfaces;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * This interface defines how training data can be accessed
@@ -106,4 +107,10 @@ public interface Training {
 	 */
 	public boolean isLap();
 	
+	/**
+	 * Returns a list of all measure points of this training. This list
+	 * can be used to print a graph or for advanced statistics.
+	 * @return chronological ordered list of measure points
+	 */
+	public List<GraphElement> getGraphElements();
 }
