@@ -9,10 +9,16 @@
     <property name="source" value="1.6"/>
 	<property name="src" value="src"/>
 	<property name="test-src" value="test"/>
+	<property name="junit.jar"/>
+	
     <path id="O-Synce Macro Lib.classpath">
         <pathelement location="bin"/>
         <pathelement location="libs/rxtx-2.1-7-bins-r2/RXTXcomm.jar"/>
     </path>
+	
+	<path id="junit.classpath">
+		<pathelement location="${junit.jar}"/>
+	</path>
 	
     <target name="init">
         <mkdir dir="bin"/>
