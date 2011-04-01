@@ -9,7 +9,6 @@
     <property name="source" value="1.6"/>
 	<property name="src" value="src"/>
 	<property name="test-src" value="test"/>
-	<property name="junit.jar"/>
 	
     <path id="O-Synce Macro Lib.classpath">
         <pathelement location="bin"/>
