@@ -86,6 +86,7 @@
     </target>
 	
 	<target name="unittests">
+		<echo>Junit.jar location: ${junit.jar}</echo>
 		<junit printsummary="yes" haltonfailure="yes">
 			<classpath>
 				<pathelement path="${junit.classpath}"/>
