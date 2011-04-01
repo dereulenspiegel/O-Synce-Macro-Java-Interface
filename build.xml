@@ -9,6 +9,7 @@
     <property name="source" value="1.6"/>
 	<property name="src" value="src"/>
 	<property name="test-src" value="test"/>
+	<property name="test-bin" value="test-bin"/>
 	
     <path id="O-Synce Macro Lib.classpath">
         <pathelement location="bin"/>
@@ -22,6 +23,7 @@
     <target name="init">
         <mkdir dir="bin"/>
     	<mkdir dir="${junit.output.dir}"/>
+    	<mkdir dir="${test-bin}"/>
         <copy includeemptydirs="false" todir="bin">
             <fileset dir="${src}">
                 <exclude name="**/*.launch"/>
@@ -33,6 +35,7 @@
     <target name="clean">
         <delete dir="bin"/>
     	<delete dir="${junit.output.dir}"/>
+    	<delete dir="${test-bin}"/>
     </target>
 	
     <target depends="clean" name="cleanall"/>
@@ -45,6 +48,16 @@
             <classpath refid="O-Synce Macro Lib.classpath"/>
         </javac>
     </target>
+	
+	<target name="build-tests" depends="init">
+		<javac debug="true" debuglevel="${debuglevel}" destdir="${test-bin}" source="${source}" target="${target}">
+        	<src path="${test-src}"/>
+        	<classpath refid="O-Synce Macro Lib.classpath">
+        		<pathelement refid="O-Synce Macro Lib.classpath"/>
+        		<pathelement refid="junit.classpath"/>
+			</classpath>
+    	</javac>
+	</target>
 	
     <target name="GenericPacketTestCase">
         <mkdir dir="${junit.output.dir}"/>
@@ -87,12 +100,13 @@
         </junitreport>
     </target>
 	
-	<target name="unittests" depends="init">
+	<target name="unittests" depends="build-tests">
 		<echo>Junit.jar location: ${junit.jar}</echo>
 		<junit printsummary="yes" haltonfailure="yes">
 			<classpath>
-				<pathelement location="${junit.jar}"/>
+				<pathelement refid="junit.classpath"/>
 				<pathelement location="${test-src}"/>
+				<pathelement location="${test-bin}"/>
 			</classpath>
 			
 			<batchtest fork="yes" todir="${junit.output.dir}">
