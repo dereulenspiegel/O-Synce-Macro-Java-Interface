@@ -101,6 +101,8 @@ public class TrainingDetailPayload extends AbstractFixedLengthPayload {
 		}
 	}
 	
+	public final static int lastPage = 0xFA0A;
+	
 	private Summary summary = new Summary();
 	
 	public TrainingDetailPayload(){
