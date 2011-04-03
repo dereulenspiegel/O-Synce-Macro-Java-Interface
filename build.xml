@@ -10,6 +10,7 @@
 	<property name="src" value="src"/>
 	<property name="test-src" value="test"/>
 	<property name="test-bin" value="test-bin"/>
+	<property name="bin" value="bin"/>
 	<property name="report-dir" value="reports"/>
 	<property name="emma.dir" location="bin/emma" />
 	
@@ -189,7 +190,7 @@
 			<classpath refid="analyze.libs" />
 		</taskdef>
 		<emma enabled="true">
-			<instr instrpath="${test-bin}" destdir="${test-bin}" 
+			<instr instrpath="${bin}" destdir="${bin}" 
 					metadatafile="${emma.dir}/metadata.emma"
 					merge="true"
 					mode="overwrite">
@@ -200,7 +201,7 @@
 	<target name="emma.report" depends="unittests">
 		<copy file="coverage.ec" tofile="${emma.dir}/coverage.ec"/>
 		<emma enabled="true">
-			<report sourcepath="${test-src}" sort="+name" 
+			<report sourcepath="${src}" sort="+name" 
 					metrics="${emma.thresholds}">
 				<fileset dir="${emma.dir}">
 					<include name="*.emma"/>
