@@ -184,7 +184,9 @@
 	</target>
 	
 	<target name="emma.instrument" depends="build-tests">
-		<taskdef resource="emma_ant.properties" classpathref="analyze.libs" />
+		<taskdef resource="emma_ant.properties" classpathref="analyze.libs" >
+			<classpath refid="analyze.libs" />
+		</taskdef>
 		<emma enabled="true">
 			<instr instrpath="${test-bin}" destdir="${test-bin}" 
 					metadatafile="${emma.dir}/metadata.emma"
