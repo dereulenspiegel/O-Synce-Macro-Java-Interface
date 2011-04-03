@@ -60,11 +60,5 @@ public interface GraphElement {
 	 * @return true if data was captured with bike 2
 	 */
 	public boolean isBike2();
-	
-	/**
-	 * TODO: Check
-	 * @return
-	 */
-	public boolean unkwonw();
 
 }
