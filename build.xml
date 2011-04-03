@@ -128,7 +128,7 @@
 		</junit>
 	</target>
 	
-	<target name="pmd">
+	<target name="pmd" depends="init">
 		<echo>Setting up PMD Task</echo>
 		<taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask">
 			<classpath refid="analyze.libs" />
@@ -148,7 +148,7 @@
 		</pmd>
 	</target>
 	
-	<target name="ncss">
+	<target name="ncss" depends="init">
 		<echo>Setting up Java NCSS Task</echo>
 		<taskdef name="javancss" classname="javancss.JavancssAntTask">
 			<classpath refid="analyze.libs"/>
@@ -165,7 +165,7 @@
 		</javancss>
 	</target>
 	
-	<target name="cpd">
+	<target name="cpd" depends="init">
 		<echo>Setting up CPD Task</echo>
 		<taskdef name="cpd" classname="net.sourceforge.pmd.cpd.CPDTask" >
 			<classpath refid="analyze.libs" />
