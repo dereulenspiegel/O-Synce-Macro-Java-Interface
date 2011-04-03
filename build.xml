@@ -11,6 +11,10 @@
 	<property name="test-src" value="test"/>
 	<property name="test-bin" value="test-bin"/>
 	<property name="report-dir" value="reports"/>
+	<property name="emma.dir" location="bin/emma" />
+	
+	<property name="emma.thresholds" 
+			value="class:100,method:100,block:100,line:100" />
 	
     <path id="O-Synce Macro Lib.classpath">
         <pathelement location="bin"/>
@@ -33,6 +37,7 @@
     	<mkdir dir="${junit.output.dir}"/>
     	<mkdir dir="${test-bin}"/>
     	<mkdir dir="${report-dir}"/>
+    	<mkdir dir="${emma.dir}"/>
         <copy includeemptydirs="false" todir="bin">
             <fileset dir="${src}">
                 <exclude name="**/*.launch"/>
@@ -110,7 +115,7 @@
         </junitreport>
     </target>
 	
-	<target name="unittests" depends="build-tests">
+	<target name="unittests" depends="emma.instrument">
 		<echo>Junit.jar location: ${junit.jar}</echo>
 		<junit printsummary="yes" haltonfailure="yes">
 			<classpath>
@@ -178,6 +183,31 @@
 		<echo>CPD Task finished</echo>
 	</target>
 	
+	<target name="emma.instrument" depends="build-tests">
+		<taskdef resource="emma_ant.properties" classpathref="analyze.libs" />
+		<emma enabled="true">
+			<instr instrpath="${test-bin}" destdir="${test-bin}" 
+					metadatafile="${emma.dir}/metadata.emma"
+					merge="true"
+					mode="overwrite">
+			</instr>
+		</emma>
+	</target>
+	
+	<target name="emma.report" depends="unittests">
+		<copy file="coverage.ec" tofile="${emma.dir}/coverage.ec"/>
+		<emma enabled="true">
+			<report sourcepath="${test-src}" sort="+name" 
+					metrics="${emma.thresholds}">
+				<fileset dir="${emma.dir}">
+					<include name="*.emma"/>
+					<include name="*.ec"/>
+				</fileset>
+				<xml outfile="${report-dir}/emma.xml" depth="method"/>
+			</report>
+		</emma>
+	</target>
+	
 	<target name="analyze" depends="pmd,cpd,ncss"/>
-	<target name="testAndAnalyze" depends="analyze,unittests"/>
+	<target name="testAndAnalyze" depends="analyze,emma.report"/>
 </project>
