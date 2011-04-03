@@ -23,7 +23,9 @@
 	</path>
 	
 	<path id="analyze.libs">
-		<pathelement location="test-libs"/>
+		<fileset dir="test-libs">
+			<include name="**/*.jar"/>
+		</fileset>
 	</path>
 	
     <target name="init">
