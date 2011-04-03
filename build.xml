@@ -176,4 +176,7 @@
 		</cpd>
 		<echo>CPD Task finished</echo>
 	</target>
+	
+	<target name="analyze" depends="pmd,cpd,ncss"/>
+	<target name="testAndAnalyze" depends="analyze,unittests"/>
 </project>
