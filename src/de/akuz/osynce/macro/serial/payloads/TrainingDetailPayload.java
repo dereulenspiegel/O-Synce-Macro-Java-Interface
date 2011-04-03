@@ -1,5 +1,10 @@
 package de.akuz.osynce.macro.serial.payloads;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import de.akuz.osynce.macro.interfaces.GraphElement;
 import de.akuz.osynce.macro.utils.Utils;
 
 public class TrainingDetailPayload extends AbstractFixedLengthPayload {
@@ -99,6 +104,96 @@ public class TrainingDetailPayload extends AbstractFixedLengthPayload {
 			data = Utils.invertByteArray(data);
 			return Utils.convertByteArrayToInt(data);
 		}
+		
+		/**
+		 * Returns the duration of this training
+		 * @return the duration in seconds
+		 */
+		public int getTrainingDuration(){
+			int secs = Utils.convertBCDToInt(getByteFromPosition(35));
+			int minutes = Utils.convertBCDToInt(getByteFromPosition(36));
+			int hours = Utils.convertBCDToInt(getByteFromPosition(37));
+			
+			return secs + (minutes*60) + (hours*3600);
+		}
+		
+		public int getAveragePower(){
+			byte[] data = getBytesFromPosition(38,2);
+			data = Utils.invertByteArray(data);
+			return Utils.convertByteArrayToInt(data);
+		}
+		
+		/**
+		 * Check whether this summary and training data belongs
+		 * to a complete training record or to lap of a record
+		 * @return true if this belongs to a lap
+		 */
+		public boolean isLap(){
+			return ((getByteFromPosition(42) & 0x01) == 1);
+		}
+	}
+	
+	public class GraphData implements GraphElement{
+		
+		private int offset;
+		
+		private GraphData(int offset){
+			this.offset = offset;
+		}
+
+		@Override
+		public float getTemperature() {
+			byte[] data = getBytesFromPosition(offset,2);
+			data = Utils.invertByteArray(data);
+			return (float)Utils.convertByteArrayToInt(data)/10.0f;
+		}
+
+		@Override
+		public int getAltitude() {
+			byte[] data = getBytesFromPosition(offset+2,2);
+			data = Utils.invertByteArray(data);
+			return Utils.convertByteArrayToInt(data);
+		}
+
+		@Override
+		public int getGradient() {
+			return Utils.byteToInt(getByteFromPosition(offset+4));
+		}
+
+		@Override
+		public int getCadence() {
+			return Utils.byteToInt(getByteFromPosition(offset+5));
+		}
+
+		@Override
+		public float getSpeed() {
+			byte[] data = getBytesFromPosition(offset+6,2);
+			data = Utils.invertByteArray(data);
+			return (float)Utils.convertByteArrayToInt(data)/10.0f;
+		}
+
+		@Override
+		public int getHeartRate() {
+			return Utils.byteToInt(getByteFromPosition(offset+8));
+		}
+
+		@Override
+		public int getPower() {
+			byte[] data = getBytesFromPosition(offset+9,2);
+			data = Utils.invertByteArray(data);
+			return Utils.convertByteArrayToInt(data);
+		}
+
+		@Override
+		public int getDataRate() {
+			return (0x03 & getByteFromPosition(11));
+		}
+
+		@Override
+		public boolean isBike2() {	
+			return (0x08 & getByteFromPosition(11))==1;
+		}
+		
 	}
 	
 	public final static int lastPage = 0xFA0A;
@@ -123,6 +218,28 @@ public class TrainingDetailPayload extends AbstractFixedLengthPayload {
 			return summary;
 		}
 		return null;
+	}
+	
+	public List<GraphElement> getGraphData(){
+		int numberOfElements = getNumberOfData();
+		if(getSummary() != null){
+			numberOfElements = numberOfElements - 1;
+		}
+		List<GraphElement> list = 
+			new ArrayList<GraphElement>(numberOfElements);
+		
+		int startOffset = 4; //TODO:Verify this offset doesn't seem right
+		if(getSummary() == null){
+			startOffset = 76;
+		} 
+		
+		for(int i=0;i<numberOfElements;i++){
+			GraphData data = new GraphData(startOffset);
+			list.add(data);
+			startOffset = startOffset + 12;
+		}
+		
+		return Collections.unmodifiableList(list);
 	}
 
 }
