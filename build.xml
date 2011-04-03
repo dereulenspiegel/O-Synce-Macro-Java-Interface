@@ -221,7 +221,7 @@
 			<classespath>
 				<pathelement location="${bin}"/>
 			</classespath>
-			<classpath refid="O-Synce Macro Lib.classpath">
+			<classpath>
 				<path refid="O-Synce Macro Lib.classpath"/>
 				<path refid="analyze-libs"/>
 			</classpath>
