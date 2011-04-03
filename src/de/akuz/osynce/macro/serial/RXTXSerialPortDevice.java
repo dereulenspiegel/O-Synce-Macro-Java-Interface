@@ -1,7 +1,6 @@
 package de.akuz.osynce.macro.serial;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.LinkedList;
@@ -22,31 +21,6 @@ import de.akuz.osynce.macro.serial.packet.PacketException;
 import de.akuz.osynce.macro.serial.packet.ProviderManager;
 
 public class RXTXSerialPortDevice implements SerialPortDevice, SerialPortEventListener{
-	
-	public static class SerialWriter implements Runnable{
-		
-		private OutputStream out;
-		private Packet packet;
-		
-		public SerialWriter(OutputStream stream, Packet packet){
-			out = stream;
-			this.packet = packet;
-		}
-
-		@Override
-		public void run() {
-			try {
-				System.out.println("Writing packet bytes");
-				out.write(packet.getBytes());
-				System.out.println("Writing packet bytes done");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		}
-		
-	}
 	
 	private String portName;
 	
