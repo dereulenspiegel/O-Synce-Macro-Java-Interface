@@ -213,6 +213,18 @@
 		</emma>
 	</target>
 	
+	<target name="jdepend" depends="build-project">
+		<jdepend format="xml" outputfile="${report-dir}/jdepend.xml">
+			<exclude name="java.*"/>
+			<exclude name="javax.*"/>
+			<exclude name="gnu.*"/>
+			<classespath>
+				<pathelement location="${bin}"/>
+			</classespath>
+			<classpath refid="O-Synce Macro Lib.classpath"/>
+		</jdepend>
+	</target>
+	
 	<target name="analyze" depends="pmd,cpd,ncss"/>
-	<target name="testAndAnalyze" depends="analyze,emma.report"/>
+	<target name="testAndAnalyze" depends="jdepend,analyze,emma.report"/>
 </project>
