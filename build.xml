@@ -139,7 +139,6 @@
 			<ruleset>unusedcode</ruleset>
 			<ruleset>braces</ruleset>
 			<ruleset>imports</ruleset>
-			<ruleset>optimizations</ruleset>
 			<ruleset>strings</ruleset>
 			<formatter type="xml" toFile="${report-dir}/pmd.xml" />
 			<fileset dir="${src}">
