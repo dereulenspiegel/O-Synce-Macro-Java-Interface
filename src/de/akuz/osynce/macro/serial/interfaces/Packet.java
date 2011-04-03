@@ -36,5 +36,7 @@ public interface Packet {
 	public void addReceivedByte(byte b);
 	
 	public byte getChecksum();
+	
+	public Payload getPayload();
 
 }

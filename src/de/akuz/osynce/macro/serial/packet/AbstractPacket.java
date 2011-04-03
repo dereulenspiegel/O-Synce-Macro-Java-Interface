@@ -92,4 +92,9 @@ public abstract class AbstractPacket implements Packet {
 		return checksum;
 	}
 
+	@Override
+	public Payload getPayload() {
+		return this.payload;
+	}
+
 }
