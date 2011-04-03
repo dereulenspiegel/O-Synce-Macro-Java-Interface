@@ -122,7 +122,7 @@
 				<path refid="junit.classpath"/>
 				<pathelement location="${test-src}"/>
 				<pathelement location="${test-bin}"/>
-				<path refif="analyze.libs"/>
+				<path refid="analyze.libs"/>
 			</classpath>
 			
 			<batchtest fork="yes" todir="${junit.output.dir}">
