@@ -9,7 +9,7 @@ public class NumberOfTrainingsProvider implements PacketProvider {
 	public Packet parse(byte[] array) {
 		if(array[0] == Commands.NUMBER_OF_TRAININGS.toByte()){
 			Packet packet = new NumberOfTrainingsPacket();
-			for(int i=1;i<array.length;i++){
+			for(int i=0;i<array.length;i++){
 				packet.addReceivedByte(array[i]);
 			}
 			return packet;
