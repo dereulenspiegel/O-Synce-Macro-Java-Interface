@@ -10,6 +10,7 @@
 	<property name="src" value="src"/>
 	<property name="test-src" value="test"/>
 	<property name="test-bin" value="test-bin"/>
+	<property name="report-dir" value="reports"/>
 	
     <path id="O-Synce Macro Lib.classpath">
         <pathelement location="bin"/>
@@ -21,10 +22,15 @@
 		<pathelement location="bin"/>
 	</path>
 	
+	<path id="analyze.libs">
+		<pathelement location="test-libs"/>
+	</path>
+	
     <target name="init">
         <mkdir dir="bin"/>
     	<mkdir dir="${junit.output.dir}"/>
     	<mkdir dir="${test-bin}"/>
+    	<mkdir dir="${report-dir}"/>
         <copy includeemptydirs="false" todir="bin">
             <fileset dir="${src}">
                 <exclude name="**/*.launch"/>
@@ -37,6 +43,7 @@
         <delete dir="bin"/>
     	<delete dir="${junit.output.dir}"/>
     	<delete dir="${test-bin}"/>
+    	<delete dir="${report-dir}"/>
     </target>
 	
     <target depends="clean" name="cleanall"/>
@@ -117,5 +124,56 @@
 				</fileset>
 			</batchtest>
 		</junit>
+	</target>
+	
+	<target name="pmd">
+		<echo>Setting up PMD Task</echo>
+		<taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask">
+			<classpath refid="analyze.libs" />
+		</taskdef>
+		<echo>Generating PMD Report</echo>
+		<pmd>
+			<ruleset>basic</ruleset>
+			<ruleset>unusedcode</ruleset>
+			<ruleset>braces</ruleset>
+			<ruleset>imports</ruleset>
+			<ruleset>optimizations</ruleset>
+			<ruleset>strings</ruleset>
+			<formatter type="xml" toFile="${report-dir}/pmd.xml" />
+			<fileset dir="${src}">
+				<include name="**/*.java" />
+			</fileset>
+		</pmd>
+	</target>
+	
+	<target name="ncss">
+		<echo>Setting up Java NCSS Task</echo>
+		<taskdef name="javancss" classname="javancss.JavancssAntTask">
+			<classpath refid="analyze.libs"/>
+		</taskdef>
+		<echo>Generating NCSS report</echo>
+		<javancss srcdir="${src}"
+			includes="**/*.java"
+			generateReport="yes"
+			outputfile="${report-dir}/javancss.xml"
+			format="xml"
+			packageMetrics="yes"
+			classMetrics="yes"
+			functionMetrics="yes">
+		</javancss>
+	</target>
+	
+	<target name="cpd">
+		<echo>Setting up CPD Task</echo>
+		<taskdef name="cpd" classname="net.sourceforge.pmd.cpd.CPDTask" >
+			<classpath refid="analyze.libs" />
+		</taskdef>
+		<echo>Starting CPD and generating report</echo>
+		<cpd minimumTokenCount="100" outputFile="${report-dir}/cpd.xml" format="xml">
+			<fileset dir="${src}">
+				<include name="**/*.java"/>
+			</fileset>
+		</cpd>
+		<echo>CPD Task finished</echo>
 	</target>
 </project>
