@@ -27,7 +27,7 @@ public abstract class AbstractPayload implements Payload {
 			int offset, int length){
 		for(int i=length-1;i>=0;i--){
 			getBytes()[offset+(length-(i+1))] = 
-				value[(value.length-1)-(i+byteOffset)];
+				value[(value.length-1+byteOffset)-(length-(i+1))];
 		}
 	}
 	

@@ -208,14 +208,6 @@ public class PersonalData extends AbstractFixedLengthPayload {
 		writeByteToData(Utils.convertIntToBCD(hour),25);
 	}
 	
-	public int getLowerHeartRateLimit(){
-		return Utils.byteToInt(getByteFromPosition(15));
-	}
-	
-	public int getUpperHeartRateLimit(){
-		return Utils.byteToInt(getByteFromPosition(14));
-	}
-	
 	/**
 	 * - User flag:	Bit 0: set if bike2 selected
 	Bit 1: set if user sex is female
@@ -335,6 +327,20 @@ public class PersonalData extends AbstractFixedLengthPayload {
 		int flag = rate/10;
 		flag = flag << 6;
 		addFlag(flag);
+	}
+	
+	public int getLowerHeartRateLimit(){
+		return Utils.byteToInt(getByteFromPosition(15));
+	}
+	
+	public int getUpperHeartRateLimit(){
+		return Utils.byteToInt(getByteFromPosition(14));
+	}
+	
+	public int getBike1Odo(){
+		byte[] data = getBytesFromPosition(0,3);
+		data = Utils.invertByteArray(data);
+		return Utils.convertByteArrayToInt(data);
 	}
 	
 	/**

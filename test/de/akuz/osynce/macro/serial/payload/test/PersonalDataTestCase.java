@@ -86,5 +86,39 @@ public class PersonalDataTestCase {
 	public void testGetUpperHeartRateLimit(){
 		Assert.assertEquals(upperHeartRateLimit, payload.getUpperHeartRateLimit());
 	}
+	
+	@Test
+	public void testGetLowerHeartRateLimit(){
+		Assert.assertEquals(lowerHeartRateLimit, payload.getLowerHeartRateLimit());
+	}
+	
+	@Test
+	public void testSet24hFormat(){
+		payload.set24hFormat(true);
+		payload.set24hFormat(false);
+	}
+	
+	@Test
+	public void testSetBike1Odo(){
+		boolean exceptionThrown = false;
+		try{
+			payload.setBike1ODO(9999999);
+		} catch(IllegalArgumentException e){
+			exceptionThrown = true;
+		}
+		Assert.assertTrue(exceptionThrown);
+		Assert.assertEquals(this.bike1Odo, payload.getBike1Odo());
+	}
+	
+	@Test
+	public void testSetBike2Odo(){
+		boolean exceptionThrown = false;
+		try{
+			payload.setBike2ODO(9999999);
+		} catch(IllegalArgumentException e){
+			exceptionThrown = true;
+		}
+		Assert.assertTrue(exceptionThrown);
+	}
 
 }
