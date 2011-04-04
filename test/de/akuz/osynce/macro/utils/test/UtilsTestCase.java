@@ -115,6 +115,15 @@ public class UtilsTestCase {
 			exceptionThrown = true;
 		}
 		Assert.assertTrue(exceptionThrown);
+		
+		exceptionThrown = false;
+		try{
+			i = -1;
+			Utils.convertIntToBCD(i);
+		} catch (IllegalArgumentException e){
+			exceptionThrown = true;
+		}
+		Assert.assertTrue(exceptionThrown);
 	}
 	
 	@Test
