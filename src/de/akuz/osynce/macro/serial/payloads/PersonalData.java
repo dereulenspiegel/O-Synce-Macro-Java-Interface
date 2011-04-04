@@ -208,11 +208,11 @@ public class PersonalData extends AbstractFixedLengthPayload {
 		writeByteToData(Utils.convertIntToBCD(hour),25);
 	}
 	
-	private int getLowerHeartRateLimit(){
+	public int getLowerHeartRateLimit(){
 		return Utils.byteToInt(getByteFromPosition(15));
 	}
 	
-	private int getUpperHeartRateLimit(){
+	public int getUpperHeartRateLimit(){
 		return Utils.byteToInt(getByteFromPosition(14));
 	}
 	

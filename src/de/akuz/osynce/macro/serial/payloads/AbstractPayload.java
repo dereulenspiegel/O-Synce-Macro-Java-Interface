@@ -25,8 +25,9 @@ public abstract class AbstractPayload implements Payload {
 	 */
 	public void writeBytesToData(byte[] value, int byteOffset, 
 			int offset, int length){
-		for(int i=length-1;i>0;i--){
-			getBytes()[offset+(length-(i+1))] = value[i+byteOffset];
+		for(int i=length-1;i>=0;i--){
+			getBytes()[offset+(length-(i+1))] = 
+				value[(value.length-1)-(i+byteOffset)];
 		}
 	}
 	
@@ -47,7 +48,7 @@ public abstract class AbstractPayload implements Payload {
 	 * @param offset the position in the payload
 	 */
 	public void writeByteToData(byte value, int offset){
-		writeBytesToData(new byte[]{value},0,offset,1);
+		getBytes()[offset] = value;
 	}
 	
 	/**

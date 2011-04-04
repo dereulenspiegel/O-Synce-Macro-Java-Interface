@@ -1,4 +1,4 @@
-package de.akuz.osynce.macro.serial.packet.test;
+package de.akuz.osynce.macro.serial.payload.test;
 
 
 import junit.framework.Assert;
@@ -78,8 +78,13 @@ public class PersonalDataTestCase {
 	
 	@Test
 	public void testLength(){
-		int expectedLength = 29;
+		int expectedLength = 30;
 		Assert.assertEquals(expectedLength, packet.getBytes().length);
+	}
+	
+	@Test
+	public void testGetUpperHeartRateLimit(){
+		Assert.assertEquals(upperHeartRateLimit, payload.getUpperHeartRateLimit());
 	}
 
 }
