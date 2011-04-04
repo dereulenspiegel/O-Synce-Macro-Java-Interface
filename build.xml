@@ -250,6 +250,9 @@
 			<fileset dir="${src}">
 				<include name="**/*.java"/>
 			</fileset>
+			<classpath>
+				<path refid="O-Synce Macro Lib.classpath"/>
+			</classpath>
 		</javadoc>
 	</target>
 	
