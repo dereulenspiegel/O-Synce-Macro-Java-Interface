@@ -84,7 +84,7 @@ public class PersonalData extends AbstractFixedLengthPayload {
 	
 	/**
 	 * Sets the upper heart rate limit. This limit must be below 240 and
-	 * above the lower heart rate limit.
+	 * above the lower heart rate limit. This limit should be set first.
 	 * @param limit heart rate in beats per minute
 	 */
 	public void setUpperHeartRateLimit(int limit){
@@ -95,8 +95,9 @@ public class PersonalData extends AbstractFixedLengthPayload {
 	}
 	
 	/**
-	 * Sets the lower heart rate limit. Thus limit must be above 30 and
-	 * below the upper heart rate limit.
+	 * Sets the lower heart rate limit. This limit must be above 30 and
+	 * below the upper heart rate limit. The upper heart rate limit should
+	 * be set first.
 	 * @param limit heart rate in beats per minute
 	 */
 	public void setLowerHeartRateLimit(int limit){

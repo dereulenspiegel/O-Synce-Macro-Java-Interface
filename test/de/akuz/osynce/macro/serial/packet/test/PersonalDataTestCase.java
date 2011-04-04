@@ -53,8 +53,8 @@ public class PersonalDataTestCase {
 		payload.setDataRate(dataRate);
 		payload.setFemale(female);
 		payload.setHomeAlti(homeAlti);
-		payload.setLowerHeartRateLimit(lowerHeartRateLimit);
 		payload.setUpperHeartRateLimit(upperHeartRateLimit);
+		payload.setLowerHeartRateLimit(lowerHeartRateLimit);
 		payload.setRTCDay(rtcDay);
 		payload.setRTChour(rtcHour);
 		payload.setRTCmin(rtcMin);
