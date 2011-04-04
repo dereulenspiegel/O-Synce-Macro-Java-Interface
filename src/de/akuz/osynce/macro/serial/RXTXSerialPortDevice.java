@@ -112,8 +112,9 @@ public class RXTXSerialPortDevice implements SerialPortDevice, SerialPortEventLi
 	public Packet sendCommand(Command command) throws PacketException {
 		try {
 			port.getOutputStream().write(command.getBytes());
-			while(port.getInputStream().available()==0){
-				//System.out.println("Waiting for InputStream");
+			int availableBytes = 0;
+			while(availableBytes==0){
+				availableBytes = port.getInputStream().available();
 			}
 			return readPacketBytes();
 		} catch (IOException e) {
