@@ -142,7 +142,7 @@
 	
 	<target name="junit.report" depends="unittests">
 		<junitreport todir="${report-dir}">
-			<fileset dir="${report-dir}">
+			<fileset dir="${junit.output.dir}">
 				<include name="TEST-*.xml"/>
 			</fileset>
 			<report format="frames" todir="${report-dir}/html"/>
