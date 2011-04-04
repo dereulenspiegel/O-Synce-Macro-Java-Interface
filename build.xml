@@ -12,7 +12,9 @@
 	<property name="test-bin" value="test-bin"/>
 	<property name="bin" value="bin"/>
 	<property name="report-dir" value="reports"/>
-	<property name="emma.dir" location="bin/emma" />
+	<property name="emma.dir" value="bin/emma" />
+	<property name="javadoc.dir" value="doc/javadoc"/>
+	<property name="doc.dir" value="doc"/>
 	
 	<property name="emma.thresholds" 
 			value="class:100,method:100,block:100,line:100" />
@@ -39,6 +41,8 @@
     	<mkdir dir="${test-bin}"/>
     	<mkdir dir="${report-dir}"/>
     	<mkdir dir="${emma.dir}"/>
+    	<mkdir dir="${doc.dir}"/>
+    	<mkdir dir="${javadoc.dir}"/>
         <copy includeemptydirs="false" todir="bin">
             <fileset dir="${src}">
                 <exclude name="**/*.launch"/>
@@ -52,6 +56,7 @@
     	<delete dir="${junit.output.dir}"/>
     	<delete dir="${test-bin}"/>
     	<delete dir="${report-dir}"/>
+    	<delete dir="${doc.dir}"/>
     </target>
 	
     <target depends="clean" name="cleanall"/>
@@ -226,6 +231,17 @@
 				<path refid="analyze-libs"/>
 			</classpath>
 		</jdepend>
+	</target>
+	
+	<target name="javadoc" depends="init">
+		<javadoc destdir="${javadoc.dir}" author="true"
+				version="true"
+				use="true"
+				windowtitle="O-Synce Macro Lib JavaDoc">
+			<fileset dir="${src}">
+				<include name="**/*.java"/>
+			</fileset>
+		</javadoc>
 	</target>
 	
 	<target name="analyze" depends="pmd,cpd,ncss"/>
