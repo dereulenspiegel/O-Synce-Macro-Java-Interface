@@ -2,12 +2,24 @@ package de.akuz.osynce.macro.serial.payloads;
 
 import de.akuz.osynce.macro.utils.Utils;
 
+/**
+ * This class represents the payload needed to be send to set the
+ * personal data of the user in the cycle computer. All values should be
+ * set here, since everything not set defaults to zero and is written to
+ * the device.
+ * @author Till Klocke
+ *
+ */
 public class PersonalData extends AbstractFixedLengthPayload {
 	
 	public PersonalData(){
-		super(27);
+		super(28);
 	}
 	
+	/**
+	 * Sets the odo meter for bike 1
+	 * @param km odo value in km
+	 */
 	public void setBike1ODO(int km){
 		if(km > 99999 || km < 0){
 			throw new IllegalArgumentException("ODO value must be between 0 and 99999");
@@ -15,6 +27,10 @@ public class PersonalData extends AbstractFixedLengthPayload {
 		writeBytesToData(Utils.convertIntToByteArray(km),0,3);
 	}
 	
+	/**
+	 * Sets the odo meter for bike 2
+	 * @param km odo value in km
+	 */
 	public void setBike2ODO(int km){
 		if(km > 99999 || km < 0){
 			throw new IllegalArgumentException("ODO value must be between 0 and 99999");
@@ -22,6 +38,10 @@ public class PersonalData extends AbstractFixedLengthPayload {
 		writeBytesToData(Utils.convertIntToByteArray(km),3,3);
 	}
 	
+	/**
+	 * Sets the tire perimeter for bike 1
+	 * @param mm tire perimeter in mm
+	 */
 	public void setBike1WS(int mm){
 		if(mm < 0 || mm > 3999){
 			throw new IllegalArgumentException("WS value must be between 0 and 3999");
@@ -29,6 +49,10 @@ public class PersonalData extends AbstractFixedLengthPayload {
 		writeBytesToData(Utils.convertIntToByteArray(mm),6,2);
 	}
 	
+	/**
+	 * Sets the tire perimeter for bike 2
+	 * @param mm tire perimeter in mm
+	 */
 	public void setBike2WS(int mm){
 		if(mm < 0 || mm > 3999){
 			throw new IllegalArgumentException("WS value must be between 0 and 3999");
@@ -36,6 +60,10 @@ public class PersonalData extends AbstractFixedLengthPayload {
 		writeBytesToData(Utils.convertIntToByteArray(mm),8,2);
 	}
 	
+	/**
+	 * Sets the weight of the user
+	 * @param lb weight in pound
+	 */
 	public void setWeight(int lb){
 		if(lb < 44 || lb > 485){
 			throw new IllegalArgumentException("Weight must be between 44 and 485 lb");
@@ -43,6 +71,10 @@ public class PersonalData extends AbstractFixedLengthPayload {
 		writeBytesToData(Utils.convertIntToByteArray(lb),10,2);
 	}
 	
+	/**
+	 * Sets the home altitude
+	 * @param meters altitude in meters
+	 */
 	public void setHomeAlti(int meters){
 		if(meters < -381 || meters > 6000){
 			throw new IllegalArgumentException("Home Altitude must be between -381 and 6000 meters");
@@ -50,20 +82,34 @@ public class PersonalData extends AbstractFixedLengthPayload {
 		writeBytesToData(Utils.convertIntToByteArray(meters),12,2);
 	}
 	
+	/**
+	 * Sets the upper heart rate limit. This limit must be below 240 and
+	 * above the lower heart rate limit.
+	 * @param limit heart rate in beats per minute
+	 */
 	public void setUpperHeartRateLimit(int limit){
-		if(limit > 240){
-			throw new IllegalArgumentException("Max heart rate limit too high");
-		} //TODO: Check for lower heart rate limit
+		if(limit > 240 || limit < getLowerHeartRateLimit()){
+			throw new IllegalArgumentException("Max heart rate limit too high or lower von lower limit");
+		}
 		writeBytesToData(Utils.convertIntToByteArray(limit),14,1);
 	}
 	
+	/**
+	 * Sets the lower heart rate limit. Thus limit must be above 30 and
+	 * below the upper heart rate limit.
+	 * @param limit heart rate in beats per minute
+	 */
 	public void setLowerHeartRateLimit(int limit){
-		if(limit < 30){
-			throw new IllegalArgumentException("Min heart rate limit too high");
-		} //TODO: Check for higher heart rate limit
+		if(limit < 30 || limit > getUpperHeartRateLimit()){
+			throw new IllegalArgumentException("Min heart rate limit too low or higher than upper limit");
+		}
 		writeBytesToData(Utils.convertIntToByteArray(limit),15,1);
 	}
 	
+	/**
+	 * Sets the minutes of the device clock
+	 * @param min minutes
+	 */
 	public void setRTCmin(int min){
 		if(min < 0 || min > 59){
 			throw new IllegalArgumentException("Minute must be between 0 and 59");
@@ -71,6 +117,10 @@ public class PersonalData extends AbstractFixedLengthPayload {
 		writeByteToData(Utils.convertIntToBCD(min),16);
 	}
 	
+	/**
+	 * Sets the hours of the device clock
+	 * @param hour hours
+	 */
 	public void setRTChour(int hour){
 		if(hour < 0 || hour > 23){
 			throw new IllegalArgumentException("Hour must be between 0 and 23");
@@ -78,6 +128,10 @@ public class PersonalData extends AbstractFixedLengthPayload {
 		writeByteToData(Utils.convertIntToBCD(hour),17);
 	}
 	
+	/**
+	 * Sets the day of month of the device clock
+	 * @param day day of month
+	 */
 	public void setRTCDay(int day){
 		if(day < 1 || day > 31){
 			throw new IllegalArgumentException("Day must be between 1 and 31");
@@ -85,6 +139,10 @@ public class PersonalData extends AbstractFixedLengthPayload {
 		writeByteToData(Utils.convertIntToBCD(day),18);
 	}
 	
+	/**
+	 * Sets the month of the device clock
+	 * @param month month of year
+	 */
 	public void setRTCMonth(int month){
 		if(month < 1 || month > 12){
 			throw new IllegalArgumentException("Month must be between 1 and 12");
@@ -92,6 +150,11 @@ public class PersonalData extends AbstractFixedLengthPayload {
 		writeByteToData(Utils.convertIntToBCD(month),19);
 	}
 	
+	/**
+	 * Sets the year of the device clock. Note that you only the last two digits
+	 * of the year. For example for 2011 you set 11.
+	 * @param year last two digits of year
+	 */
 	public void setRTCYear(int year){
 		if(year < 0 || year > 99){
 			throw new IllegalArgumentException("Year must be between 0 and 99");
@@ -111,6 +174,10 @@ public class PersonalData extends AbstractFixedLengthPayload {
 		writeByteToData((byte)mode,21);
 	}
 	
+	/**
+	 * Sets the distance for for the stopwatch auto distance lap mode
+	 * @param distance distance in km
+	 */
 	public void setStopwatchDistance(int distance){
 		if(distance < 0 || distance > 999){
 			throw new IllegalArgumentException("Distance must be between 0 and 999");
@@ -118,6 +185,10 @@ public class PersonalData extends AbstractFixedLengthPayload {
 		writeBytesToData(Utils.convertIntToByteArray(distance),22,2);
 	}
 	
+	/**
+	 * Sets the minutes for the stopwatch auto time lap mode
+	 * @param min minutes
+	 */
 	public void setStopwatchTimeMinute(int min){
 		if(min < 0 || min > 59){
 			throw new IllegalArgumentException("Stopwatch auto lap Minute must be between 0 and 59");
@@ -125,11 +196,23 @@ public class PersonalData extends AbstractFixedLengthPayload {
 		writeByteToData(Utils.convertIntToBCD(min),24);
 	}
 	
+	/**
+	 * Sets the hours for the stopwatch auto time lap mode. The maximum is 9.
+	 * @param hour hours
+	 */
 	public void setStopwatchTimeHour(int hour){
 		if(hour < 0 || hour >9){
 			throw new IllegalArgumentException("Stopwatch auto lap Hour must be between 0 and 9");
 		}
 		writeByteToData(Utils.convertIntToBCD(hour),25);
+	}
+	
+	private int getLowerHeartRateLimit(){
+		return Utils.byteToInt(getByteFromPosition(15));
+	}
+	
+	private int getUpperHeartRateLimit(){
+		return Utils.byteToInt(getByteFromPosition(14));
 	}
 	
 	/**
