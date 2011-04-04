@@ -133,12 +133,20 @@
 			
 			<batchtest fork="yes" todir="${junit.output.dir}">
 				<formatter type="xml"/>
-				<formatter type="plain"/>
 				<fileset dir="${test-src}">
 					<include name="**/*TestCase.java"/>
 				</fileset>
 			</batchtest>
 		</junit>
+	</target>
+	
+	<target name="junit.report" depends="unittests">
+		<junitreport todir="${report-dir}">
+			<fileset dir="${report-dir}">
+				<include name="TEST-*.xml"/>
+			</fileset>
+			<report format="frames" todir="${report-dir}/html"/>
+		</junitreport>
 	</target>
 	
 	<target name="pmd" depends="init">
@@ -204,7 +212,7 @@
 		</emma>
 	</target>
 	
-	<target name="emma.report" depends="unittests">
+	<target name="emma.report" depends="junit.report">
 		<copy file="coverage.ec" tofile="${emma.dir}/coverage.ec"/>
 		<emma enabled="true">
 			<report sourcepath="${src}" sort="+name" 
