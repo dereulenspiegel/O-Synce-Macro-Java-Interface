@@ -62,6 +62,15 @@ public class UtilsTestCase {
 		byteArray[0] = 0;
 		byteArray[1] = 1;
 		Assert.assertEquals(1, Utils.convertByteArrayToInt(byteArray));
+		
+		boolean exceptionThrown = false;
+		try{
+			byte[] tooLong = new byte[5];
+			Utils.convertByteArrayToInt(tooLong);
+		} catch (IllegalArgumentException e){
+			exceptionThrown = true;
+		}
+		Assert.assertTrue(exceptionThrown);
 	}
 	
 	@Test
@@ -94,6 +103,18 @@ public class UtilsTestCase {
 		
 		i = 9;
 		Assert.assertEquals(i, Utils.convertIntToBCD(i));
+		
+		i = 10;
+		Assert.assertEquals(0x10, Utils.byteToInt(Utils.convertIntToBCD(i)));
+		
+		boolean exceptionThrown = false;
+		try{
+			i = 101;
+			Utils.convertIntToBCD(i);
+		} catch (IllegalArgumentException e){
+			exceptionThrown = true;
+		}
+		Assert.assertTrue(exceptionThrown);
 	}
 	
 	@Test

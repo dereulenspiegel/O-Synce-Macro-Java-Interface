@@ -64,14 +64,14 @@ public class Utils {
 			throw new IllegalArgumentException("Integer must be between 0 and 99");
 		}
 		byte value = 0x00;
-		if(in > 10){
+		if(in >= 10){
 			int high = in/10;
 			in = in % 10;
-			value = (byte)(value | high);
+			value = (byte)(value | (0x0F & high));
 			value = (byte)(value << 4);
 		}
 		
-		value = (byte)(value | in);
+		value = (byte)(value | (0x0F & in));
 		
 		return value;
 	}
