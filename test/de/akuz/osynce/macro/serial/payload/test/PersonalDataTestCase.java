@@ -191,5 +191,53 @@ public class PersonalDataTestCase {
 		Assert.assertTrue(exceptionThrown);
 		Assert.assertEquals(rtcMin, payload.getRTCMin());
 	}
+	
+	@Test
+	public void testSetRTCHour(){
+		boolean exceptionThrown = false;
+		try{
+			payload.setRTChour(60);
+		} catch(IllegalArgumentException e){
+			exceptionThrown = true;
+		}
+		Assert.assertTrue(exceptionThrown);
+		Assert.assertEquals(rtcHour, payload.getRTCHour());
+	}
+	
+	@Test
+	public void testSetRTCDay(){
+		boolean exceptionThrown = false;
+		try{
+			payload.setRTCDay(60);
+		} catch(IllegalArgumentException e){
+			exceptionThrown = true;
+		}
+		Assert.assertTrue(exceptionThrown);
+		Assert.assertEquals(rtcDay, payload.getRTCDay());
+	}
+	
+	@Test
+	public void testSetRTCMonth(){
+		boolean exceptionThrown = false;
+		try{
+			payload.setRTCMonth(60);
+		} catch(IllegalArgumentException e){
+			exceptionThrown = true;
+		}
+		Assert.assertTrue(exceptionThrown);
+		Assert.assertEquals(rtcMonth, payload.getRTCMonth());
+	}
+	
+	@Test
+	public void testSetRTCYear(){
+		boolean exceptionThrown = false;
+		try{
+			payload.setRTCYear(100);
+		} catch(IllegalArgumentException e){
+			exceptionThrown = true;
+		}
+		Assert.assertTrue(exceptionThrown);
+		Assert.assertEquals(rtcYear, payload.getRTCYear());
+	}
 
 }

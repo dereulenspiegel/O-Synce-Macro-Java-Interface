@@ -376,4 +376,20 @@ public class PersonalData extends AbstractFixedLengthPayload {
 	public int getRTCMin(){
 		return Utils.convertBCDToInt(getByteFromPosition(16));
 	}
+	
+	public int getRTCHour(){
+		return Utils.convertBCDToInt(getByteFromPosition(17));
+	}
+	
+	public int getRTCDay(){
+		return Utils.convertBCDToInt(getByteFromPosition(18));
+	}
+	
+	public int getRTCMonth(){
+		return Utils.convertBCDToInt(getByteFromPosition(19));
+	}
+	
+	public int getRTCYear(){
+		return Utils.convertBCDToInt(getByteFromPosition(20));
+	}
 }
