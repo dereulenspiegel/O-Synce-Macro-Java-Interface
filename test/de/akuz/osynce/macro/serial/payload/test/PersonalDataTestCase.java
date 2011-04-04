@@ -119,6 +119,77 @@ public class PersonalDataTestCase {
 			exceptionThrown = true;
 		}
 		Assert.assertTrue(exceptionThrown);
+		Assert.assertEquals(this.bike2Odo, payload.getBike2Odo());
+	}
+	
+	@Test
+	public void testSetBike1WS(){
+		boolean exceptionThrown = false;
+		try{
+			payload.setBike1WS(4000);
+		} catch(IllegalArgumentException e){
+			exceptionThrown = true;
+		}
+		Assert.assertTrue(exceptionThrown);
+		Assert.assertEquals(this.bike1Ws, payload.getBike1WS());
+	}
+	
+	@Test
+	public void testSetBike2WS(){
+		boolean exceptionThrown = false;
+		try{
+			payload.setBike2WS(4000);
+		} catch(IllegalArgumentException e){
+			exceptionThrown = true;
+		}
+		Assert.assertTrue(exceptionThrown);
+		Assert.assertEquals(this.bike2Ws, payload.getBike2WS());
+	}
+	
+	@Test
+	public void testSetWeight(){
+		boolean exceptionThrown = false;
+		try{
+			payload.setWeight(486);
+		} catch(IllegalArgumentException e){
+			exceptionThrown = true;
+		}
+		Assert.assertTrue(exceptionThrown);
+		
+		exceptionThrown = false;
+		try{
+			payload.setWeight(20);
+		} catch(IllegalArgumentException e){
+			exceptionThrown = true;
+		}
+		Assert.assertTrue(exceptionThrown);
+		
+		Assert.assertEquals(this.weight, payload.getWeight());
+	}
+	
+	@Test
+	public void testSetHomeAlti(){
+		boolean exceptionThrown = false;
+		try{
+			payload.setHomeAlti(6001);
+		} catch(IllegalArgumentException e){
+			exceptionThrown = true;
+		}
+		Assert.assertTrue(exceptionThrown);
+		
+		Assert.assertEquals(homeAlti, payload.getHomeAltitude());
+	}
+	
+	@Test
+	public void testSetRTCMin(){
+		boolean exceptionThrown = false;
+		try{
+			payload.setRTCmin(60);
+		} catch(IllegalArgumentException e){
+			exceptionThrown = true;
+		}
+		Assert.assertTrue(exceptionThrown);
+		Assert.assertEquals(rtcMin, payload.getRTCMin());
 	}
 
 }

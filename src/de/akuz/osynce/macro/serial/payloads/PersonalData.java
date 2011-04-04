@@ -343,13 +343,37 @@ public class PersonalData extends AbstractFixedLengthPayload {
 		return Utils.convertByteArrayToInt(data);
 	}
 	
-	/**
-	 * This method exists only due to compatibility reasons, but isn't
-	 * implemented here.
-	 */
-	@Override
-	public void addByte(byte b) {
-		// Ignore
-		
+	public int getBike2Odo(){
+		byte[] data = getBytesFromPosition(3,3);
+		data = Utils.invertByteArray(data);
+		return Utils.convertByteArrayToInt(data);
+	}
+	
+	public int getBike1WS(){
+		byte[] data = getBytesFromPosition(6,2);
+		data = Utils.invertByteArray(data);
+		return Utils.convertByteArrayToInt(data);
+	}
+	
+	public int getBike2WS(){
+		byte[] data = getBytesFromPosition(8,2);
+		data = Utils.invertByteArray(data);
+		return Utils.convertByteArrayToInt(data);
+	}
+	
+	public int getWeight(){
+		byte[] data = getBytesFromPosition(10,2);
+		data = Utils.invertByteArray(data);
+		return Utils.convertByteArrayToInt(data);
+	}
+	
+	public int getHomeAltitude(){
+		byte[] data = getBytesFromPosition(12,2);
+		data = Utils.invertByteArray(data);
+		return Utils.convertByteArrayToInt(data);
+	}
+	
+	public int getRTCMin(){
+		return Utils.convertBCDToInt(getByteFromPosition(16));
 	}
 }
