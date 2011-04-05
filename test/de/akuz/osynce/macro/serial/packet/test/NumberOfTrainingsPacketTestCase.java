@@ -12,6 +12,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.akuz.osynce.macro.serial.packet.NumberOfTrainingsPacket;
+import de.akuz.osynce.macro.serial.payloads.TrainingsList;
+import de.akuz.osynce.macro.serial.payloads.TrainingsList.Training;
 
 public class NumberOfTrainingsPacketTestCase {
 	
@@ -61,6 +63,23 @@ public class NumberOfTrainingsPacketTestCase {
 		Assert.assertEquals(expectedDate, 
 				packet.getListOfTrainings().get(2).getTrainingStartDate());
 		expectedDate = dateFormat.parse("13:02:01 30.03.2011");
+	}
+	
+	@Test
+	public void testGetTrainingCount(){
+		Assert.assertEquals(4, 
+				((TrainingsList)packet.getPayload()).getTrainingCount());
+	}
+	
+	@Test
+	public void testGetId(){
+		Training training1 = 
+			((TrainingsList)packet.getPayload()).getListOfTrainings().get(0);
+		Assert.assertEquals(0, training1.getId());
+		
+		Training training2 = 
+			((TrainingsList)packet.getPayload()).getListOfTrainings().get(1);
+		Assert.assertEquals(1, training2.getId());
 	}
 
 }

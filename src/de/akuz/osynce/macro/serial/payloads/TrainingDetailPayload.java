@@ -144,7 +144,6 @@ public class TrainingDetailPayload extends AbstractFixedLengthPayload {
 		@Override
 		public float getTemperature() {
 			byte[] data = getBytesFromPosition(offset,2);
-			System.out.println("Bytes from offset "+offset+": "+data[0]+" | "+data[1]);
 			data = Utils.invertByteArray(data);
 			return (float)Utils.convertByteArrayToInt(data)/100.0f;
 		}

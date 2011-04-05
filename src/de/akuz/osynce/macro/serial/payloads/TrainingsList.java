@@ -25,7 +25,7 @@ public class TrainingsList extends AbstractPayload {
 		}
 		
 		public int getId(){
-			return Utils.byteToInt(data[1]);
+			return Utils.byteToInt(data[0]);
 		}
 		
 		public Date getTrainingStartDate() throws ParseException{
