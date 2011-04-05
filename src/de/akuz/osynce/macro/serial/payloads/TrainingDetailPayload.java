@@ -233,7 +233,7 @@ public class TrainingDetailPayload extends AbstractFixedLengthPayload {
 		List<GraphElement> list = 
 			new ArrayList<GraphElement>(numberOfElements);
 		
-		int startOffset = 4;
+		int startOffset = 3;
 		if(getSummary() != null){
 			startOffset = 75;
 		} 
