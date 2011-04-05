@@ -184,5 +184,15 @@ public class TrainingDetailPayloadTestCase {
 	public void testGetSpeed(){
 		Assert.assertEquals(0.0f, payload.getGraphData().get(0).getSpeed());
 	}
+	
+	@Test
+	public void testGetGradient(){
+		Assert.assertEquals(0, payload.getGraphData().get(0).getGradient());
+	}
+	
+	@Test
+	public void testIsBike2(){
+		Assert.assertFalse(payload.getGraphData().get(0).isBike2());
+	}
 
 }
