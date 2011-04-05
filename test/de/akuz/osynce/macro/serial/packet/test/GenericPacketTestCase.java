@@ -11,13 +11,13 @@ import de.akuz.osynce.macro.serial.packet.GenericPacket;
 
 public class GenericPacketTestCase {
 	
-	private byte[] rawData = RawData.numberOfTrainings;
+	private byte[] rawData = RawData.trainingDetail0;
 	private GenericPacket packet;
 
 	@Before
 	public void setUp() throws Exception {
-		packet = new GenericPacket(new byte[]{rawData[0]});
-		for(int i=1;i<rawData.length;i++){
+		packet = new GenericPacket();
+		for(int i=0;i<rawData.length;i++){
 			packet.addReceivedByte(rawData[i]);
 		}
 	}
@@ -43,6 +43,8 @@ public class GenericPacketTestCase {
 	
 	@Test
 	public void testChecksum(){
-		Assert.assertEquals(rawData[30],packet.getCalculatedChecksum());
+		Assert.assertEquals(rawData[rawData.length-1],
+				packet.getCalculatedChecksum());
+		Assert.assertTrue(packet.check());
 	}
 }

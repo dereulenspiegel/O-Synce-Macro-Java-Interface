@@ -29,10 +29,14 @@ public class DefaultPacketProviderTestCase {
 	
 	@Test
 	public void testGetEmptyPacket(){
-		Packet packet = provider.getEmptyPacket(Commands.ACKNOWLEDGE.toByte());
+		Packet packet = provider.getEmptyPacket(Commands.TRAINING_DETAIL.toByte());
 		Assert.assertNotNull(packet);
-		Assert.assertEquals(Commands.ACKNOWLEDGE, packet.getCommand());
+		Assert.assertEquals(Commands.TRAINING_DETAIL, packet.getCommand());
 		Assert.assertTrue(packet instanceof GenericPacket);
+		for(int i=1;i<rawData.length;i++){
+			packet.addReceivedByte(rawData[i]);
+		}
+		Assert.assertArrayEquals(rawData, packet.getBytes());
 	}
 	
 	 @Test
@@ -40,7 +44,11 @@ public class DefaultPacketProviderTestCase {
 		 Packet packet = provider.parse(rawData);
 		 Assert.assertNotNull(packet);
 		 Assert.assertTrue(packet instanceof GenericPacket);
-		 Assert.assertEquals(260, packet.getBytes().length);
+		 Assert.assertTrue(packet.check());
+		 Assert.assertEquals((byte)0x02, 
+				 packet.getBytes()[1]);
+		 Assert.assertEquals((byte)0xa5, 
+				 packet.getBytes()[250]);
 		 Assert.assertArrayEquals(rawData, packet.getBytes());
 		 Assert.assertEquals(Commands.TRAINING_DETAIL, packet.getCommand());
 	 }

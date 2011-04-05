@@ -74,5 +74,10 @@ public class AbstractVariableLengthPayloadTestCase {
 		Assert.assertEquals(array[3], readArray[0]);
 	}
 	
+	@Test
+	public void testLength(){
+		Assert.assertEquals(258, payload.getLength());
+	}
+	
 
 }

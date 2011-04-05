@@ -36,6 +36,7 @@ public class AcknowledgeTestCase {
 	@Test
 	public void testChecksum(){
 		Assert.assertEquals((byte)144, ack.getChecksum());
+		Assert.assertTrue(ack.check());
 	}
 
 }
