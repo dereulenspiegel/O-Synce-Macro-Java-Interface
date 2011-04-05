@@ -129,7 +129,7 @@ public class TrainingDetailPayload extends AbstractFixedLengthPayload {
 		 * @return true if this belongs to a lap
 		 */
 		public boolean isLap(){
-			return ((getByteFromPosition(42) & 0x01) == 1);
+			return !((getByteFromPosition(42) & 0x01) == 1);
 		}
 	}
 	

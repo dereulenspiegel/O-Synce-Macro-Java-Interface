@@ -1,6 +1,7 @@
 package de.akuz.osynce.macro.serial.payload.test;
 
 import static org.junit.Assert.*;
+import junit.framework.Assert;
 
 import org.junit.After;
 import org.junit.Before;
@@ -59,6 +60,94 @@ public class TrainingDetailPayloadTestCase {
 				payload.getGraphData().size());
 		assertEquals(payload2.getNumberOfData(),
 				payload2.getGraphData().size());
+	}
+	
+	@Test
+	public void testGetSummary(){
+		Assert.assertNotNull(payload.getSummary());
+		Assert.assertNull(payload2.getSummary());
+	}
+	
+	@Test
+	public void testGetAltitudeGain(){
+		Assert.assertEquals(261, payload.getSummary().getAltitudeGain());
+	}
+	
+	@Test
+	public void testGetAltitudeLoss(){
+		Assert.assertEquals(219, payload.getSummary().getAltitudeLoss());
+	}
+	
+	@Test
+	public void testGetBurnedEnergy(){
+		Assert.assertEquals(0, payload.getSummary().getBurnedEnergy());
+	}
+	
+	@Test
+	public void testGetBurnedFat(){
+		Assert.assertEquals(0.0f, payload.getSummary().getBurnedFat());
+	}
+	
+	@Test
+	public void testGetAverageCadence(){
+		Assert.assertEquals(0, payload.getSummary().getAverageCadence());
+	}
+	
+	@Test
+	public void testGetTripDistance(){
+		Assert.assertEquals(35999306, payload.getSummary().getTripDistance());
+	}
+	
+	@Test
+	public void testGetTrainingDuration(){
+		Assert.assertEquals(23460, payload.getSummary().getTrainingDuration());
+	}
+	
+	@Test
+	public void testGetAveragePower(){
+		Assert.assertEquals(0, payload.getSummary().getAveragePower());
+	}
+	
+	@Test
+	public void testIsLap(){
+		Assert.assertFalse(payload.getSummary().isLap());
+	}
+	
+	@Test
+	public void testGetAverageSpeed(){
+		Assert.assertEquals(5.5f, payload.getSummary().getAverageSpeed());
+	}
+	
+	@Test
+	public void testGetAverageHeartRate(){
+		Assert.assertEquals(0, payload.getSummary().getAverageHeartRate());
+	}
+	
+	@Test
+	public void testGetLoZoneTime(){
+		Assert.assertEquals(0, payload.getSummary().getLoZoneTime());
+	}
+	
+	@Test
+	public void testGetHiZoneTime(){
+		Assert.assertEquals(0, payload.getSummary().getHiZoneTime());
+	}
+	
+	@Test
+	public void testInZoneTime(){
+		Assert.assertEquals(0, payload.getSummary().getInZoneTime());
+	}
+	
+	@Test
+	public void testGetPositiveAverageGradient(){
+		Assert.assertEquals(3, 
+				payload.getSummary().getPositiveAverageGradient());
+	}
+	
+	@Test
+	public void testGetNegativeAverageGradient(){
+		Assert.assertEquals(3, 
+				payload.getSummary().getNegativeAverageGradient());
 	}
 
 }
