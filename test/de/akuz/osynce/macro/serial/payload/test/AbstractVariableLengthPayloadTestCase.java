@@ -53,6 +53,25 @@ public class AbstractVariableLengthPayloadTestCase {
 		payload.writeByteToData(newByte, 270);
 		Assert.assertEquals(271, payload.getLength());
 		Assert.assertEquals(newByte, payload.getByteFromPosition(270));
+		
+		int oldLength = payload.getLength();
+		payload.writeByteToData(newByte, payload.getLength());
+		Assert.assertEquals(oldLength+1, payload.getLength());
+		Assert.assertEquals(newByte, 
+				payload.getByteFromPosition(payload.getLength()-1));
+		
+		byte[] array = new byte[4];
+		array[0] = 1;
+		array[1] = 2;
+		array[2] = 3;
+		array[3] = 4;
+		payload.writeBytesToData(array, 130, 4);
+		
+		byte[] readArray = payload.getBytesFromPosition(130, 4);
+		Assert.assertEquals(array[0], readArray[3]);
+		Assert.assertEquals(array[1], readArray[2]);
+		Assert.assertEquals(array[2], readArray[1]);
+		Assert.assertEquals(array[3], readArray[0]);
 	}
 	
 
