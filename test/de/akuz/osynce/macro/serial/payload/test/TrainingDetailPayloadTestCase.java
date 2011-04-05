@@ -149,5 +149,40 @@ public class TrainingDetailPayloadTestCase {
 		Assert.assertEquals(3, 
 				payload.getSummary().getNegativeAverageGradient());
 	}
+	
+	@Test
+	public void testGetAltitude(){
+		Assert.assertEquals(269, payload.getGraphData().get(0).getAltitude());
+	}
+	
+	@Test
+	public void testGetCadence(){
+		Assert.assertEquals(0, payload.getGraphData().get(0).getCadence());
+	}
+	
+	@Test
+	public void testGetDataRate(){
+		Assert.assertEquals(5, payload.getGraphData().get(0).getDataRate());
+	}
+	
+	@Test
+	public void testGetHeartRate(){
+		Assert.assertEquals(0, payload.getGraphData().get(0).getHeartRate());
+	}
+	
+	@Test
+	public void testGetPower(){
+		Assert.assertEquals(0, payload.getGraphData().get(0).getPower());
+	}
+	
+	@Test
+	public void testGetTemperature(){
+		Assert.assertEquals(18.1f, payload.getGraphData().get(0).getTemperature());
+	}
+	
+	@Test
+	public void testGetSpeed(){
+		Assert.assertEquals(0.0f, payload.getGraphData().get(0).getSpeed());
+	}
 
 }
