@@ -17,7 +17,7 @@
 	<property name="doc.dir" value="doc"/>
 	
 	<property name="emma.thresholds" 
-			value="class:100,method:100,block:100,line:100" />
+			value="class:90,method:90,block:90,line:90" />
 	
     <path id="O-Synce Macro Lib.classpath">
         <pathelement location="bin"/>
