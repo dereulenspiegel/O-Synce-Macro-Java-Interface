@@ -12,6 +12,23 @@ import de.akuz.osynce.macro.utils.Utils;
  */
 public class PersonalData extends AbstractFixedLengthPayload {
 	
+	/**
+	 * Static values for flags which can be set or unset
+	 */
+	public final static int SPEED_SCALE_MPH = 0x04;
+	public final static int TEMPERATURE_SCALE_FAHRENHEIT = 0x10;
+	public final static int WEIGHT_SCALE_KG = 0x08;
+	public final static int TIME_FORMAT_24H = 0x20;
+	public final static int GENDER_FEMALE = 0x02;
+	public final static int BIKE2 = 0x01;
+	
+	/**
+	 * Static values for Stopwatch modes
+	 */
+	public final static int STOPWATCH_MODE_AUTO_TIME = 2;
+	public final static int STOPWATCH_MODE_AUTO_DISTANCE = 1;
+	public final static int STOPWATCH_MODE_MANUAL = 0;
+	
 	public PersonalData(){
 		super(28);
 	}
@@ -225,6 +242,10 @@ public class PersonalData extends AbstractFixedLengthPayload {
 		writeByteToData((byte)flags,26);
 	}
 	
+	/**
+	 * Adds a flag to the flag byte by conducting an or operation
+	 * @param flag
+	 */
 	private void addFlag(int flag){
 		int flags = this.getByteFromPosition(26);
 		flags = flags | flag;
@@ -232,7 +253,20 @@ public class PersonalData extends AbstractFixedLengthPayload {
 	}
 	
 	/**
-	 * Sets a flag in user flags by using exclusive or.
+	 * Checks if a certain flag is already set. This method returns true
+	 * if all bits which are 1 in the given flag are also 1 in the flag
+	 * saved in this PersonalData
+	 * @param flag the flag to check
+	 * @return true if all 1's from flag are matching
+	 */
+	private boolean isFlagSet(int flag){
+		int flags = getByteFromPosition(26);
+		int result = flags & flag;
+		return result == flag;
+	}
+	
+	/**
+	 * Unsets a flag in user flags by using exclusive or.
 	 * @param flag
 	 */
 	private void removeFlag(int flag){
@@ -248,9 +282,9 @@ public class PersonalData extends AbstractFixedLengthPayload {
 	 */
 	public void setFemale(boolean gender){
 		if(gender){
-			addFlag(0x02);
+			addFlag(GENDER_FEMALE);
 		} else {
-			removeFlag(0x02);
+			removeFlag(GENDER_FEMALE);
 		}
 	}
 	
@@ -260,9 +294,9 @@ public class PersonalData extends AbstractFixedLengthPayload {
 	 */
 	public void setBike2(boolean bike2){
 		if(bike2){
-			addFlag(0x01);
+			addFlag(BIKE2);
 		} else {
-			removeFlag(0x01);
+			removeFlag(BIKE2);
 		}
 	}
 	
@@ -273,9 +307,9 @@ public class PersonalData extends AbstractFixedLengthPayload {
 	 */
 	public void setSpeedScaleMpH(boolean mph){
 		if(mph){
-			addFlag(0x04);
+			addFlag(SPEED_SCALE_MPH);
 		} else {
-			removeFlag(0x04);
+			removeFlag(SPEED_SCALE_MPH);
 		}
 	}
 	
@@ -286,9 +320,9 @@ public class PersonalData extends AbstractFixedLengthPayload {
 	 */
 	public void setWeightScaleToKg(boolean kg){
 		if(kg){
-			addFlag(0x08);
+			addFlag(WEIGHT_SCALE_KG);
 		} else {
-			removeFlag(0x08);
+			removeFlag(WEIGHT_SCALE_KG);
 		}
 	}
 	
@@ -298,9 +332,9 @@ public class PersonalData extends AbstractFixedLengthPayload {
 	 */
 	public void setTemperatureScaleToFahrenheit(boolean fahrenheit){
 		if(fahrenheit){
-			addFlag(0x10);
+			addFlag(TEMPERATURE_SCALE_FAHRENHEIT);
 		} else {
-			removeFlag(0x10);
+			removeFlag(TEMPERATURE_SCALE_FAHRENHEIT);
 		}
 	}
 	
@@ -310,9 +344,9 @@ public class PersonalData extends AbstractFixedLengthPayload {
 	 */
 	public void set24hFormat(boolean h){
 		if(h){
-			addFlag(0x20);
+			addFlag(TIME_FORMAT_24H);
 		} else {
-			removeFlag(0x20);
+			removeFlag(TIME_FORMAT_24H);
 		}
 	}
 	
@@ -329,67 +363,210 @@ public class PersonalData extends AbstractFixedLengthPayload {
 		addFlag(flag);
 	}
 	
+	/**
+	 * Return the lower heart rate limit
+	 * @return heart rate in beats per minute
+	 */
 	public int getLowerHeartRateLimit(){
 		return Utils.byteToInt(getByteFromPosition(15));
 	}
 	
+	/**
+	 * Returns the upper heart rate limit
+	 * @return heart rate in beats per minute
+	 */
 	public int getUpperHeartRateLimit(){
 		return Utils.byteToInt(getByteFromPosition(14));
 	}
 	
+	/**
+	 * Returns the odo value for bike 1
+	 * @return odo value in km
+	 */
 	public int getBike1Odo(){
 		byte[] data = getBytesFromPosition(0,3);
 		data = Utils.invertByteArray(data);
 		return Utils.convertByteArrayToInt(data);
 	}
 	
+	/**
+	 * Return the odo value for bike 2
+	 * @return odo value in km
+	 */
 	public int getBike2Odo(){
 		byte[] data = getBytesFromPosition(3,3);
 		data = Utils.invertByteArray(data);
 		return Utils.convertByteArrayToInt(data);
 	}
 	
+	/**
+	 * Returns the tire perimeter for bike 1
+	 * @return perimeter in mm
+	 */
 	public int getBike1WS(){
 		byte[] data = getBytesFromPosition(6,2);
 		data = Utils.invertByteArray(data);
 		return Utils.convertByteArrayToInt(data);
 	}
 	
+	/**
+	 * Returns the tire perimeter for bike 2
+	 * @return perimeter in mm
+	 */
 	public int getBike2WS(){
 		byte[] data = getBytesFromPosition(8,2);
 		data = Utils.invertByteArray(data);
 		return Utils.convertByteArrayToInt(data);
 	}
 	
+	/**
+	 * Returns the weight
+	 * @return weight in lb
+	 */
 	public int getWeight(){
 		byte[] data = getBytesFromPosition(10,2);
 		data = Utils.invertByteArray(data);
 		return Utils.convertByteArrayToInt(data);
 	}
 	
+	/**
+	 * Returns the home altitude
+	 * @return altitude in m
+	 */
 	public int getHomeAltitude(){
 		byte[] data = getBytesFromPosition(12,2);
 		data = Utils.invertByteArray(data);
 		return Utils.convertByteArrayToInt(data);
 	}
 	
+	/**
+	 * Returns the minutes set for the device clock
+	 * @return minutes
+	 */
 	public int getRTCMin(){
 		return Utils.convertBCDToInt(getByteFromPosition(16));
 	}
 	
+	/**
+	 * Returns the hours set for the device clock
+	 * @return hours
+	 */
 	public int getRTCHour(){
 		return Utils.convertBCDToInt(getByteFromPosition(17));
 	}
 	
+	/**
+	 * Returns the day of the month set for the device clock
+	 * @return day of month
+	 */
 	public int getRTCDay(){
 		return Utils.convertBCDToInt(getByteFromPosition(18));
 	}
 	
+	/**
+	 * Returns the month of year set for the device clock
+	 * @return month of year
+	 */
 	public int getRTCMonth(){
 		return Utils.convertBCDToInt(getByteFromPosition(19));
 	}
 	
+	/**
+	 * Returns the last two digits of the year set for the device clock
+	 * @return last two digits of the year
+	 */
 	public int getRTCYear(){
 		return Utils.convertBCDToInt(getByteFromPosition(20));
+	}
+	
+	/**
+	 * Check whether the speed scale is in miles per hour or 
+	 * kilometers per hour
+	 * @return true if scale is in miles per hour
+	 */
+	public boolean isSpeedScaleMph(){
+		return isFlagSet(SPEED_SCALE_MPH);
+	}
+	
+	/**
+	 * Returns the distance set for the stopwatch distance auto lap mode
+	 * @return distance in km
+	 */
+	public int getStopwatchDistance(){
+		byte[] data = getBytesFromPosition(22,2);
+		data = Utils.invertByteArray(data);
+		return Utils.convertByteArrayToInt(data);
+	}
+	
+	/**
+	 * Returns the stopwatch auto lap mode
+	 * @return the mode
+	 */
+	public int getStopwatchMode(){
+		return Utils.byteToInt(getByteFromPosition(21));
+	}
+	
+	/**
+	 * Returns the hours set for the stopwatch time auto lap mode
+	 * @return hours
+	 */
+	public int getStopwatchTimeHour(){
+		return Utils.convertBCDToInt(getByteFromPosition(25));
+	}
+	
+	/**
+	 * Returns the minutes set for the stopwatch time auto lap mode
+	 * @return minutes
+	 */
+	public int getStopwatchTimeMinute(){
+		return Utils.convertBCDToInt(getByteFromPosition(24));
+	}
+	
+	/**
+	 * Check whether the temperature scale is Celsius or Fahrenheit
+	 * @return true if scale is in Fahrenheit
+	 */
+	public boolean isTemperatureScaleFahrenheit(){
+		return isFlagSet(TEMPERATURE_SCALE_FAHRENHEIT);
+	}
+	
+	/**
+	 * Returns an int holding all user flags
+	 * @return integer holding all user flags
+	 */
+	public int getUserFlags(){
+		return Utils.byteToInt(getByteFromPosition(26));
+	}
+	
+	/**
+	 * Check whether the shown weight scale is Kilogramm or pound
+	 * @return true if scale is in Kilogramm
+	 */
+	public boolean isWeightScaleKg(){
+		return isFlagSet(WEIGHT_SCALE_KG);
+	}
+	
+	/**
+	 * Check whether the time format is 24h or 12h based
+	 * @return true if time format is in 24h format
+	 */
+	public boolean isTime24hFormat(){
+		return isFlagSet(TIME_FORMAT_24H);
+	}
+	
+	/**
+	 * Determine the gender of the user
+	 * @return true if gender is female
+	 */
+	public boolean isFemale(){
+		return isFlagSet(GENDER_FEMALE);
+	}
+	
+	/**
+	 * Check whether the flag for bike 2 is set
+	 * @return true if the flag for bike 2 is set
+	 */
+	public boolean isBike2(){
+		return isFlagSet(BIKE2);
 	}
 }
