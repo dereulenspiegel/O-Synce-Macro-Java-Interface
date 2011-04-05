@@ -6,7 +6,7 @@ package de.akuz.osynce.macro.serial.payloads;
  * @author Till Klocke
  *
  */
-public class GenericPayload extends AbstractVariableLenghtPayload {
+public class GenericPayload extends AbstractVariableLengthPayload {
 	
 	/**
 	 * Adds a byte to the payload

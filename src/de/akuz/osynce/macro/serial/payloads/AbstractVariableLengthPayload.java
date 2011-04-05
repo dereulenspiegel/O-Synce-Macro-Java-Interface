@@ -10,7 +10,7 @@ import java.util.List;
  * @author Till Klocke
  *
  */
-public abstract class AbstractVariableLenghtPayload extends AbstractPayload {
+public abstract class AbstractVariableLengthPayload extends AbstractPayload {
 	
 	protected List<Byte> dataBytes = new LinkedList<Byte>();
 	
@@ -26,8 +26,9 @@ public abstract class AbstractVariableLenghtPayload extends AbstractPayload {
 	@Override
 	public void writeBytesToData(byte[] value, int byteOffset, int offset,
 			int length) {
-		for(int i=value.length;i>0;i--){
-			insertByteToList(offset+(length-(i+1)),value[i+byteOffset]);
+		for(int i=value.length-1;i>=0;i--){
+			insertByteToList(offset+(length-(i+1)),
+					value[(i-byteOffset)]);
 		}
 	}
 	
@@ -66,7 +67,7 @@ public abstract class AbstractVariableLenghtPayload extends AbstractPayload {
 		byte[] array = new byte[count];
 		
 		for(int i=0;i<count;i++){
-			array[i] = dataBytes.get(i);
+			array[i] = dataBytes.get(position+i);
 		}
 		
 		return array;
@@ -80,6 +81,12 @@ public abstract class AbstractVariableLenghtPayload extends AbstractPayload {
 	@Override
 	public int getLength() {
 		return dataBytes.size();
+	}
+
+	@Override
+	public void addByte(byte b) {
+		dataBytes.add(b);
+		
 	}
 
 }
