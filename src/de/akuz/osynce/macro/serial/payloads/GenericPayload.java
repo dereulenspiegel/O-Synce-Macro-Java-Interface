@@ -7,13 +7,5 @@ package de.akuz.osynce.macro.serial.payloads;
  *
  */
 public class GenericPayload extends AbstractVariableLengthPayload {
-	
-	/**
-	 * Adds a byte to the payload
-	 * @param b
-	 */
-	public void addByte(byte b){
-		dataBytes.add(b);
-	}
 
 }

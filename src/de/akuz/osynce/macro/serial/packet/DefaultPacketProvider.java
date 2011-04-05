@@ -13,7 +13,6 @@ public class DefaultPacketProvider implements PacketProvider {
 
 	@Override
 	public Packet parse(byte[] array) {
-		System.out.println("Parsing default packet with "+array.length+" bytes");
 		GenericPacket packet = new GenericPacket();
 		for(int i=0;i<array.length-1;i++){
 			packet.addReceivedByte(array[i]);
