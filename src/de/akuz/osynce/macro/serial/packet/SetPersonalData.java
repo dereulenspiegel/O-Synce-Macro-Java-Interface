@@ -9,11 +9,4 @@ public class SetPersonalData extends AbstractPacket implements Command {
 		super(Commands.PERSONAL_DATA_PACKET);
 		setPayload(personalData);
 	}
-
-	@Override
-	public void addReceivedByte(byte b) {
-		// Ignore
-		
-	}
-
 }
