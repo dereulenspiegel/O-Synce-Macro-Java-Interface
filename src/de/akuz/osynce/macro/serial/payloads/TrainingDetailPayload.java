@@ -144,8 +144,9 @@ public class TrainingDetailPayload extends AbstractFixedLengthPayload {
 		@Override
 		public float getTemperature() {
 			byte[] data = getBytesFromPosition(offset,2);
+			System.out.println("Bytes from offset "+offset+": "+data[0]+" | "+data[1]);
 			data = Utils.invertByteArray(data);
-			return (float)Utils.convertByteArrayToInt(data)/10.0f;
+			return (float)Utils.convertByteArrayToInt(data)/100.0f;
 		}
 
 		@Override
@@ -186,12 +187,17 @@ public class TrainingDetailPayload extends AbstractFixedLengthPayload {
 
 		@Override
 		public int getDataRate() {
-			return (0x03 & getByteFromPosition(11));
+			int rate = (0x03 & getByteFromPosition(offset+11));
+			rate = rate * 10;
+			if(rate == 0){
+				rate = 5;
+			}
+			return rate;
 		}
 
 		@Override
 		public boolean isBike2() {	
-			return (0x08 & getByteFromPosition(11))==1;
+			return (0x08 & getByteFromPosition(offset+11))==1;
 		}
 		
 	}
@@ -229,8 +235,8 @@ public class TrainingDetailPayload extends AbstractFixedLengthPayload {
 			new ArrayList<GraphElement>(numberOfElements);
 		
 		int startOffset = 4;
-		if(getSummary() == null){
-			startOffset = 76;
+		if(getSummary() != null){
+			startOffset = 75;
 		} 
 		
 		for(int i=0;i<numberOfElements;i++){
