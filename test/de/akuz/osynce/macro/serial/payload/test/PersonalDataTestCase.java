@@ -84,12 +84,14 @@ public class PersonalDataTestCase {
 	
 	@Test
 	public void testGetUpperHeartRateLimit(){
-		Assert.assertEquals(upperHeartRateLimit, payload.getUpperHeartRateLimit());
+		Assert.assertEquals(upperHeartRateLimit, 
+				payload.getUpperHeartRateLimit());
 	}
 	
 	@Test
 	public void testGetLowerHeartRateLimit(){
-		Assert.assertEquals(lowerHeartRateLimit, payload.getLowerHeartRateLimit());
+		Assert.assertEquals(lowerHeartRateLimit, 
+				payload.getLowerHeartRateLimit());
 	}
 	
 	@Test
@@ -238,6 +240,101 @@ public class PersonalDataTestCase {
 		}
 		Assert.assertTrue(exceptionThrown);
 		Assert.assertEquals(rtcYear, payload.getRTCYear());
+	}
+	
+	@Test 
+	public void testSetSpeedScale(){
+		payload.setSpeedScaleMpH(true);
+		Assert.assertTrue(payload.isSpeedScaleMph());
+		payload.setSpeedScaleMpH(false);
+		Assert.assertFalse(payload.isSpeedScaleMph());
+	}
+	
+	@Test
+	public void testSetStopwatchDistance(){
+		boolean exceptionThrown = false;
+		try{
+			payload.setStopwatchDistance(1000);
+		} catch(IllegalArgumentException e){
+			exceptionThrown = true;
+		}
+		Assert.assertTrue(exceptionThrown);
+		Assert.assertEquals(stopwatchDistance, payload.getStopwatchDistance());
+	}
+	
+	@Test
+	public void testSetStopwatchTime(){
+		boolean exceptionThrown = false;
+		try{
+			payload.setStopwatchTimeMinute(1000);
+		} catch(IllegalArgumentException e){
+			exceptionThrown = true;
+		}
+		Assert.assertTrue(exceptionThrown);
+		
+		exceptionThrown = false;
+		try{
+			payload.setStopwatchTimeHour(1000);
+		} catch(IllegalArgumentException e){
+			exceptionThrown = true;
+		}
+		Assert.assertTrue(exceptionThrown);
+		
+		Assert.assertEquals(this.stopwatchHour, payload.getStopwatchTimeHour());
+		Assert.assertEquals(this.stopwatchMinute, 
+				payload.getStopwatchTimeMinute());
+	}
+	
+	@Test
+	public void testSetStopwatchMode(){
+		boolean exceptionThrown = false;
+		try{
+			payload.setStopwatchMode(3);
+		} catch(IllegalArgumentException e){
+			exceptionThrown = true;
+		}
+		Assert.assertTrue(exceptionThrown);
+		Assert.assertEquals(this.stopwatchMode, payload.getStopwatchMode());
+	}
+	
+	@Test
+	public void testSetTemperatureScale(){
+		payload.setTemperatureScaleToFahrenheit(false);
+		Assert.assertFalse(payload.isTemperatureScaleFahrenheit());
+		payload.setTemperatureScaleToFahrenheit(true);
+		Assert.assertTrue(payload.isTemperatureScaleFahrenheit());
+	}
+	
+	@Test
+	public void testSetWeightScale(){
+		payload.setWeightScaleToKg(false);
+		Assert.assertFalse(payload.isWeightScaleKg());
+		payload.setWeightScaleToKg(true);
+		Assert.assertTrue(payload.isWeightScaleKg());
+	}
+	
+	@Test
+	public void testSetTimeFormat(){
+		payload.set24hFormat(false);
+		Assert.assertFalse(payload.isTime24hFormat());
+		payload.set24hFormat(true);
+		Assert.assertTrue(payload.isTime24hFormat());
+	}
+	
+	@Test
+	public void testSetGender(){
+		payload.setFemale(false);
+		Assert.assertFalse(payload.isFemale());
+		payload.setFemale(true);
+		Assert.assertTrue(payload.isFemale());
+	}
+	
+	@Test
+	public void testSetBike2(){
+		payload.setBike2(false);
+		Assert.assertFalse(payload.isBike2());
+		payload.setBike2(true);
+		Assert.assertTrue(payload.isBike2());
 	}
 
 }
