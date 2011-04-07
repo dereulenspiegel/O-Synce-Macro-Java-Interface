@@ -4,8 +4,8 @@ import de.akuz.osynce.macro.serial.DeviceException;
 import de.akuz.osynce.macro.serial.packet.PacketException;
 
 /**
- * This is an interface to bicycle computer of the Macro series
- * from O-Synce
+ * This is in interface to enforce unified packet based communication with
+ * serial port devices.
  * @author Till Klocke
  *
  */

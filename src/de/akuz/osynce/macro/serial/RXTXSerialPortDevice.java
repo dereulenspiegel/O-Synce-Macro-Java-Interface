@@ -20,6 +20,14 @@ import de.akuz.osynce.macro.serial.interfaces.PacketListener;
 import de.akuz.osynce.macro.serial.packet.PacketException;
 import de.akuz.osynce.macro.serial.packet.ProviderManager;
 
+/**
+ * This class is a simple implementation of the SerialPortDevice interface.
+ * Non-blocking methods aren't implemented at the moment. Time out issues
+ * aren't handled. This implementation uses the RXTX library which has
+ * to be installed in the system.
+ * @author Till Klocke
+ *
+ */
 public class RXTXSerialPortDevice implements SerialPortDevice, SerialPortEventListener{
 	
 	private String portName;
