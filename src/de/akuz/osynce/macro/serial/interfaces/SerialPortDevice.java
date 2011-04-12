@@ -26,10 +26,22 @@ public interface SerialPortDevice {
 	/**
 	 * Initializes the device and claims necessary resources;
 	 */
-	public void open() throws DeviceException;
+	public void open(String portname) throws DeviceException;
 	/**
 	 * Closes the device and releases claimed resources
 	 */
 	public void close();
+	
+	/**
+	 * Adds a PacketListener to monitor all communication operations
+	 * @param listener The PacketListener to add
+	 */
+	public void addPacketListener(PacketListener listener);
+	
+	/**
+	 * Removes a PacketListener from this SerialPortDevice
+	 * @param listener The PacketListener to be removed
+	 */
+	public void removePacketListener(PacketListener listener);
 
 }

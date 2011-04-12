@@ -14,19 +14,26 @@ public interface PacketListener {
 	 * Singals that a data packet is completely received
 	 * @param packet the received packet
 	 */
+	
 	public void packetReceived(Packet packet);
 	/**
 	 * Signals that reception of the packet has begun 
 	 * @param the command of the packet
 	 */
 	public void packetStarted(Commands command);
+	
 	/**
-	 * Signals that the reception of the payload
+	 * Signals the reception of the payload. 
 	 * @param currentCount received number of bytes
-	 * @param totalCount total number of bytes
+	 * @param totalCount total number of bytes, or -1 if totalCount is unknown
 	 */
 	public void receivingPayload(int currentCount, int totalCount);
 	
+	/**
+	 * This method gets calles when an exception occurs while a packet
+	 * is received
+	 * @param e
+	 */
 	public void exceptionOccured(PacketException e);
 
 }
