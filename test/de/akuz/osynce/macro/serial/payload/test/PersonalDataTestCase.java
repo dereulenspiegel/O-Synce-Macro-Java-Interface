@@ -8,12 +8,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.akuz.osynce.macro.serial.packet.SetPersonalData;
-import de.akuz.osynce.macro.serial.payloads.PersonalData;
+import de.akuz.osynce.macro.serial.payloads.PersonalDataPayload;
 
 public class PersonalDataTestCase {
 	
 	private SetPersonalData packet;
-	private PersonalData payload;
+	private PersonalDataPayload payload;
 	
 	private final boolean format24h = true;
 	private final int bike1Odo = 90000;
@@ -43,7 +43,7 @@ public class PersonalDataTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		payload = new PersonalData();
+		payload = new PersonalDataPayload();
 		payload.set24hFormat(format24h);
 		payload.setBike1ODO(bike1Odo);
 		payload.setBike1WS(bike1Ws);

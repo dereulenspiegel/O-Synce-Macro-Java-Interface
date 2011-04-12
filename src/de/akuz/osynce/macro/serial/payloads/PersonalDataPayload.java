@@ -10,7 +10,7 @@ import de.akuz.osynce.macro.utils.Utils;
  * @author Till Klocke
  *
  */
-public class PersonalData extends AbstractFixedLengthPayload {
+public class PersonalDataPayload extends AbstractFixedLengthPayload {
 	
 	/**
 	 * Static values for flags which can be set or unset
@@ -29,7 +29,7 @@ public class PersonalData extends AbstractFixedLengthPayload {
 	public final static int STOPWATCH_MODE_AUTO_DISTANCE = 1;
 	public final static int STOPWATCH_MODE_MANUAL = 0;
 	
-	public PersonalData(){
+	public PersonalDataPayload(){
 		super(28);
 	}
 	
