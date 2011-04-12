@@ -13,8 +13,12 @@ import de.akuz.osynce.macro.serial.packet.EraseAllDoneProvider;
 import de.akuz.osynce.macro.serial.packet.EraseAllRecords;
 import de.akuz.osynce.macro.serial.packet.NumberOfTrainingsProvider;
 import de.akuz.osynce.macro.serial.packet.PacketException;
+import de.akuz.osynce.macro.serial.packet.PersonalDataReceivedPacket;
+import de.akuz.osynce.macro.serial.packet.PersonalDataReceivedProvider;
 import de.akuz.osynce.macro.serial.packet.ProviderManager;
+import de.akuz.osynce.macro.serial.packet.SetPersonalData;
 import de.akuz.osynce.macro.serial.packet.TrainingDetailProvider;
+import de.akuz.osynce.macro.serial.payloads.PersonalDataPayload;
 
 /**
  * Abstract implementation of the Macro interface. This should be the
@@ -36,9 +40,14 @@ public abstract class AbstractMacroSerialPortDevice implements Macro {
 				new NumberOfTrainingsProvider());
 		pm.registerPacketProvider(Commands.TRAINING_DETAIL.toByte(),
 				new TrainingDetailProvider());
+		pm.registerPacketProvider(Commands.PERSONAL_DATA_RECEIVED.toByte(), 
+				new PersonalDataReceivedProvider());
 	}
 	
-	private SerialPortDevice device;
+	protected SerialPortDevice device;
+	protected String portName;
+	
+	public final static String PROPERTY_PORTNAME = "portname";
 
 	@Override
 	public List<Training> getTrainings() throws CommunicationException {
@@ -47,10 +56,32 @@ public abstract class AbstractMacroSerialPortDevice implements Macro {
 	}
 
 	@Override
-	public void setPersonalData(PersonalData data)
+	public boolean setPersonalData(PersonalData data)
 			throws CommunicationException {
-		// TODO Auto-generated method stub
+		SetPersonalData packet = 
+			new SetPersonalData(getPersonalDataPayload(data));
+		try {
+			Packet result = device.sendCommand(packet);
+			if(result instanceof PersonalDataReceivedPacket &&
+					result.check()){
+				return true;
+			}
+		} catch (PacketException e) {
+			throw new CommunicationException(e);
+		}
+		return false;
 
+	}
+	
+	private PersonalDataPayload getPersonalDataPayload(PersonalData data){
+		if(data instanceof PersonalDataPayload){
+			return (PersonalDataPayload)data;
+		}
+		PersonalDataPayload payload = new PersonalDataPayload();
+		
+		//TODO:
+		
+		return payload;
 	}
 
 	@Override

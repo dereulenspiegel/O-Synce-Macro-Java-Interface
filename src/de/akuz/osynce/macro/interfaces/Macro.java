@@ -25,7 +25,7 @@ public interface Macro {
 	 * Configure the device.
 	 * @throws CommunicationException in case an exception occurs
 	 */
-	public void setPersonalData(PersonalData data) throws CommunicationException;
+	public boolean setPersonalData(PersonalData data) throws CommunicationException;
 	
 	/**
 	 * Wipe all stored trainings from the device
