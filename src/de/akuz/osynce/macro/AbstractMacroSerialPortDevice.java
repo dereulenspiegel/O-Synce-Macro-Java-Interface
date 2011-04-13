@@ -5,6 +5,7 @@ import java.util.List;
 import de.akuz.osynce.macro.interfaces.Macro;
 import de.akuz.osynce.macro.interfaces.PersonalData;
 import de.akuz.osynce.macro.interfaces.Training;
+import de.akuz.osynce.macro.serial.DeviceException;
 import de.akuz.osynce.macro.serial.interfaces.Packet;
 import de.akuz.osynce.macro.serial.interfaces.SerialPortDevice;
 import de.akuz.osynce.macro.serial.packet.Commands;
@@ -51,7 +52,14 @@ public abstract class AbstractMacroSerialPortDevice implements Macro {
 
 	@Override
 	public List<Training> getTrainings() throws CommunicationException {
-		// TODO Auto-generated method stub
+		try {
+			device.open(portName);
+			
+		} catch (DeviceException e) {
+			throw new CommunicationException(e);
+		} finally {
+			device.close();
+		}
 		return null;
 	}
 
@@ -61,13 +69,19 @@ public abstract class AbstractMacroSerialPortDevice implements Macro {
 		SetPersonalData packet = 
 			new SetPersonalData(getPersonalDataPayload(data));
 		try {
+			device.open(this.portName);
 			Packet result = device.sendCommand(packet);
 			if(result instanceof PersonalDataReceivedPacket &&
 					result.check()){
+				device.close();
 				return true;
 			}
 		} catch (PacketException e) {
 			throw new CommunicationException(e);
+		} catch (DeviceException e) {
+			throw new CommunicationException(e);
+		} finally{
+			device.close();
 		}
 		return false;
 
@@ -88,12 +102,18 @@ public abstract class AbstractMacroSerialPortDevice implements Macro {
 	public boolean erase() throws CommunicationException {
 		EraseAllRecords packet = new EraseAllRecords();
 		try {
+			device.open(portName);
 			Packet result = device.sendCommand(packet);
 			if(result instanceof EraseAllDonePacket && result.check()){
+				device.close();
 				return true;
 			}
 		} catch (PacketException e) {
 			throw new CommunicationException(e);
+		} catch (DeviceException e) {
+			throw new CommunicationException(e);
+		} finally {
+			device.close();
 		}
 		return false;
 	}
