@@ -274,7 +274,7 @@
 		<jar destfile="${target.dir}/${jar.name}"
 				basedir="."
 				includes="${bin}/**/*.class"
-				manifest="MANIFEST.MF"/>
+				manifest="${target.dir}/MANIFEST.MF"/>
 		
 	</target>
 	
