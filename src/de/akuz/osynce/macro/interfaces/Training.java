@@ -81,7 +81,7 @@ public interface Training {
 	 * Returns the estimated amount of burned fat
 	 * @return amount of burnt fat in kg;
 	 */
-	public int getFatBurn();
+	public float getFatBurn();
 	
 	/**
 	 * Returns the average cadence during this training
@@ -99,7 +99,7 @@ public interface Training {
 	 * Returns the ATM time as java date
 	 * @return ATM time as java date
 	 */
-	public Date getATMTime();
+	public int getTrainingDuration();
 	
 	/**
 	 * Check if this a complete new record a lap of a training
@@ -108,9 +108,14 @@ public interface Training {
 	public boolean isLap();
 	
 	/**
-	 * Returns a list of all measure points of this training. This list
+	 * Returns a list of all measure points of this training including
+	 * all laps. This list
 	 * can be used to print a graph or for advanced statistics.
 	 * @return chronological ordered list of measure points
 	 */
+	public List<GraphElement> getAllGraphElements();
+	
 	public List<GraphElement> getGraphElements();
+	
+	public List<Training> getLaps();
 }
