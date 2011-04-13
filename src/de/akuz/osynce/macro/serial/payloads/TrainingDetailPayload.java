@@ -1,7 +1,9 @@
 package de.akuz.osynce.macro.serial.payloads;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import de.akuz.osynce.macro.interfaces.GraphElement;
@@ -130,6 +132,17 @@ public class TrainingDetailPayload extends AbstractFixedLengthPayload {
 		 */
 		public boolean isLap(){
 			return !((getByteFromPosition(42) & 0x01) == 1);
+		}
+		
+		public Date getSectionStartTime() throws ParseException{
+			int secs = Utils.convertBCDToInt(getByteFromPosition(63));
+			int mins = Utils.convertBCDToInt(getByteFromPosition(64));
+			int hours = Utils.convertBCDToInt(getByteFromPosition(65));
+			int day = Utils.convertBCDToInt(getByteFromPosition(66));
+			int month = Utils.byteToInt(getByteFromPosition(67));
+			int year = Utils.convertBCDToInt(getByteFromPosition(68));
+			
+			return Utils.getDateFromTime(secs, mins, hours, day, month, year);
 		}
 	}
 	

@@ -1,6 +1,11 @@
 package de.akuz.osynce.macro.serial.payload.test;
 
 import static org.junit.Assert.*;
+
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.Date;
+
 import junit.framework.Assert;
 
 import org.junit.After;
@@ -148,6 +153,19 @@ public class TrainingDetailPayloadTestCase {
 	public void testGetNegativeAverageGradient(){
 		Assert.assertEquals(3, 
 				payload.getSummary().getNegativeAverageGradient());
+	}
+	
+	@Test
+	public void testGetSectionStartTime() throws ParseException{
+		Date time = payload.getSummary().getSectionStartTime();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(time);
+		Assert.assertEquals(cal.get(Calendar.SECOND), 21);
+		Assert.assertEquals(cal.get(Calendar.MINUTE), 29);
+		Assert.assertEquals(cal.get(Calendar.HOUR_OF_DAY), 12);
+		Assert.assertEquals(cal.get(Calendar.DAY_OF_MONTH), 2);
+		Assert.assertEquals(cal.get(Calendar.MONTH)+1, 4);
+		Assert.assertEquals(cal.get(Calendar.YEAR)-2000, 11);
 	}
 	
 	@Test
