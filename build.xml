@@ -61,7 +61,7 @@
 	
     <target name="clean">
         <delete dir="bin"/>
-    	<delete dir="${target}"/>
+    	<delete dir="${target.dir}"/>
     	<delete dir="${junit.output.dir}"/>
     	<delete dir="${test-bin}"/>
     	<delete dir="${report-dir}"/>
