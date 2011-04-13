@@ -288,7 +288,7 @@
 		</copy>
 		<zip destfile="${release.dir}/${ant.project.name}-${version.num}.zip">
 			<fileset dir="${release.dir}" includes="${jar.name}"/>
-			<fileset dir="$${release.dir}/{javadoc.dir}"/>
+			<fileset dir="${release.dir}/{doc.dir}"/>
 		</zip>
 	</target>
 	
