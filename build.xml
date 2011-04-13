@@ -15,6 +15,9 @@
 	<property name="emma.dir" value="bin/emma" />
 	<property name="javadoc.dir" value="doc/javadoc"/>
 	<property name="doc.dir" value="doc"/>
+	<property name="jar.name" value="macro.jar"/>
+	<property name="target.dir" value="target"/>
+	<property name="version.num" value="0.9"/>
 	
 	<property name="emma.thresholds" 
 			value="class:90,method:90,block:90,line:90" />
@@ -36,7 +39,12 @@
 	</path>
 	
     <target name="init">
+		<tstamp>
+			<format property="TODAY" pattern="yyyy-MM-dd HH:mm:ss" />
+		</tstamp>
+    	
         <mkdir dir="bin"/>
+    	<mkdir dir="${target.dir}"/>
     	<mkdir dir="${junit.output.dir}"/>
     	<mkdir dir="${test-bin}"/>
     	<mkdir dir="${report-dir}"/>
@@ -53,6 +61,7 @@
 	
     <target name="clean">
         <delete dir="bin"/>
+    	<delete dir="${target}"/>
     	<delete dir="${junit.output.dir}"/>
     	<delete dir="${test-bin}"/>
     	<delete dir="${report-dir}"/>
@@ -254,6 +263,19 @@
 				<path refid="O-Synce Macro Lib.classpath"/>
 			</classpath>
 		</javadoc>
+	</target>
+	
+	<target name="build-jar" depends="build-project">
+		<manifest file="${target.dir}/MANIFEST.MF">
+			<attribute name="Built-By" value="${user.name}"/>
+			<attribute name="Implementation-Version" value="${version.num}-${BUILD_NUMBER}"/>
+			<attribute name="Built-Date" value="${TODAY}"/>
+		</manifest>
+		<jar destfile="${target.dir}/${jar.name}"
+				basedir="."
+				includes="${bin}/**/*.class"
+				manifest="MANIFEST.MF"/>
+		
 	</target>
 	
 	<target name="analyze" depends="pmd,cpd,ncss"/>
