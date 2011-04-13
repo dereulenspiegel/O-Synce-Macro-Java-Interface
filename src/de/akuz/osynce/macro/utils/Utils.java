@@ -1,5 +1,9 @@
 package de.akuz.osynce.macro.utils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Utility class to handle conversions
  * @author Till Klocke
@@ -108,6 +112,47 @@ public class Utils {
 			array[in.length-(i+1)] = in[i];
 		}
 		return array;
+	}
+	
+	public final static SimpleDateFormat dateFormat =
+		new SimpleDateFormat("HH:mm:ss dd.MM.yy");
+	
+	public static Date getDateFromTime(int secs, int mins, int hours, 
+			int day, int month, int year) throws ParseException{
+		StringBuilder builder = new StringBuilder(17);
+		if(hours<10){
+			builder.append(0);
+		}
+		builder.append(hours);
+		builder.append(':');
+		if(mins<10){
+			builder.append(0);
+		}
+		builder.append(mins);
+		builder.append(':');
+		if(secs<10){
+			builder.append(0);
+		}
+		builder.append(secs);
+		builder.append(' ');
+		
+		if(day<10){
+			builder.append(0);
+		}
+		builder.append(day);
+		builder.append('.');
+		
+		if(month<10){
+			builder.append(0);
+		}
+		builder.append(month);
+		builder.append('.');
+		
+		if(year<10){
+			builder.append(0);
+		}
+		builder.append(year);
+		return dateFormat.parse(builder.toString());
 	}
 
 }
