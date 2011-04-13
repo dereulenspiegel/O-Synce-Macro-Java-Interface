@@ -30,7 +30,7 @@ public class TrainingsList extends AbstractPayload {
 			int mins = Utils.convertBCDToInt(data[2]);
 			int hours = Utils.convertBCDToInt(data[3]);
 			int day = Utils.convertBCDToInt(data[4]);
-			int month = Utils.convertBCDToInt(data[5]);
+			int month = Utils.byteToInt(data[5]);
 			int year = Utils.convertBCDToInt(data[6]);
 			return Utils.getDateFromTime(secs, mins, hours, day, month, year);
 		}	
