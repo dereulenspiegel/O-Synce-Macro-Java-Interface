@@ -18,6 +18,7 @@
 	<property name="jar.name" value="macro.jar"/>
 	<property name="target.dir" value="target"/>
 	<property name="version.num" value="0.9"/>
+	<property name="release.dir" value="release"/>
 	
 	<property name="emma.thresholds" 
 			value="class:90,method:90,block:90,line:90" />
@@ -43,6 +44,7 @@
 			<format property="TODAY" pattern="yyyy-MM-dd HH:mm:ss" />
 		</tstamp>
     	
+    	<mkdir dir="${release.dir}"/>
         <mkdir dir="bin"/>
     	<mkdir dir="${target.dir}"/>
     	<mkdir dir="${junit.output.dir}"/>
@@ -60,6 +62,7 @@
     </target>
 	
     <target name="clean">
+    	<delete dir="${release.dir}"/>
         <delete dir="bin"/>
     	<delete dir="${target.dir}"/>
     	<delete dir="${junit.output.dir}"/>
@@ -276,6 +279,19 @@
 				includes="${bin}/**/*.class"
 				manifest="${target.dir}/MANIFEST.MF"/>
 		
+	</target>
+	
+	<target name="release" depends="testAndAnalyze,build-jar">
+		<copy file="${target.dir}/${jar.name}" todir="${release.dir}"/>
+		<copy todir="${release.dir}">
+			<fileset dir="${javadoc.dir}"/>
+		</copy>
+		<zip destfile="${release.dir}/${ant.project.name}-${version.num}.zip">
+			<fileset dir="${release.dir}">
+				<include file="${jar-name}"/>
+				<include dir="${javadoc.dir}"/>
+			</fileset>
+		</zip>
 	</target>
 	
 	<target name="analyze" depends="pmd,cpd,ncss"/>
