@@ -1,5 +1,9 @@
 package de.akuz.osynce.macro.utils.test;
 
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.Date;
+
 import junit.framework.Assert;
 
 import org.junit.After;
@@ -164,6 +168,24 @@ public class UtilsTestCase {
 		array = new byte[1];
 		array[0] = 5;
 		Assert.assertEquals(array[0], Utils.invertByteArray(array)[0]);
+	}
+	
+	@Test
+	public void testGetDateFromTime() throws ParseException{
+		Date now = new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(now);
+		
+		int secs = cal.get(Calendar.SECOND);
+		int mins = cal.get(Calendar.MINUTE);
+		int hours = cal.get(Calendar.HOUR_OF_DAY);
+		int day = cal.get(Calendar.DAY_OF_MONTH);
+		int month = cal.get(Calendar.MONTH)+1;
+		int year = cal.get(Calendar.YEAR)-2000;
+		
+		Date value = Utils.getDateFromTime(secs, mins, hours, day, month, year);
+		Assert.assertEquals((int)(now.getTime()/1000), 
+				(int)(value.getTime()/1000));
 	}
 
 }
