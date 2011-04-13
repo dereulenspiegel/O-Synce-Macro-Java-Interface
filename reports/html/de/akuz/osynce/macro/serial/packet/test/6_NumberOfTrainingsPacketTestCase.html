@@ -1,13 +1,13 @@
 <html xmlns:lxslt="http://xml.apache.org/xslt" xmlns:stringutils="xalan://org.apache.tools.ant.util.StringUtils">
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Unit Test Results: de.akuz.osynce.macro.serial.payload.test.PersonalDataTestCase</title>
+<title>Unit Test Results: de.akuz.osynce.macro.serial.packet.test.NumberOfTrainingsPacketTestCase</title>
 <link rel="stylesheet" type="text/css" title="Style" href="../../../../../../../stylesheet.css">
 <script type="text/javascript" language="JavaScript">
         var TestCases = new Array();
         var cur;
         
-    cur = TestCases['de.akuz.osynce.macro.serial.payload.test.PersonalDataTestCase'] = new Array();
+    cur = TestCases['de.akuz.osynce.macro.serial.packet.test.NumberOfTrainingsPacketTestCase'] = new Array();
     
         cur['ant.core.lib'] = '/var/lib/jenkins/tools/Ant_1.8.2/lib/ant.jar';
     
@@ -53,13 +53,13 @@
     
         cur['env.ANT_HOME'] = '/var/lib/jenkins/tools/Ant_1.8.2';
     
-        cur['env.BUILD_ID'] = '2011-04-12_16-45-54';
+        cur['env.BUILD_ID'] = '2011-04-13_10-15-35';
     
-        cur['env.BUILD_NUMBER'] = '72';
+        cur['env.BUILD_NUMBER'] = '73';
     
-        cur['env.BUILD_TAG'] = 'jenkins-Macro_Java-Lib-72';
+        cur['env.BUILD_TAG'] = 'jenkins-Macro_Java-Lib-73';
     
-        cur['env.BUILD_URL'] = 'http://mediacenter/jenkins/job/Macro_Java-Lib/72/';
+        cur['env.BUILD_URL'] = 'http://mediacenter/jenkins/job/Macro_Java-Lib/73/';
     
         cur['env.DISPLAY'] = 'localhost:10.0';
     
@@ -75,7 +75,7 @@
     
         cur['env.HUDSON_URL'] = 'http://mediacenter/jenkins/';
     
-        cur['env.JENKINS_COOKIE'] = '79bdf724-9d84-4320-aba7-ddbfe245537e';
+        cur['env.JENKINS_COOKIE'] = 'd3ff1afa-cc99-49ca-9bf2-05ec7e474b7d';
     
         cur['env.JENKINS_HOME'] = '/var/lib/jenkins';
     
@@ -275,13 +275,13 @@
 </tr>
 </table>
 <hr size="1">
-<h3>Class de.akuz.osynce.macro.serial.payload.test.PersonalDataTestCase</h3>
+<h3>Class de.akuz.osynce.macro.serial.packet.test.NumberOfTrainingsPacketTestCase</h3>
 <table class="details" border="0" cellpadding="5" cellspacing="2" width="95%">
 <tr valign="top">
 <th width="80%">Name</th><th>Tests</th><th>Errors</th><th>Failures</th><th nowrap>Time(s)</th><th nowrap>Time Stamp</th><th>Host</th>
 </tr>
 <tr valign="top" class="Pass">
-<td><a title="Display all tests" href="11_PersonalDataTestCase.html">PersonalDataTestCase</a></td><td><a title="Display all tests" href="11_PersonalDataTestCase.html">24</a></td><td>0</td><td>0</td><td>0.205</td><td>2011-04-12T14:46:22</td><td>mediacenter</td>
+<td><a title="Display all tests" href="6_NumberOfTrainingsPacketTestCase.html">NumberOfTrainingsPacketTestCase</a></td><td><a title="Display all tests" href="6_NumberOfTrainingsPacketTestCase.html">6</a></td><td>0</td><td>0</td><td>0.191</td><td>2011-04-13T08:15:55</td><td>mediacenter</td>
 </tr>
 </table>
 <h2>Tests</h2>
@@ -290,85 +290,31 @@
 <th>Name</th><th>Status</th><th width="80%">Type</th><th nowrap>Time(s)</th>
 </tr>
 <tr valign="top" class="TableRowColor">
-<td><a name="testLength"></a>testLength</td><td>Success</td><td></td><td>0.086</td>
+<td><a name="testNumberOfReceivedTrainings"></a>testNumberOfReceivedTrainings</td><td>Success</td><td></td><td>0.078</td>
 </tr>
 <tr valign="top" class="TableRowColor">
-<td><a name="testGetUpperHeartRateLimit"></a>testGetUpperHeartRateLimit</td><td>Success</td><td></td><td>0.001</td>
+<td><a name="testPacketLength"></a>testPacketLength</td><td>Success</td><td></td><td>0.001</td>
 </tr>
 <tr valign="top" class="TableRowColor">
-<td><a name="testGetLowerHeartRateLimit"></a>testGetLowerHeartRateLimit</td><td>Success</td><td></td><td>0.001</td>
+<td><a name="testArraysAreTheSame"></a>testArraysAreTheSame</td><td>Success</td><td></td><td>0.002</td>
 </tr>
 <tr valign="top" class="TableRowColor">
-<td><a name="testSet24hFormat"></a>testSet24hFormat</td><td>Success</td><td></td><td>0.000</td>
+<td><a name="testDates"></a>testDates</td><td>Success</td><td></td><td>0.003</td>
 </tr>
 <tr valign="top" class="TableRowColor">
-<td><a name="testSetBike1Odo"></a>testSetBike1Odo</td><td>Success</td><td></td><td>0.000</td>
+<td><a name="testGetTrainingCount"></a>testGetTrainingCount</td><td>Success</td><td></td><td>0.000</td>
 </tr>
 <tr valign="top" class="TableRowColor">
-<td><a name="testSetBike2Odo"></a>testSetBike2Odo</td><td>Success</td><td></td><td>0.000</td>
-</tr>
-<tr valign="top" class="TableRowColor">
-<td><a name="testSetBike1WS"></a>testSetBike1WS</td><td>Success</td><td></td><td>0.000</td>
-</tr>
-<tr valign="top" class="TableRowColor">
-<td><a name="testSetBike2WS"></a>testSetBike2WS</td><td>Success</td><td></td><td>0.000</td>
-</tr>
-<tr valign="top" class="TableRowColor">
-<td><a name="testSetWeight"></a>testSetWeight</td><td>Success</td><td></td><td>0.001</td>
-</tr>
-<tr valign="top" class="TableRowColor">
-<td><a name="testSetHomeAlti"></a>testSetHomeAlti</td><td>Success</td><td></td><td>0.000</td>
-</tr>
-<tr valign="top" class="TableRowColor">
-<td><a name="testSetRTCMin"></a>testSetRTCMin</td><td>Success</td><td></td><td>0.000</td>
-</tr>
-<tr valign="top" class="TableRowColor">
-<td><a name="testSetRTCHour"></a>testSetRTCHour</td><td>Success</td><td></td><td>0.001</td>
-</tr>
-<tr valign="top" class="TableRowColor">
-<td><a name="testSetRTCDay"></a>testSetRTCDay</td><td>Success</td><td></td><td>0.000</td>
-</tr>
-<tr valign="top" class="TableRowColor">
-<td><a name="testSetRTCMonth"></a>testSetRTCMonth</td><td>Success</td><td></td><td>0.000</td>
-</tr>
-<tr valign="top" class="TableRowColor">
-<td><a name="testSetRTCYear"></a>testSetRTCYear</td><td>Success</td><td></td><td>0.000</td>
-</tr>
-<tr valign="top" class="TableRowColor">
-<td><a name="testSetSpeedScale"></a>testSetSpeedScale</td><td>Success</td><td></td><td>0.004</td>
-</tr>
-<tr valign="top" class="TableRowColor">
-<td><a name="testSetStopwatchDistance"></a>testSetStopwatchDistance</td><td>Success</td><td></td><td>0.000</td>
-</tr>
-<tr valign="top" class="TableRowColor">
-<td><a name="testSetStopwatchTime"></a>testSetStopwatchTime</td><td>Success</td><td></td><td>0.000</td>
-</tr>
-<tr valign="top" class="TableRowColor">
-<td><a name="testSetStopwatchMode"></a>testSetStopwatchMode</td><td>Success</td><td></td><td>0.001</td>
-</tr>
-<tr valign="top" class="TableRowColor">
-<td><a name="testSetTemperatureScale"></a>testSetTemperatureScale</td><td>Success</td><td></td><td>0.000</td>
-</tr>
-<tr valign="top" class="TableRowColor">
-<td><a name="testSetWeightScale"></a>testSetWeightScale</td><td>Success</td><td></td><td>0.000</td>
-</tr>
-<tr valign="top" class="TableRowColor">
-<td><a name="testSetTimeFormat"></a>testSetTimeFormat</td><td>Success</td><td></td><td>0.000</td>
-</tr>
-<tr valign="top" class="TableRowColor">
-<td><a name="testSetGender"></a>testSetGender</td><td>Success</td><td></td><td>0.000</td>
-</tr>
-<tr valign="top" class="TableRowColor">
-<td><a name="testSetBike2"></a>testSetBike2</td><td>Success</td><td></td><td>0.000</td>
+<td><a name="testGetId"></a>testGetId</td><td>Success</td><td></td><td>0.000</td>
 </tr>
 </table>
 <div class="Properties">
-<a href="javascript:displayProperties('de.akuz.osynce.macro.serial.payload.test.PersonalDataTestCase');">
+<a href="javascript:displayProperties('de.akuz.osynce.macro.serial.packet.test.NumberOfTrainingsPacketTestCase');">
                     Properties &raquo;
                 </a>
 </div>
 <div class="Properties">
-<a href="./11_PersonalDataTestCase-out.html">
+<a href="./6_NumberOfTrainingsPacketTestCase-out.html">
                         System.out &raquo;
                     </a>
 </div>
