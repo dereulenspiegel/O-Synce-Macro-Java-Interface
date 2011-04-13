@@ -13,9 +13,6 @@ public class TrainingsList extends AbstractPayload {
 	
 	public static class Training {
 		
-		private final static SimpleDateFormat dateFormat =
-			new SimpleDateFormat("HH:mm:ss dd.MM.yy");
-		
 		private byte[] data = new byte[TRAINING_LENGTH];
 		private int byteCount = 0;
 		
