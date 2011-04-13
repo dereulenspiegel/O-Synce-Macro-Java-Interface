@@ -287,9 +287,8 @@
 			<fileset dir="${javadoc.dir}"/>
 		</copy>
 		<zip destfile="${release.dir}/${ant.project.name}-${version.num}.zip">
-			<fileset dir="${release.dir}" includes="${jar.name}">
-				<include dir="${javadoc.dir}"/>
-			</fileset>
+			<fileset dir="${release.dir}" includes="${jar.name}"/>
+			<fileset dir="${javadoc.dir}"/>
 		</zip>
 	</target>
 	
