@@ -283,12 +283,12 @@
 	
 	<target name="release" depends="testAndAnalyze,build-jar">
 		<copy file="${target.dir}/${jar.name}" todir="${release.dir}"/>
-		<copy todir="${release.dir}">
+		<copy todir="${release.dir}/${javadoc.dir}">
 			<fileset dir="${javadoc.dir}"/>
 		</copy>
 		<zip destfile="${release.dir}/${ant.project.name}-${version.num}.zip">
 			<fileset dir="${release.dir}" includes="${jar.name}"/>
-			<fileset dir="${javadoc.dir}"/>
+			<fileset dir="$${release.dir}/{javadoc.dir}"/>
 		</zip>
 	</target>
 	
