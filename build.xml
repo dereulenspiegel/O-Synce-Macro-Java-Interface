@@ -13,12 +13,13 @@
 	<property name="bin" value="bin"/>
 	<property name="report-dir" value="reports"/>
 	<property name="emma.dir" value="bin/emma" />
-	<property name="javadoc.dir" value="doc/javadoc"/>
-	<property name="doc.dir" value="doc"/>
+	<property name="doc.dir" value="documentation"/>
+	<property name="javadoc.dir" value="${doc.dir}/javadoc"/>
 	<property name="jar.name" value="macro.jar"/>
 	<property name="target.dir" value="target"/>
 	<property name="version.num" value="0.9"/>
 	<property name="release.dir" value="release"/>
+	<property name="temp.dir" value="temp" />
 	
 	<property name="emma.thresholds" 
 			value="class:90,method:90,block:90,line:90" />
@@ -44,6 +45,7 @@
 			<format property="TODAY" pattern="yyyy-MM-dd HH:mm:ss" />
 		</tstamp>
     	
+    	<mkdir dir="${temp.dir}"/>
     	<mkdir dir="${release.dir}"/>
         <mkdir dir="bin"/>
     	<mkdir dir="${target.dir}"/>
@@ -62,6 +64,7 @@
     </target>
 	
     <target name="clean">
+    	<delete dir="${temp.dir}"/>
     	<delete dir="${release.dir}"/>
         <delete dir="bin"/>
     	<delete dir="${target.dir}"/>
@@ -282,13 +285,13 @@
 	</target>
 	
 	<target name="release" depends="testAndAnalyze,build-jar">
-		<copy file="${target.dir}/${jar.name}" todir="${release.dir}"/>
-		<copy todir="${release.dir}/${javadoc.dir}">
-			<fileset dir="${javadoc.dir}"/>
+		<copy file="${target.dir}/${jar.name}" todir="${temp.dir}"/>
+		<copy todir="${temp.dir}/${doc.dir}">
+			<fileset dir="${doc.dir}"/>
 		</copy>
 		<zip destfile="${release.dir}/${ant.project.name}-${version.num}.zip">
-			<fileset dir="${release.dir}" includes="${jar.name}"/>
-			<fileset dir="${release.dir}/${doc.dir}"/>
+			<!-- <fileset dir="${release.dir}" includes="${jar.name}"/> -->
+			<fileset dir="${temp.dir}"/>
 		</zip>
 	</target>
 	

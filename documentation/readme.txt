@@ -1,0 +1,1 @@
+Soon here will be documentation on how to use this lib.
