@@ -20,6 +20,7 @@
 	<property name="version.num" value="0.9"/>
 	<property name="release.dir" value="release"/>
 	<property name="temp.dir" value="temp" />
+	<property name="findbugs.home" value="test-libs/findbugs"/>
 	
 	<property name="emma.thresholds" 
 			value="class:90,method:90,block:90,line:90" />
@@ -287,7 +288,7 @@
 		<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask">
 			<classpath refid="analyze.libs"/>
 		</taskdef>
-		<findbugs output="xml" outputFile="${report-dir}/findbugs.xml">
+		<findbugs home="${findbugs.home}" output="xml" outputFile="${report-dir}/findbugs.xml">
 			<auxClasspath refid="O-Synce Macro Lib.classpath"/>
 			<sourcePath path="${src}" />
 			<class location="${target.dir}/${jar.name}" />
