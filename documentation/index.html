@@ -1,0 +1,70 @@
+<html>
+<head>
+<title>How to use the Java interface library for the O-Synce Macro series</title>
+<meta charset='utf-8'>
+<style type="text/css">
+    body {
+      margin-top: 1.0em;
+      background-color: #000000;
+      font-family: Helvetica, Arial, FreeSans, san-serif;
+      color: #FFFFFF;
+    }
+    #container {
+      margin: 0 auto;
+      width: 700px;
+    }
+    h1 { font-size: 3.8em; color: #FC960C; margin-bottom: 3px; }
+    h1 .small { font-size: 0.4em; }
+    h1 a { text-decoration: none }
+    h2 { font-size: 1.5em; color: #FC960C; }
+    h3 { text-align: center; color: #FC960C; }
+    a { color: #FC960C; }
+    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
+    .download { float: right; }
+    pre { background: #000; color: #fff; padding: 15px;}
+    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
+    .footer { text-align:center; padding-top:30px; font-style: italic; }
+  </style>
+</head>
+<body>
+This is a small documentation on how to use this library to read data from a device of the Macro device series. If you want
+more detailed information have a look at the <a href="javadoc/index.html">JavaDoc</a> of this project or check out the source code on
+<a href="https://github.com/dereulenspiegel/O-Synce-Macro-Java-Interface">GitHub</a>
+<h2>Prerequisites</h2>
+<p>This library requires a working installation of the RXTX library at the moment. The application using this
+library should make sure that RXTX is installed corretcly on the users system, i.e. by using an installer. But also developers using
+this library will need a working installation of RXTX. See the <a href="http://rxtx.qbang.org">RXTX project homepage</a> for information
+on how to install it.</p>
+<h2>How to read trainings from the device</h2>
+To read data from the device you have to create an instance from an object implementing the de.akuz.osynce.macro.interfaces.Macro interface.
+At the moment there is only one class which implements this interface available. This class uses tbe RXTX library to comunicate with the
+Macro series device via serial bus.
+<pre>
+import de.akuz.osynce.macro.interfaces.Macro;
+import de.akuz.osynce.macro.interfaces.Training;
+import de.akuz.osynce.macro.serial.RXTXSerialPortDevice;
+//... class body and so on
+
+public void getDataFromDevice(){
+	Macro device = new RXTXSerialPortDevice();
+	Map<String,String> properties = new HashMap<String,String>();
+	properties.put(AbstractMacroSerialPortDevice.PROPERTY_PORTNAME, "Your port name, i.e. COM2");
+	device.init(properties);
+	try{
+		List<Training> trainingsList = device.getTrainings();
+	} catch (CommunicationException e){
+		//Handle the exception
+	}
+}
+</pre>
+This enabled you to read all training session from the connected device. If something goes wrong a CommunicationException with the
+reason is thrown. The serial bus will only be openend for every operation if needed and closed immediately. So the init method doesn't
+allocate any native resources on the bus. Every Training object in the list can contain other Training objects representing laps. See the
+JavaDoc for more detailed information.
+
+<h2>How to get a list of available ports</h2>
+The class de.akuz.osynce.macro.serial.RXTXSerialPortDevice has method called getAvailablePortNames(). This method returns a list of Strings.
+Every string is the name of a port which could be used with this library and is valid property for the init method mentionend above.
+
+</body>
+</html>
