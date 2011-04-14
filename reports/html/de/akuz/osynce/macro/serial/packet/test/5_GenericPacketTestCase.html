@@ -1,0 +1,338 @@
+<html xmlns:lxslt="http://xml.apache.org/xslt" xmlns:stringutils="xalan://org.apache.tools.ant.util.StringUtils">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Unit Test Results: de.akuz.osynce.macro.serial.packet.test.GenericPacketTestCase</title>
+<link rel="stylesheet" type="text/css" title="Style" href="../../../../../../../stylesheet.css">
+<script type="text/javascript" language="JavaScript">
+        var TestCases = new Array();
+        var cur;
+        
+    cur = TestCases['de.akuz.osynce.macro.serial.packet.test.GenericPacketTestCase'] = new Array();
+    
+        cur['ant.core.lib'] = '/var/lib/jenkins/tools/Ant_1.8.2/lib/ant.jar';
+    
+        cur['ant.file'] = '/var/lib/jenkins/jobs/Macro_Java-Lib/workspace/build.xml';
+    
+        cur['ant.file.O-Synce Macro Lib'] = '/var/lib/jenkins/jobs/Macro_Java-Lib/workspace/build.xml';
+    
+        cur['ant.file.type'] = 'file';
+    
+        cur['ant.file.type.O-Synce Macro Lib'] = 'file';
+    
+        cur['ant.home'] = '/var/lib/jenkins/tools/Ant_1.8.2';
+    
+        cur['ant.java.version'] = '1.6';
+    
+        cur['ant.library.dir'] = '/var/lib/jenkins/tools/Ant_1.8.2/lib';
+    
+        cur['ant.project.default-target'] = 'build';
+    
+        cur['ant.project.invoked-targets'] = 'clean,testAndAnalyze,javadoc,build-jar,release';
+    
+        cur['ant.project.name'] = 'O-Synce Macro Lib';
+    
+        cur['ant.version'] = 'Apache Ant(TM) version 1.8.2 compiled on December 20 2010';
+    
+        cur['basedir'] = '/var/lib/jenkins/jobs/Macro_Java-Lib/workspace';
+    
+        cur['bin'] = 'bin';
+    
+        cur['debuglevel'] = 'source,lines,vars';
+    
+        cur['doc.dir'] = 'documentation';
+    
+        cur['DSTAMP'] = '20110414';
+    
+        cur['ECLIPSE_HOME'] = '../../eclipse';
+    
+        cur['edu.umd.cs.findbugs.FindBugs2.executeReturnCode.d8a02066-6445-4aff-9ff1-a1910b7c54e0'] = '3';
+    
+        cur['emma.dir'] = 'bin/emma';
+    
+        cur['emma.thresholds'] = 'class:90,method:90,block:90,line:90';
+    
+        cur['env._'] = '/usr/bin/daemon';
+    
+        cur['env.android.sdk.dir'] = '/usr/local/android/android-sdk-linux_x86/';
+    
+        cur['env.ANT_HOME'] = '/var/lib/jenkins/tools/Ant_1.8.2';
+    
+        cur['env.BUILD_ID'] = '2011-04-14_21-01-40';
+    
+        cur['env.BUILD_NUMBER'] = '98';
+    
+        cur['env.BUILD_TAG'] = 'jenkins-Macro_Java-Lib-98';
+    
+        cur['env.BUILD_URL'] = 'http://mediacenter/jenkins/job/Macro_Java-Lib/98/';
+    
+        cur['env.DISPLAY'] = 'localhost:10.0';
+    
+        cur['env.EXECUTOR_NUMBER'] = '1';
+    
+        cur['env.GIT_BRANCH'] = 'master';
+    
+        cur['env.HOME'] = '/var/lib/jenkins';
+    
+        cur['env.HUDSON_HOME'] = '/var/lib/jenkins';
+    
+        cur['env.HUDSON_SERVER_COOKIE'] = 'a480d227f935427700b8e4d66d026e3d';
+    
+        cur['env.HUDSON_URL'] = 'http://mediacenter/jenkins/';
+    
+        cur['env.JENKINS_COOKIE'] = '23ea4905-e922-498b-9901-4ee2b0867238';
+    
+        cur['env.JENKINS_HOME'] = '/var/lib/jenkins';
+    
+        cur['env.JENKINS_SERVER_COOKIE'] = 'a480d227f935427700b8e4d66d026e3d';
+    
+        cur['env.JENKINS_URL'] = 'http://mediacenter/jenkins/';
+    
+        cur['env.JOB_NAME'] = 'Macro_Java-Lib';
+    
+        cur['env.JOB_URL'] = 'http://mediacenter/jenkins/job/Macro_Java-Lib/';
+    
+        cur['env.LANG'] = 'de_DE.UTF-8';
+    
+        cur['env.LD_LIBRARY_PATH'] = '/usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/i386/server:/usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/i386:/usr/lib/jvm/java-6-sun-1.6.0.24/jre/../lib/i386';
+    
+        cur['env.LOGNAME'] = 'jenkins';
+    
+        cur['env.MAIL'] = '/var/mail/jenkins';
+    
+        cur['env.NLSPATH'] = '/usr/dt/lib/nls/msg/%L/%N.cat';
+    
+        cur['env.NODE_LABELS'] = 'master';
+    
+        cur['env.PATH'] = '/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/local/android/android-sdk-linux_x86/platform-tools';
+    
+        cur['env.PWD'] = '/var/lib/jenkins/jobs/Macro_Java-Lib/workspace';
+    
+        cur['env.SHELL'] = '/bin/bash';
+    
+        cur['env.SHLVL'] = '1';
+    
+        cur['env.SPEECHD_PORT'] = '6676';
+    
+        cur['env.TERM'] = 'xterm';
+    
+        cur['env.USER'] = 'jenkins';
+    
+        cur['env.WORKSPACE'] = '/var/lib/jenkins/jobs/Macro_Java-Lib/workspace';
+    
+        cur['env.XDG_SESSION_COOKIE'] = '889a557bd1f09fd5de7bcc934d2db7e6-1302550069.126365-1796451811';
+    
+        cur['env.XFILESEARCHPATH'] = '/usr/dt/app-defaults/%L/Dt';
+    
+        cur['file.encoding'] = 'UTF-8';
+    
+        cur['file.encoding.pkg'] = 'sun.io';
+    
+        cur['file.separator'] = '/';
+    
+        cur['findbugs.home'] = 'test-libs/findbugs';
+    
+        cur['jar.name'] = 'macro.jar';
+    
+        cur['java.awt.graphicsenv'] = 'sun.awt.X11GraphicsEnvironment';
+    
+        cur['java.awt.printerjob'] = 'sun.print.PSPrinterJob';
+    
+        cur['java.class.path'] = '/usr/share/java/junit4.jar:/var/lib/jenkins/jobs/Macro_Java-Lib/workspace/bin:/var/lib/jenkins/jobs/Macro_Java-Lib/workspace/test:/var/lib/jenkins/jobs/Macro_Java-Lib/workspace/test-bin:/var/lib/jenkins/jobs/Macro_Java-Lib/workspace/test-libs/ccl.jar:/var/lib/jenkins/jobs/Macro_Java-Lib/workspace/test-libs/emma.jar:/var/lib/jenkins/jobs/Macro_Java-Lib/workspace/test-libs/emma_ant.jar:/var/lib/jenkins/jobs/Macro_Java-Lib/workspace/test-libs/findbugs/asm-3.1.jar:/var/lib/jenkins/jobs/Macro_Java-Lib/workspace/test-libs/findbugs/asm-analysis-3.1.jar:/var/lib/jenkins/jobs/Macro_Java-Lib/workspace/test-libs/findbugs/asm-commons-3.1.jar:/var/lib/jenkins/jobs/Macro_Java-Lib/workspace/test-libs/findbugs/asm-tree-3.1.jar:/var/lib/jenkins/jobs/Macro_Java-Lib/workspace/test-libs/findbugs/asm-util-3.1.jar:/var/lib/jenkins/jobs/Macro_Java-Lib/workspace/test-libs/findbugs/asm-xml-3.1.jar:/var/lib/jenkins/jobs/Macro_Java-Lib/workspace/test-libs/findbugs/bcel.jar:/var/lib/jenkins/jobs/Macro_Java-Lib/workspace/test-libs/findbugs/commons-lang-2.4.jar:/var/lib/jenkins/jobs/Macro_Java-Lib/workspace/test-libs/findbugs/dom4j-1.6.1.jar:/var/lib/jenkins/jobs/Macro_Java-Lib/workspace/test-libs/findbugs/findbugs-ant.jar:/var/lib/jenkins/jobs/Macro_Java-Lib/workspace/test-libs/findbugs/findbugs.jar:/var/lib/jenkins/jobs/Macro_Java-Lib/workspace/test-libs/findbugs/jFormatString.jar:/var/lib/jenkins/jobs/Macro_Java-Lib/workspace/test-libs/findbugs/jaxen-1.1.1.jar:/var/lib/jenkins/jobs/Macro_Java-Lib/workspace/test-libs/findbugs/jsr305.jar:/var/lib/jenkins/jobs/Macro_Java-Lib/workspace/test-libs/javancss.jar:/var/lib/jenkins/jobs/Macro_Java-Lib/workspace/test-libs/jdepend-2.9.1.jar:/var/lib/jenkins/jobs/Macro_Java-Lib/workspace/test-libs/pmd-4.2.5.jar:/var/lib/jenkins/tools/Ant_1.8.2/lib/ant-launcher.jar:/var/lib/jenkins/tools/Ant_1.8.2/lib/ant.jar:/var/lib/jenkins/tools/Ant_1.8.2/lib/ant-junit.jar:/var/lib/jenkins/tools/Ant_1.8.2/lib/ant-junit4.jar';
+    
+        cur['java.class.version'] = '50.0';
+    
+        cur['java.endorsed.dirs'] = '/usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/endorsed';
+    
+        cur['java.ext.dirs'] = '/usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/ext:/usr/java/packages/lib/ext';
+    
+        cur['java.home'] = '/usr/lib/jvm/java-6-sun-1.6.0.24/jre';
+    
+        cur['java.io.tmpdir'] = '/tmp';
+    
+        cur['java.library.path'] = '/usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/i386/server:/usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/i386:/usr/lib/jvm/java-6-sun-1.6.0.24/jre/../lib/i386:/usr/java/packages/lib/i386:/lib:/usr/lib';
+    
+        cur['java.runtime.name'] = 'Java(TM) SE Runtime Environment';
+    
+        cur['java.runtime.version'] = '1.6.0_24-b07';
+    
+        cur['java.specification.name'] = 'Java Platform API Specification';
+    
+        cur['java.specification.vendor'] = 'Sun Microsystems Inc.';
+    
+        cur['java.specification.version'] = '1.6';
+    
+        cur['java.vendor'] = 'Sun Microsystems Inc.';
+    
+        cur['java.vendor.url'] = 'http://java.sun.com/';
+    
+        cur['java.vendor.url.bug'] = 'http://java.sun.com/cgi-bin/bugreport.cgi';
+    
+        cur['java.version'] = '1.6.0_24';
+    
+        cur['java.vm.info'] = 'mixed mode';
+    
+        cur['java.vm.name'] = 'Java HotSpot(TM) Server VM';
+    
+        cur['java.vm.specification.name'] = 'Java Virtual Machine Specification';
+    
+        cur['java.vm.specification.vendor'] = 'Sun Microsystems Inc.';
+    
+        cur['java.vm.specification.version'] = '1.0';
+    
+        cur['java.vm.vendor'] = 'Sun Microsystems Inc.';
+    
+        cur['java.vm.version'] = '19.1-b02';
+    
+        cur['javadoc.dir'] = 'documentation/javadoc';
+    
+        cur['junit.jar'] = '/usr/share/java/junit4.jar';
+    
+        cur['junit.output.dir'] = 'junit';
+    
+        cur['line.separator'] = '
+';
+    
+        cur['Macro Test.location'] = '../Macro Test';
+    
+        cur['org.apache.tools.ant.taskdefs.optional.junit.AggregateTransformer0'] = '/tmp/null1804045654';
+    
+        cur['os.arch'] = 'i386';
+    
+        cur['os.name'] = 'Linux';
+    
+        cur['os.version'] = '2.6.32-30-generic';
+    
+        cur['path.separator'] = ':';
+    
+        cur['release.dir'] = 'release';
+    
+        cur['report-dir'] = 'reports';
+    
+        cur['source'] = '1.6';
+    
+        cur['src'] = 'src';
+    
+        cur['sun.arch.data.model'] = '32';
+    
+        cur['sun.boot.class.path'] = '/usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/resources.jar:/usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/rt.jar:/usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/jsse.jar:/usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/jce.jar:/usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/charsets.jar:/usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/modules/jdk.boot.jar:/usr/lib/jvm/java-6-sun-1.6.0.24/jre/classes';
+    
+        cur['sun.boot.library.path'] = '/usr/lib/jvm/java-6-sun-1.6.0.24/jre/lib/i386';
+    
+        cur['sun.cpu.endian'] = 'little';
+    
+        cur['sun.cpu.isalist'] = '';
+    
+        cur['sun.io.unicode.encoding'] = 'UnicodeLittle';
+    
+        cur['sun.java.launcher'] = 'SUN_STANDARD';
+    
+        cur['sun.jnu.encoding'] = 'UTF-8';
+    
+        cur['sun.management.compiler'] = 'HotSpot Tiered Compilers';
+    
+        cur['sun.os.patch.level'] = 'unknown';
+    
+        cur['target'] = '1.6';
+    
+        cur['target.dir'] = 'target';
+    
+        cur['temp.dir'] = 'temp';
+    
+        cur['test-bin'] = 'test-bin';
+    
+        cur['test-src'] = 'test';
+    
+        cur['TODAY'] = '2011-04-14 21:01:42';
+    
+        cur['TSTAMP'] = '2101';
+    
+        cur['user.country'] = 'DE';
+    
+        cur['user.dir'] = '/var/lib/jenkins/jobs/Macro_Java-Lib/workspace';
+    
+        cur['user.home'] = '/var/lib/jenkins';
+    
+        cur['user.language'] = 'de';
+    
+        cur['user.name'] = 'jenkins';
+    
+        cur['user.timezone'] = '';
+    
+        cur['version.num'] = '0.9';
+    </script><script type="text/javascript" language="JavaScript">
+        function displayProperties (name) {
+          var win = window.open('','JUnitSystemProperties','scrollbars=1,resizable=1');
+          var doc = win.document;
+          doc.open();
+          doc.write("<html><head><title>Properties of " + name + "</title>");
+          doc.write("<style type=\"text/css\">");
+          doc.write("body {font:normal 68% verdana,arial,helvetica; color:#000000; }");
+          doc.write("table tr td, table tr th { font-size: 68%; }");
+          doc.write("table.properties { border-collapse:collapse; border-left:solid 1 #cccccc; border-top:solid 1 #cccccc; padding:5px; }");
+          doc.write("table.properties th { text-align:left; border-right:solid 1 #cccccc; border-bottom:solid 1 #cccccc; background-color:#eeeeee; }");
+          doc.write("table.properties td { font:normal; text-align:left; border-right:solid 1 #cccccc; border-bottom:solid 1 #cccccc; background-color:#fffffff; }");
+          doc.write("h3 { margin-bottom: 0.5em; font: bold 115% verdana,arial,helvetica }");
+          doc.write("</style>");
+          doc.write("</head><body>");
+          doc.write("<h3>Properties of " + name + "</h3>");
+          doc.write("<div align=\"right\"><a href=\"javascript:window.close();\">Close</a></div>");
+          doc.write("<table class='properties'>");
+          doc.write("<tr><th>Name</th><th>Value</th></tr>");
+          for (prop in TestCases[name]) {
+            doc.write("<tr><th>" + prop + "</th><td>" + TestCases[name][prop] + "</td></tr>");
+          }
+          doc.write("</table>");
+          doc.write("</body></html>");
+          doc.close();
+          win.focus();
+        }
+      
+      </script>
+</head>
+<body>
+<h1>Unit Test Results.</h1>
+<table width="100%">
+<tr>
+<td align="left"></td><td align="right">Designed for use with <a href="http://www.junit.org/">JUnit</a> and <a href="http://ant.apache.org/">Ant</a>.</td>
+</tr>
+</table>
+<hr size="1">
+<h3>Class de.akuz.osynce.macro.serial.packet.test.GenericPacketTestCase</h3>
+<table class="details" border="0" cellpadding="5" cellspacing="2" width="95%">
+<tr valign="top">
+<th width="80%">Name</th><th>Tests</th><th>Errors</th><th>Failures</th><th nowrap>Time(s)</th><th nowrap>Time Stamp</th><th>Host</th>
+</tr>
+<tr valign="top" class="Pass">
+<td><a title="Display all tests" href="5_GenericPacketTestCase.html">GenericPacketTestCase</a></td><td><a title="Display all tests" href="5_GenericPacketTestCase.html">4</a></td><td>0</td><td>0</td><td>0.188</td><td>2011-04-14T19:02:48</td><td>mediacenter</td>
+</tr>
+</table>
+<h2>Tests</h2>
+<table class="details" border="0" cellpadding="5" cellspacing="2" width="95%">
+<tr valign="top">
+<th>Name</th><th>Status</th><th width="80%">Type</th><th nowrap>Time(s)</th>
+</tr>
+<tr valign="top" class="TableRowColor">
+<td><a name="testLength"></a>testLength</td><td>Success</td><td></td><td>0.097</td>
+</tr>
+<tr valign="top" class="TableRowColor">
+<td><a name="testCommandByte"></a>testCommandByte</td><td>Success</td><td></td><td>0.000</td>
+</tr>
+<tr valign="top" class="TableRowColor">
+<td><a name="testArraysAreTheSame"></a>testArraysAreTheSame</td><td>Success</td><td></td><td>0.002</td>
+</tr>
+<tr valign="top" class="TableRowColor">
+<td><a name="testChecksum"></a>testChecksum</td><td>Success</td><td></td><td>0.001</td>
+</tr>
+</table>
+<div class="Properties">
+<a href="javascript:displayProperties('de.akuz.osynce.macro.serial.packet.test.GenericPacketTestCase');">
+                    Properties &raquo;
+                </a>
+</div>
+<div class="Properties">
+<a href="./5_GenericPacketTestCase-out.html">
+                        System.out &raquo;
+                    </a>
+</div>
+</body>
+</html>
