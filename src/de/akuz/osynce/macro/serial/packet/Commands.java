@@ -91,7 +91,7 @@ public enum Commands {
 	
 	public static Commands fromByte(byte b){
 		if(!commandMap.containsKey(b)){
-			System.out.println("Getting unknown byte: "+Integer.toHexString(Utils.byteToInt(b)));
+			return UNKNOWN;
 		}
 		return commandMap.get(b);
 	}
