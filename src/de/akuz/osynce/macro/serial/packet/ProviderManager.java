@@ -76,7 +76,7 @@ public class ProviderManager {
 	 * Unregisters the packet provider for a specific command byte
 	 * @param command
 	 */
-	public void unregisterPacketProvider(Commands command){
+	public void unregisterPacketProvider(byte command){
 		providers.remove(command);
 	}
 	
