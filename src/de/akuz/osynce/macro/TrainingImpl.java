@@ -11,6 +11,12 @@ import de.akuz.osynce.macro.interfaces.Training;
 import de.akuz.osynce.macro.serial.packet.TrainingDetailPacket;
 import de.akuz.osynce.macro.serial.payloads.TrainingDetailPayload;
 
+/**
+ * Simple implementation of the training interface. This implementation
+ * can be used in combination with the TrainingDetailPayload.
+ * @author Till Klocke
+ *
+ */
 public class TrainingImpl implements Training {
 	
 	private List<Training> laps = new LinkedList<Training>();
@@ -33,6 +39,12 @@ public class TrainingImpl implements Training {
 	private int trainingDuration;
 	private boolean isLap;
 	
+	/**
+	 * This constructor needs a valid TrainingDetailPayload as parameter.
+	 * This payload must be the start of a training or a lap and therefore must
+	 * contain a summary
+	 * @param payload
+	 */
 	public TrainingImpl(TrainingDetailPayload payload){
 		if(payload.getSummary() == null){
 			throw new IllegalArgumentException("This is not the beginning " +
@@ -158,6 +170,15 @@ public class TrainingImpl implements Training {
 		return Collections.unmodifiableList(laps);
 	}
 	
+	/**
+	 * Add the data contained in antoher payload to this training.
+	 * Since most trainings won't fit inside a single TrainingDetailPayload
+	 * you can add subsequent payloads here. If you add a payload with
+	 * a summary a new lap will be added and all following payloads
+	 * will be added to this lap. Please note that it is not allowed for laps
+	 * to have sub laps.
+	 * @param payload TrainingDetailPayload to be added
+	 */
 	public void addReceivedTraining(TrainingDetailPayload payload){
 		if(isLap() && payload.getSummary() != null){
 			throw new IllegalArgumentException("Laps can't have sub laps");

@@ -115,7 +115,17 @@ public interface Training {
 	 */
 	public List<GraphElement> getAllGraphElements();
 	
+	/**
+	 * Returns the GraphElements contained only in this training
+	 * and omits all elements which are stored in laps.
+	 * @return
+	 */
 	public List<GraphElement> getGraphElements();
 	
+	/**
+	 * Returns all instances of Training which represent a lap of this 
+	 * training.
+	 * @return List of objects implementing Training as laps
+	 */
 	public List<Training> getLaps();
 }
