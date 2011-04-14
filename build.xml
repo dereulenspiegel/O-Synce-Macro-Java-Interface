@@ -283,6 +283,17 @@
 		
 	</target>
 	
+	<target name="findbugs" depends="build-jar">
+		<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask">
+			<classpath refid="analyze.libs"/>
+		</taskdef>
+		<findbugs output="xml" outputFile="${report-dir}/findbugs.xml">
+			<auxClasspath refid="O-Synce Macro Lib.classpath"/>
+			<sourcePath path="${src}" />
+			<class location="${target.dir}/${jar.name}" />
+		</findbugs>
+	</target>
+	
 	<target name="release" depends="testAndAnalyze,build-jar">
 		<copy file="${target.dir}/${jar.name}" todir="${temp.dir}"/>
 		<copy todir="${temp.dir}/${doc.dir}">
@@ -295,5 +306,5 @@
 	</target>
 	
 	<target name="analyze" depends="pmd,cpd,ncss"/>
-	<target name="testAndAnalyze" depends="jdepend,analyze,emma.report"/>
+	<target name="testAndAnalyze" depends="jdepend,analyze,emma.report,findbugs"/>
 </project>
