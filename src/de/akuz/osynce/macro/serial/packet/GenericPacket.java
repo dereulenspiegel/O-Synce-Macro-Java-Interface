@@ -10,8 +10,6 @@ import de.akuz.osynce.macro.serial.payloads.GenericPayload;
  *
  */
 public class GenericPacket extends AbstractPacket {
-	
-	int counter = 0;
 
 	public GenericPacket() {
 		super(Commands.ACKNOWLEDGE);
