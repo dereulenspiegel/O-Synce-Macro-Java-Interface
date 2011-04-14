@@ -12,6 +12,8 @@ import de.akuz.osynce.macro.utils.Utils;
  */
 public enum Commands {
 	
+	UNKNOWN((byte)0x00),
+	
 	//Commands send from PC to computer 
 	/**
 	 * Acknowledge received data

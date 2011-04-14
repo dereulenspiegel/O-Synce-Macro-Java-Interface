@@ -97,9 +97,6 @@ public class RXTXSerialPortDevice implements SerialPortDevice, SerialPortEventLi
 	 * @throws IOException
 	 */
 	private Packet readPacketBytes() throws IOException{
-		if(listener != null){
-			listener.packetStarted(null);
-		}
 		int count = 0;
 		Packet packet = null;
 		int read = 0;
