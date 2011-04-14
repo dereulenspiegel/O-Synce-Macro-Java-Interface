@@ -78,6 +78,8 @@
     <target depends="build-project" name="build"/>
 	
     <target depends="init" name="build-project">
+    	<delete dir="bin"/>
+    	<mkdir dir="bin"/>
         <echo message="${ant.project.name}: ${ant.file}"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
             <src path="${src}"/>
@@ -307,5 +309,5 @@
 	</target>
 	
 	<target name="analyze" depends="pmd,cpd,ncss"/>
-	<target name="testAndAnalyze" depends="jdepend,analyze,emma.report,findbugs"/>
+	<target name="testAndAnalyze" depends="findbugs,jdepend,analyze,emma.report"/>
 </project>
