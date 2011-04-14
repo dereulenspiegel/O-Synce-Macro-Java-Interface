@@ -47,8 +47,6 @@ public class RXTXSerialPortDevice implements SerialPortDevice, SerialPortEventLi
 	private final static int stopBits = SerialPort.STOPBITS_1;
 	private final static int parity = SerialPort.PARITY_NONE;
 	
-	private PacketListener listener;
-	
 	public RXTXSerialPortDevice(String portName){
 		this.portName = portName;
 	}
