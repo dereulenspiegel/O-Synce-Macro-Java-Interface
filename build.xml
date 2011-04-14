@@ -53,7 +53,6 @@
     	<mkdir dir="${test-bin}"/>
     	<mkdir dir="${report-dir}"/>
     	<mkdir dir="${emma.dir}"/>
-    	<mkdir dir="${doc.dir}"/>
     	<mkdir dir="${javadoc.dir}"/>
         <copy includeemptydirs="false" todir="bin">
             <fileset dir="${src}">
