@@ -70,7 +70,7 @@
     	<delete dir="${junit.output.dir}"/>
     	<delete dir="${test-bin}"/>
     	<delete dir="${report-dir}"/>
-    	<delete dir="${doc.dir}"/>
+    	<delete dir="${javadoc.dir}"/>
     </target>
 	
     <target depends="clean" name="cleanall"/>
