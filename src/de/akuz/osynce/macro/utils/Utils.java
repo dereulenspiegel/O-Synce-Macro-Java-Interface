@@ -88,7 +88,7 @@ public class Utils {
 	public static int convertBCDToInt(byte in){
 		int value = 0x00;
 		
-		value = (byteToInt((byte)(in >>> 4))*10);
+		value = (byteToInt((byte)(in >> 4))*10);
 		in = (byte)(in & 0x0F);
 		value = value + byteToInt(in);
 		
