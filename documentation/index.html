@@ -47,7 +47,7 @@ import de.akuz.osynce.macro.serial.RXTXSerialPortDevice;
 
 public void getDataFromDevice(){
 	Macro device = new RXTXSerialPortDevice();
-	Map<String,String> properties = new HashMap<String,String>();
+	Map&lt;String,String&gt; properties = new HashMap&lt;String,String&gt;();
 	properties.put(AbstractMacroSerialPortDevice.PROPERTY_PORTNAME, "Your port name, i.e. COM2");
 	device.init(properties);
 	try{
