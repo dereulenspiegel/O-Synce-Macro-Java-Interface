@@ -59,6 +59,10 @@ public abstract class AbstractMacroSerialPortDevice implements Macro {
 	protected SerialPortDevice device;
 	protected String portName;
 	
+	/**
+	 * This is the name of the property to specifiy the serial port
+	 * which will be used.
+	 */
 	public final static String PROPERTY_PORTNAME = "portname";
 
 	@Override
@@ -121,6 +125,13 @@ public abstract class AbstractMacroSerialPortDevice implements Macro {
 		return Collections.unmodifiableList(packets);
 	}
 	
+	/**
+	 * This method returns the number of laps stored on the
+	 * macro device. Note that this will not return the number of trainings
+	 * sessions but the number of all laps stored on this device.
+	 * @return the number of laps on the device
+	 * @throws CommunicationException
+	 */
 	public int getTrainingCount() throws CommunicationException{
 		int trainings = -1;
 		try {
