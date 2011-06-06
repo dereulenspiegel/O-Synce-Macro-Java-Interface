@@ -179,7 +179,7 @@ public class TrainingImpl implements Training {
 	 * to have sub laps.
 	 * @param payload TrainingDetailPayload to be added
 	 */
-	public void addReceivedTraining(TrainingDetailPayload payload){
+	public void addReceivedTrainingPayload(TrainingDetailPayload payload){
 		if(isLap() && payload.getSummary() != null){
 			throw new IllegalArgumentException("Laps can't have sub laps");
 		}
@@ -190,12 +190,19 @@ public class TrainingImpl implements Training {
 			laps.add(temp);
 		} else if(payload.getSummary() == null && laps.size() > 0){
 			TrainingImpl t = (TrainingImpl)laps.get(laps.size()-1);
-			t.addReceivedTraining(payload);
+			t.addReceivedTrainingPayload(payload);
 		}
 	}
 	
-	public void addReceivedPacket(TrainingDetailPacket packet){
-		addReceivedTraining((TrainingDetailPayload)packet.getPayload());
+	public void addLap(Training lap){
+		if(lap == null){
+			throw new IllegalArgumentException("laps can't be NULL");
+		}
+		laps.add(lap);
+	}
+	
+	public void addReceivedTrainingPacket(TrainingDetailPacket packet){
+		addReceivedTrainingPayload((TrainingDetailPayload)packet.getPayload());
 	}
 
 	@Override

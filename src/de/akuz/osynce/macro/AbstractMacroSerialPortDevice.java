@@ -1,7 +1,9 @@
 package de.akuz.osynce.macro;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -29,6 +31,7 @@ import de.akuz.osynce.macro.serial.packet.TrainingDetailProvider;
 import de.akuz.osynce.macro.serial.packet.TrainingDetailRequest;
 import de.akuz.osynce.macro.serial.payloads.PersonalDataPayload;
 import de.akuz.osynce.macro.serial.payloads.TrainingDetailPayload;
+import de.akuz.osynce.macro.serial.payloads.TrainingsList;
 
 /**
  * Abstract implementation of the Macro interface. This should be the
@@ -69,20 +72,17 @@ public abstract class AbstractMacroSerialPortDevice implements Macro {
 	public List<Training> getTrainings() throws CommunicationException {
 		int count = getTrainingCount();
 		List<Training> trainings = new ArrayList<Training>(count);
+		TrainingImpl lastFull = null;
 		try {
 			device.open(portName);
 			for(int i=0;i<count;i++){
-				List<TrainingDetailPacket> packets = getTraining(i);
-				for(TrainingDetailPacket packet : packets){
-					TrainingDetailPayload payload =
-						(TrainingDetailPayload)packet.getPayload();
-					if(payload.getSummary() != null && 
-							!payload.getSummary().isLap()){
-						TrainingImpl t = new TrainingImpl(payload);
-						trainings.add(t);
-					} else {
-						((TrainingImpl)trainings.get(trainings.size()-1)).addReceivedTraining(payload);
-					}
+				List<TrainingDetailPacket> packets = getTrainingFromDevice(i);
+				Training t = getTrainingFromPackets(packets);
+				if(lastFull != null && t.isLap()){
+					lastFull.addLap(t);
+				} else if (lastFull == null && !t.isLap()){
+					lastFull = (TrainingImpl)t;
+					trainings.add(lastFull);
 				}
 			}
 		} catch (DeviceException e) {
@@ -93,7 +93,21 @@ public abstract class AbstractMacroSerialPortDevice implements Macro {
 		return Collections.unmodifiableList(trainings);
 	}
 	
-	private List<TrainingDetailPacket> getTraining(int number) throws CommunicationException{
+	private Training getTrainingFromPackets(List<TrainingDetailPacket> list){
+		TrainingImpl t = null;
+		for(TrainingDetailPacket packet : list){
+			TrainingDetailPayload payload =
+				(TrainingDetailPayload)packet.getPayload();
+			if(payload.getSummary() != null){
+				t = new TrainingImpl(payload);
+			} else if(t != null){
+				t.addReceivedTrainingPayload(payload);
+			}
+		}
+		return t;
+	}
+	
+	private List<TrainingDetailPacket> getTrainingFromDevice(int number) throws CommunicationException{
 		TrainingDetailRequest request = new TrainingDetailRequest(number);
 		List<TrainingDetailPacket> packets = 
 			new LinkedList<TrainingDetailPacket>();
@@ -123,6 +137,11 @@ public abstract class AbstractMacroSerialPortDevice implements Macro {
 		}
 		
 		return Collections.unmodifiableList(packets);
+	}
+	
+	@Override
+	public Training getTraining(int number) throws CommunicationException{
+		return getTrainingFromPackets(getTrainingFromDevice(number));
 	}
 	
 	/**
@@ -214,6 +233,30 @@ public abstract class AbstractMacroSerialPortDevice implements Macro {
 			device.close();
 		}
 		return false;
+	}
+	
+	@Override
+	public List<Date> getTrainingsStartDates() throws CommunicationException{
+		NumberOfTrainingsRequest request = new NumberOfTrainingsRequest();
+		List<Date> retVal = new LinkedList<Date>();
+		try{
+			device.open(portName);
+			Packet result = device.sendCommand(request);
+			if(result.check() && result instanceof NumberOfTrainingsPacket){
+				TrainingsList payload = (TrainingsList)result.getPayload();
+				List<TrainingsList.Training> list = payload.getListOfTrainings();
+				for(TrainingsList.Training t : list){
+					retVal.add(t.getTrainingStartDate());
+				}
+			}
+		} catch (PacketException e){
+			throw new CommunicationException(e);
+		} catch (DeviceException e){
+			throw new CommunicationException(e);
+		} catch (ParseException e) {
+			throw new CommunicationException(e);
+		}
+		return retVal;
 	}
 
 }

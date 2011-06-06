@@ -11,7 +11,7 @@ import de.akuz.osynce.macro.serial.RXTXSerialPortDevice;
  * @author Till Klocke
  *
  */
-public class MacoRXTXDevice extends AbstractMacroSerialPortDevice{
+public class MacroRXTXDevice extends AbstractMacroSerialPortDevice{
 
 	@Override
 	public void init(Map<String, String> properties) {

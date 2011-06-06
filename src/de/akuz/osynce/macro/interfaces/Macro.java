@@ -1,5 +1,6 @@
 package de.akuz.osynce.macro.interfaces;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +21,22 @@ public interface Macro {
 	 * @throws CommunicationException in case an exception occurs
 	 */
 	public List<Training> getTrainings() throws CommunicationException;
+	
+	/**
+	 * Get List of the start dates of all saved trainings. The order of
+	 * the list is the same as the order of trainings in the device.
+	 * @return List of start dates
+	 * @throws CommunicationException
+	 */
+	public List<Date> getTrainingsStartDates() throws CommunicationException;
+	
+	/**
+	 * Get a specific training
+	 * @param number the number of the training
+	 * @return Training object
+	 * @throws CommunicationException
+	 */
+	public Training getTraining(int number) throws CommunicationException;
 	
 	/**
 	 * Configure the device.
