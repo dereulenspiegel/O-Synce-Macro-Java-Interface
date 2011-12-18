@@ -1,2 +1,9 @@
 bin/
 *.class
+/documentation
+/junit
+/release
+/reports
+/target
+/temp
+/test-bin

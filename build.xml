@@ -276,18 +276,18 @@
 	<target name="build-jar" depends="build-project">
 		<delete dir="${temp.dir}"/>
 		<mkdir dir="${temp.dir}"/>
-		<manifest file="${temp.dir}/MANIFEST.MF">
+		<!--<manifest file="${temp.dir}/MANIFEST.MF">
 			<attribute name="Built-By" value="${user.name}"/>
 			<attribute name="Implementation-Version" value="${version.num}-${BUILD_NUMBER}"/>
 			<attribute name="Built-Date" value="${TODAY}"/>
-		</manifest>
+		</manifest> -->
 		<copy todir="${temp.dir}">
 			<fileset dir="${bin}"/>
 		</copy>
 		<jar destfile="${target.dir}/${jar.name}"
 				basedir="${temp.dir}"
 				includes="**/*.class"
-				manifest="${temp.dir}/MANIFEST.MF"/>
+				manifest="META-INF/MANIFEST.MF"/>
 		
 	</target>
 	
