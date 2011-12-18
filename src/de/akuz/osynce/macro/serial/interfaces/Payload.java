@@ -1,11 +1,19 @@
 package de.akuz.osynce.macro.serial.interfaces;
 
+import java.io.Serializable;
+
 /**
  * An interface for payloads contained in packets
  * @author Till Klocke
  *
  */
-public interface Payload {
+public interface Payload extends Serializable {
+	
+	/**
+	 * Adds a new byte at the end of the payload
+	 * @param b
+	 */
+	public void addByte(byte b);
 	
 	/**
 	 * Returns the byte array represented by the payload
@@ -18,11 +26,5 @@ public interface Payload {
 	 * @return
 	 */
 	public int getLength();
-	
-	/**
-	 * Adds a new byte at the end of the payload
-	 * @param b
-	 */
-	public void addByte(byte b);
 
 }

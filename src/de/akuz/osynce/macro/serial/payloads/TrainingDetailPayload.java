@@ -1,5 +1,6 @@
 package de.akuz.osynce.macro.serial.payloads;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,7 +12,75 @@ import de.akuz.osynce.macro.utils.Utils;
 
 public class TrainingDetailPayload extends AbstractFixedLengthPayload {
 	
-	public class Summary{
+	public class GraphData implements GraphElement{
+		
+		private final int offset;
+		
+		private GraphData(int offset){
+			this.offset = offset;
+		}
+
+		@Override
+		public int getAltitude() {
+			byte[] data = getBytesFromPosition(offset+2,2);
+			data = Utils.invertByteArray(data);
+			return Utils.convertByteArrayToInt(data);
+		}
+
+		@Override
+		public int getCadence() {
+			return Utils.byteToInt(getByteFromPosition(offset+5));
+		}
+
+		@Override
+		public int getDataRate() {
+			int rate = (0x03 & getByteFromPosition(offset+11));
+			rate = rate * 10;
+			if(rate == 0){
+				rate = 5;
+			}
+			return rate;
+		}
+
+		@Override
+		public int getGradient() {
+			return Utils.byteToInt(getByteFromPosition(offset+4));
+		}
+
+		@Override
+		public int getHeartRate() {
+			return Utils.byteToInt(getByteFromPosition(offset+8));
+		}
+
+		@Override
+		public int getPower() {
+			byte[] data = getBytesFromPosition(offset+9,2);
+			data = Utils.invertByteArray(data);
+			return Utils.convertByteArrayToInt(data);
+		}
+
+		@Override
+		public float getSpeed() {
+			byte[] data = getBytesFromPosition(offset+6,2);
+			data = Utils.invertByteArray(data);
+			return Utils.convertByteArrayToInt(data)/10.0f;
+		}
+
+		@Override
+		public float getTemperature() {
+			byte[] data = getBytesFromPosition(offset,2);
+			data = Utils.invertByteArray(data);
+			return Utils.convertByteArrayToInt(data)/100.0f;
+		}
+
+		@Override
+		public boolean isBike2() {
+			return (0x08 & getByteFromPosition(offset+11))==1;
+		}
+		
+	}
+	
+	public class Summary implements Serializable{
 		
 		/**
 		 * Private constructor, so this class can't be
@@ -21,16 +90,46 @@ public class TrainingDetailPayload extends AbstractFixedLengthPayload {
 			
 		}
 		
-		/**
-		 * Returns the time the user was below the lower heart rate limit
-		 * @return time in seconds
-		 */
-		public int getLoZoneTime(){
-			int secs = Utils.convertBCDToInt(getByteFromPosition(3));
-			int minutes = Utils.convertBCDToInt(getByteFromPosition(4));
-			int hours = Utils.convertBCDToInt(getByteFromPosition(5));
-			
-			return secs + (minutes*60) + (hours*3600);
+		public int getAltitudeGain(){
+			byte[] data = getBytesFromPosition(22,2);
+			data = Utils.invertByteArray(data);
+			return Utils.convertByteArrayToInt(data);
+		}
+		
+		public int getAltitudeLoss(){
+			byte[] data = getBytesFromPosition(24,2);
+			data = Utils.invertByteArray(data);
+			return Utils.convertByteArrayToInt(data);
+		}
+		
+		public int getAverageCadence(){
+			return Utils.byteToInt(getByteFromPosition(29));
+		}
+		
+		public int getAverageHeartRate(){
+			return Utils.byteToInt(getByteFromPosition(12));
+		}
+		
+		public int getAveragePower(){
+			byte[] data = getBytesFromPosition(38,2);
+			data = Utils.invertByteArray(data);
+			return Utils.convertByteArrayToInt(data);
+		}
+		
+		public float getAverageSpeed(){
+			byte[] data = getBytesFromPosition(16,2);
+			data = Utils.invertByteArray(data);
+			return Utils.convertByteArrayToInt(data)/10.0f;
+		}
+		
+		public int getBurnedEnergy(){
+			byte[] data = getBytesFromPosition(26,2);
+			data = Utils.invertByteArray(data);
+			return Utils.convertByteArrayToInt(data);
+		}
+		
+		public float getBurnedFat(){
+			return Utils.byteToInt(getByteFromPosition(28))/10.f;
 		}
 		
 		/**
@@ -53,58 +152,35 @@ public class TrainingDetailPayload extends AbstractFixedLengthPayload {
 			return secs + (minutes*60) + (hours*3600);
 		}
 		
-		public int getAverageHeartRate(){
-			return Utils.byteToInt(getByteFromPosition(12));
-		}
-		
-		public float getAverageSpeed(){
-			byte[] data = getBytesFromPosition(16,2);
-			data = Utils.invertByteArray(data);
-			return (float)Utils.convertByteArrayToInt(data)/10.0f;
-		}
-		
-		public int getPositiveAverageGradient(){
-			return Utils.byteToInt(getByteFromPosition(18));
+		/**
+		 * Returns the time the user was below the lower heart rate limit
+		 * @return time in seconds
+		 */
+		public int getLoZoneTime(){
+			int secs = Utils.convertBCDToInt(getByteFromPosition(3));
+			int minutes = Utils.convertBCDToInt(getByteFromPosition(4));
+			int hours = Utils.convertBCDToInt(getByteFromPosition(5));
+			
+			return secs + (minutes*60) + (hours*3600);
 		}
 		
 		public int getNegativeAverageGradient(){
 			return Utils.byteToInt(getByteFromPosition(20));
 		}
 		
-		public int getAltitudeGain(){
-			byte[] data = getBytesFromPosition(22,2);
-			data = Utils.invertByteArray(data);
-			return Utils.convertByteArrayToInt(data);
+		public int getPositiveAverageGradient(){
+			return Utils.byteToInt(getByteFromPosition(18));
 		}
 		
-		public int getAltitudeLoss(){
-			byte[] data = getBytesFromPosition(24,2);
-			data = Utils.invertByteArray(data);
-			return Utils.convertByteArrayToInt(data);
-		}
-		
-		public int getBurnedEnergy(){
-			byte[] data = getBytesFromPosition(26,2);
-			data = Utils.invertByteArray(data);
-			return Utils.convertByteArrayToInt(data);
-		}
-		
-		public float getBurnedFat(){
-			return (float)Utils.byteToInt(getByteFromPosition(28))/10.f;
-		}
-		
-		public int getAverageCadence(){
-			return Utils.byteToInt(getByteFromPosition(29));
-		}
-		
-		/**
-		 * Returns the trip distance
-		 * @return distance in mm
-		 */
-		public int getTripDistance(){
-			byte[] data = getBytesFromPosition(31,4);
-			data = Utils.invertByteArray(data);
-			return Utils.convertByteArrayToInt(data);
+		public Date getSectionStartTime() throws ParseException{
+			int secs = Utils.convertBCDToInt(getByteFromPosition(63));
+			int mins = Utils.convertBCDToInt(getByteFromPosition(64));
+			int hours = Utils.convertBCDToInt(getByteFromPosition(65));
+			int day = Utils.convertBCDToInt(getByteFromPosition(66));
+			int month = Utils.byteToInt(getByteFromPosition(67));
+			int year = Utils.convertBCDToInt(getByteFromPosition(68));
+			
+			return Utils.getDateFromTime(secs, mins, hours, day, month, year);
 		}
 		
 		/**
@@ -119,8 +195,12 @@ public class TrainingDetailPayload extends AbstractFixedLengthPayload {
 			return secs + (minutes*60) + (hours*3600);
 		}
 		
-		public int getAveragePower(){
-			byte[] data = getBytesFromPosition(38,2);
+		/**
+		 * Returns the trip distance
+		 * @return distance in mm
+		 */
+		public int getTripDistance(){
+			byte[] data = getBytesFromPosition(31,4);
 			data = Utils.invertByteArray(data);
 			return Utils.convertByteArrayToInt(data);
 		}
@@ -133,109 +213,14 @@ public class TrainingDetailPayload extends AbstractFixedLengthPayload {
 		public boolean isLap(){
 			return !((getByteFromPosition(42) & 0x01) == 1);
 		}
-		
-		public Date getSectionStartTime() throws ParseException{
-			int secs = Utils.convertBCDToInt(getByteFromPosition(63));
-			int mins = Utils.convertBCDToInt(getByteFromPosition(64));
-			int hours = Utils.convertBCDToInt(getByteFromPosition(65));
-			int day = Utils.convertBCDToInt(getByteFromPosition(66));
-			int month = Utils.byteToInt(getByteFromPosition(67));
-			int year = Utils.convertBCDToInt(getByteFromPosition(68));
-			
-			return Utils.getDateFromTime(secs, mins, hours, day, month, year);
-		}
-	}
-	
-	public class GraphData implements GraphElement{
-		
-		private int offset;
-		
-		private GraphData(int offset){
-			this.offset = offset;
-		}
-
-		@Override
-		public float getTemperature() {
-			byte[] data = getBytesFromPosition(offset,2);
-			data = Utils.invertByteArray(data);
-			return (float)Utils.convertByteArrayToInt(data)/100.0f;
-		}
-
-		@Override
-		public int getAltitude() {
-			byte[] data = getBytesFromPosition(offset+2,2);
-			data = Utils.invertByteArray(data);
-			return Utils.convertByteArrayToInt(data);
-		}
-
-		@Override
-		public int getGradient() {
-			return Utils.byteToInt(getByteFromPosition(offset+4));
-		}
-
-		@Override
-		public int getCadence() {
-			return Utils.byteToInt(getByteFromPosition(offset+5));
-		}
-
-		@Override
-		public float getSpeed() {
-			byte[] data = getBytesFromPosition(offset+6,2);
-			data = Utils.invertByteArray(data);
-			return (float)Utils.convertByteArrayToInt(data)/10.0f;
-		}
-
-		@Override
-		public int getHeartRate() {
-			return Utils.byteToInt(getByteFromPosition(offset+8));
-		}
-
-		@Override
-		public int getPower() {
-			byte[] data = getBytesFromPosition(offset+9,2);
-			data = Utils.invertByteArray(data);
-			return Utils.convertByteArrayToInt(data);
-		}
-
-		@Override
-		public int getDataRate() {
-			int rate = (0x03 & getByteFromPosition(offset+11));
-			rate = rate * 10;
-			if(rate == 0){
-				rate = 5;
-			}
-			return rate;
-		}
-
-		@Override
-		public boolean isBike2() {	
-			return (0x08 & getByteFromPosition(offset+11))==1;
-		}
-		
 	}
 	
 	public final static int lastPage = 0xFA0A;
 	
-	private Summary summary = new Summary();
+	private final Summary summary = new Summary();
 	
 	public TrainingDetailPayload(){
 		super(258);
-	}
-	
-	public int getPageNumber(){
-		byte[] raw = Utils.invertByteArray(this.getBytesFromPosition(0, 2));
-		return Utils.convertByteArrayToInt(raw);
-	}
-	
-	public int getNumberOfData(){
-		return Utils.byteToInt(this.getByteFromPosition(2));
-	}
-	
-	public Summary getSummary(){
-		if(getPageNumber()==1){
-			return summary;
-		}
-		return null;
 	}
 	
 	public List<GraphElement> getGraphData(){
@@ -243,13 +228,13 @@ public class TrainingDetailPayload extends AbstractFixedLengthPayload {
 		if(getSummary() != null){
 			numberOfElements = numberOfElements - 1;
 		}
-		List<GraphElement> list = 
+		List<GraphElement> list =
 			new ArrayList<GraphElement>(numberOfElements);
 		
 		int startOffset = 3;
 		if(getSummary() != null){
 			startOffset = 75;
-		} 
+		}
 		
 		for(int i=0;i<numberOfElements;i++){
 			GraphData data = new GraphData(startOffset);
@@ -258,6 +243,22 @@ public class TrainingDetailPayload extends AbstractFixedLengthPayload {
 		}
 		
 		return Collections.unmodifiableList(list);
+	}
+	
+	public int getNumberOfData(){
+		return Utils.byteToInt(this.getByteFromPosition(2));
+	}
+	
+	public int getPageNumber(){
+		byte[] raw = Utils.invertByteArray(this.getBytesFromPosition(0, 2));
+		return Utils.convertByteArrayToInt(raw);
+	}
+	
+	public Summary getSummary(){
+		if(getPageNumber()==1){
+			return summary;
+		}
+		return null;
 	}
 
 }

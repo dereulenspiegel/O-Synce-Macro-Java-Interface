@@ -1,17 +1,13 @@
 package de.akuz.osynce.macro.interfaces;
 
+import java.io.Serializable;
+
 /**
  * This interface how the data of a single graph element is accessed
  * @author Till Klocke
  *
  */
-public interface GraphElement {
-	
-	/**
-	 * Returns the temperature at this time 
-	 * @return temperature in degrees celcsius
-	 */
-	public float getTemperature();
+public interface GraphElement extends Serializable {
 	
 	/**
 	 * Returns the altitude at this time
@@ -20,22 +16,22 @@ public interface GraphElement {
 	public int getAltitude();
 	
 	/**
-	 * Returns the gradient at this time
-	 * @return gradient in percent
-	 */
-	public int getGradient();
-	
-	/**
 	 * Returns the cadence at this time
 	 * @return
 	 */
 	public int getCadence();
 	
 	/**
-	 * Returns the speed at this timt
-	 * @return speed in km/h
+	 * Returns the interval in which graph data is captured
+	 * @return interval in seconds
 	 */
-	public float getSpeed();
+	public int getDataRate();
+	
+	/**
+	 * Returns the gradient at this time
+	 * @return gradient in percent
+	 */
+	public int getGradient();
 	
 	/**
 	 * Returns the heart rate at this time
@@ -50,10 +46,16 @@ public interface GraphElement {
 	public int getPower();
 	
 	/**
-	 * Returns the interval in which graph data is captured
-	 * @return interval in seconds
+	 * Returns the speed at this timt
+	 * @return speed in km/h
 	 */
-	public int getDataRate();
+	public float getSpeed();
+	
+	/**
+	 * Returns the temperature at this time
+	 * @return temperature in degrees celcsius
+	 */
+	public float getTemperature();
 	
 	/**
 	 * Determine whether this data was captured with bike 2.
