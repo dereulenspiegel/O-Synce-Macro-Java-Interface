@@ -17,7 +17,7 @@
 	<property name="javadoc.dir" value="${doc.dir}/javadoc"/>
 	<property name="jar.name" value="macro.jar"/>
 	<property name="target.dir" value="target"/>
-	<property name="version.num" value="0.9"/>
+	<property name="version.num" value="0.9.1"/>
 	<property name="release.dir" value="release"/>
 	<property name="temp.dir" value="temp" />
 	<property name="findbugs.home" value="test-libs/findbugs"/>
