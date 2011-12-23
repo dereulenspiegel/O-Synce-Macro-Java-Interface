@@ -12,31 +12,35 @@ import de.akuz.osynce.macro.utils.Utils;
 
 public class TrainingDetailPayload extends AbstractFixedLengthPayload {
 	
-	public class GraphData implements GraphElement{
-		
-		private final int offset;
-		
-		private GraphData(int offset){
+	public class GraphData implements GraphElement {
+
+		/**
+		 * 
+		 */
+		private static final long	serialVersionUID	= -6999052417433880386L;
+		private final int			offset;
+
+		private GraphData(int offset) {
 			this.offset = offset;
 		}
 
 		@Override
 		public int getAltitude() {
-			byte[] data = getBytesFromPosition(offset+2,2);
+			byte[] data = getBytesFromPosition(offset + 2, 2);
 			data = Utils.invertByteArray(data);
 			return Utils.convertByteArrayToInt(data);
 		}
 
 		@Override
 		public int getCadence() {
-			return Utils.byteToInt(getByteFromPosition(offset+5));
+			return Utils.byteToInt(getByteFromPosition(offset + 5));
 		}
 
 		@Override
 		public int getDataRate() {
-			int rate = (0x03 & getByteFromPosition(offset+11));
+			int rate = (0x03 & getByteFromPosition(offset + 11));
 			rate = rate * 10;
-			if(rate == 0){
+			if (rate == 0) {
 				rate = 5;
 			}
 			return rate;
@@ -44,44 +48,49 @@ public class TrainingDetailPayload extends AbstractFixedLengthPayload {
 
 		@Override
 		public int getGradient() {
-			return Utils.byteToInt(getByteFromPosition(offset+4));
+			return Utils.byteToInt(getByteFromPosition(offset + 4));
 		}
 
 		@Override
 		public int getHeartRate() {
-			return Utils.byteToInt(getByteFromPosition(offset+8));
+			return Utils.byteToInt(getByteFromPosition(offset + 8));
 		}
 
 		@Override
 		public int getPower() {
-			byte[] data = getBytesFromPosition(offset+9,2);
+			byte[] data = getBytesFromPosition(offset + 9, 2);
 			data = Utils.invertByteArray(data);
 			return Utils.convertByteArrayToInt(data);
 		}
 
 		@Override
 		public float getSpeed() {
-			byte[] data = getBytesFromPosition(offset+6,2);
+			byte[] data = getBytesFromPosition(offset + 6, 2);
 			data = Utils.invertByteArray(data);
-			return Utils.convertByteArrayToInt(data)/10.0f;
+			return Utils.convertByteArrayToInt(data) / 10.0f;
 		}
 
 		@Override
 		public float getTemperature() {
-			byte[] data = getBytesFromPosition(offset,2);
+			byte[] data = getBytesFromPosition(offset, 2);
 			data = Utils.invertByteArray(data);
-			return Utils.convertByteArrayToInt(data)/100.0f;
+			return Utils.convertByteArrayToInt(data) / 100.0f;
 		}
 
 		@Override
 		public boolean isBike2() {
-			return (0x08 & getByteFromPosition(offset+11))==1;
+			return (0x08 & getByteFromPosition(offset + 11)) == 1;
 		}
-		
+
 	}
-	
+
 	public class Summary implements Serializable{
 		
+		/**
+		 * 
+		 */
+		private static final long	serialVersionUID	= -1502193247622726231L;
+
 		/**
 		 * Private constructor, so this class can't be
 		 * instantiated by accident
@@ -214,6 +223,11 @@ public class TrainingDetailPayload extends AbstractFixedLengthPayload {
 			return !((getByteFromPosition(42) & 0x01) == 1);
 		}
 	}
+	
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= -1524542062101648944L;
 	
 	public final static int lastPage = 0xFA0A;
 	
