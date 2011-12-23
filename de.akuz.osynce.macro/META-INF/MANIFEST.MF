@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: osynce Macro library
+Bundle-SymbolicName: de.akuz.osynce.macro
+Bundle-Version: 1.0.0.a
+Require-Bundle: net.tourbook.rxtx_2.2;bundle-version="2.2.2"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ClassPath: libs/macro.jar,
+ .
+Export-Package: de.akuz.osynce.macro,
+ de.akuz.osynce.macro.interfaces,
+ de.akuz.osynce.macro.serial.interfaces,
+ de.akuz.osynce.macro.serial.packet,
+ de.akuz.osynce.macro.serial.payloads
