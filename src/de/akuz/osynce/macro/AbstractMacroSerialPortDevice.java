@@ -47,13 +47,13 @@ public abstract class AbstractMacroSerialPortDevice implements Macro {
 	 */
 	static{
 		ProviderManager pm = ProviderManager.getInstance();
-		pm.registerPacketProvider(Commands.ERASE_DONE.toByte(), 
+		pm.registerPacketProvider(Commands.ERASE_DONE.toByte(),
 				new EraseAllDoneProvider());
 		pm.registerPacketProvider(Commands.NUMBER_OF_TRAININGS.toByte(),
 				new NumberOfTrainingsProvider());
 		pm.registerPacketProvider(Commands.TRAINING_DETAIL.toByte(),
 				new TrainingDetailProvider());
-		pm.registerPacketProvider(Commands.PERSONAL_DATA_RECEIVED.toByte(), 
+		pm.registerPacketProvider(Commands.PERSONAL_DATA_RECEIVED.toByte(),
 				new PersonalDataReceivedProvider());
 	}
 	
@@ -69,79 +69,48 @@ public abstract class AbstractMacroSerialPortDevice implements Macro {
 	public final static String PROPERTY_PORTNAME = "portname";
 
 	@Override
-	public List<Training> getTrainings() throws CommunicationException {
-		int count = getTrainingCount();
-		List<Training> trainings = new ArrayList<Training>(count);
-		TrainingImpl lastFull = null;
+	public boolean erase() throws CommunicationException {
+		EraseAllRecords packet = new EraseAllRecords();
 		try {
 			device.open(portName);
-			for(int i=0;i<count;i++){
-				List<TrainingDetailPacket> packets = getTrainingFromDevice(i);
-				Training t = getTrainingFromPackets(packets);
-				if(lastFull != null && t.isLap()){
-					lastFull.addLap(t);
-				} else if (lastFull == null && !t.isLap()){
-					lastFull = (TrainingImpl)t;
-					trainings.add(lastFull);
-				}
+			Packet result = device.sendCommand(packet);
+			if(result instanceof EraseAllDonePacket && result.check()){
+				device.close();
+				return true;
 			}
+		} catch (PacketException e) {
+			throw new CommunicationException(e);
 		} catch (DeviceException e) {
 			throw new CommunicationException(e);
 		} finally {
 			device.close();
 		}
-		return Collections.unmodifiableList(trainings);
+		return false;
 	}
 	
-	private Training getTrainingFromPackets(List<TrainingDetailPacket> list){
-		TrainingImpl t = null;
-		for(TrainingDetailPacket packet : list){
-			TrainingDetailPayload payload =
-				(TrainingDetailPayload)packet.getPayload();
-			if(payload.getSummary() != null){
-				t = new TrainingImpl(payload);
-			} else if(t != null){
-				t.addReceivedTrainingPayload(payload);
-			}
+	private PersonalDataPayload getPersonalDataPayload(PersonalData data){
+		if(data instanceof PersonalDataPayload){
+			return (PersonalDataPayload)data;
 		}
-		return t;
-	}
-	
-	private List<TrainingDetailPacket> getTrainingFromDevice(int number) throws CommunicationException{
-		TrainingDetailRequest request = new TrainingDetailRequest(number);
-		List<TrainingDetailPacket> packets = 
-			new LinkedList<TrainingDetailPacket>();
-		int pageNumber = 0;
-		try {
-			Packet result = device.sendCommand(request);
-			while(pageNumber != TrainingDetailPayload.lastPage && result != null){
-				pageNumber = 
-					((TrainingDetailPayload)result.getPayload()).getPageNumber();
-				if(result instanceof TrainingDetailPacket && result.check()){
-					packets.add((TrainingDetailPacket)result);
-					try {
-						Thread.sleep(SLEEP);
-					} catch (InterruptedException e) {
-						// Ignore
-						e.printStackTrace();
-					}
-					
-				} else {
-					throw new CommunicationException("Packet isn't read properly");
-				}
-				result = 
-					device.sendCommand(new Acknowledge(result.getCommand()));
-			}
-		} catch (PacketException e) {
-			throw new CommunicationException(e);
-		}
+		PersonalDataPayload payload = new PersonalDataPayload();
 		
-		return Collections.unmodifiableList(packets);
+		//TODO:
+		
+		return payload;
 	}
 	
 	@Override
 	public Training getTraining(int number) throws CommunicationException{
-		return getTrainingFromPackets(getTrainingFromDevice(number));
+		try {
+			device.open(portName);
+			Training t = getTrainingFromPackets(getTrainingFromDevice(number));
+			device.close();
+			return t;
+		} catch (DeviceException e) {
+			throw new CommunicationException(e);
+		} finally {
+			device.close();
+		}
 	}
 	
 	/**
@@ -166,7 +135,7 @@ public abstract class AbstractMacroSerialPortDevice implements Macro {
 				}
 				Acknowledge response = new Acknowledge(result.getCommand());
 				device.sendCommand(response);
-				NumberOfTrainingsPacket packet = 
+				NumberOfTrainingsPacket packet =
 					(NumberOfTrainingsPacket)result;
 				trainings = packet.getListOfTrainings().size();
 			}
@@ -179,62 +148,78 @@ public abstract class AbstractMacroSerialPortDevice implements Macro {
 		}
 		return trainings;
 	}
-
-	@Override
-	public boolean setPersonalData(PersonalData data)
-			throws CommunicationException {
-		SetPersonalData packet = 
-			new SetPersonalData(getPersonalDataPayload(data));
+	
+	private List<TrainingDetailPacket> getTrainingFromDevice(int number) throws CommunicationException{
+		TrainingDetailRequest request = new TrainingDetailRequest(number);
+		List<TrainingDetailPacket> packets =
+			new LinkedList<TrainingDetailPacket>();
+		int pageNumber = 0;
 		try {
-			device.open(this.portName);
-			Packet result = device.sendCommand(packet);
-			if(result instanceof PersonalDataReceivedPacket &&
-					result.check()){
-				device.close();
-				return true;
+			Packet result = device.sendCommand(request);
+			while(pageNumber != TrainingDetailPayload.lastPage && result != null){
+				pageNumber =
+					((TrainingDetailPayload)result.getPayload()).getPageNumber();
+				if(result instanceof TrainingDetailPacket && result.check()){
+					packets.add((TrainingDetailPacket)result);
+					try {
+						Thread.sleep(SLEEP);
+					} catch (InterruptedException e) {
+						// Ignore
+						e.printStackTrace();
+					}
+					
+				} else {
+					throw new CommunicationException("Packet isn't read properly");
+				}
+				result =
+					device.sendCommand(new Acknowledge(result.getCommand()));
 			}
 		} catch (PacketException e) {
 			throw new CommunicationException(e);
-		} catch (DeviceException e) {
-			throw new CommunicationException(e);
-		} finally{
-			device.close();
 		}
-		return false;
+		
+		return Collections.unmodifiableList(packets);
+	}
 
+	private Training getTrainingFromPackets(List<TrainingDetailPacket> list){
+		TrainingImpl t = null;
+		for(TrainingDetailPacket packet : list){
+			TrainingDetailPayload payload =
+				(TrainingDetailPayload)packet.getPayload();
+			if(payload.getSummary() != null){
+				t = new TrainingImpl(payload);
+			} else if(t != null){
+				t.addReceivedTrainingPayload(payload);
+			}
+		}
+		return t;
 	}
 	
-	private PersonalDataPayload getPersonalDataPayload(PersonalData data){
-		if(data instanceof PersonalDataPayload){
-			return (PersonalDataPayload)data;
-		}
-		PersonalDataPayload payload = new PersonalDataPayload();
-		
-		//TODO:
-		
-		return payload;
-	}
-
 	@Override
-	public boolean erase() throws CommunicationException {
-		EraseAllRecords packet = new EraseAllRecords();
+	public List<Training> getTrainings() throws CommunicationException {
+		int count = getTrainingCount();
+		List<Training> trainings = new ArrayList<Training>(count);
+		TrainingImpl lastFull = null;
 		try {
 			device.open(portName);
-			Packet result = device.sendCommand(packet);
-			if(result instanceof EraseAllDonePacket && result.check()){
-				device.close();
-				return true;
+			for(int i=0;i<count;i++){
+				List<TrainingDetailPacket> packets = getTrainingFromDevice(i);
+				Training t = getTrainingFromPackets(packets);
+				if(lastFull != null && t.isLap()){
+					lastFull.addLap(t);
+				} else if (lastFull == null && !t.isLap()){
+					lastFull = (TrainingImpl)t;
+					trainings.add(lastFull);
+				}
 			}
-		} catch (PacketException e) {
-			throw new CommunicationException(e);
 		} catch (DeviceException e) {
 			throw new CommunicationException(e);
 		} finally {
 			device.close();
 		}
-		return false;
+		return Collections.unmodifiableList(trainings);
 	}
-	
+
 	@Override
 	public List<Date> getTrainingsStartDates() throws CommunicationException{
 		NumberOfTrainingsRequest request = new NumberOfTrainingsRequest();
@@ -255,8 +240,34 @@ public abstract class AbstractMacroSerialPortDevice implements Macro {
 			throw new CommunicationException(e);
 		} catch (ParseException e) {
 			throw new CommunicationException(e);
+		} finally {
+			device.close();
 		}
 		return retVal;
+	}
+	
+	@Override
+	public boolean setPersonalData(PersonalData data)
+			throws CommunicationException {
+		SetPersonalData packet =
+			new SetPersonalData(getPersonalDataPayload(data));
+		try {
+			device.open(this.portName);
+			Packet result = device.sendCommand(packet);
+			if(result instanceof PersonalDataReceivedPacket &&
+					result.check()){
+				device.close();
+				return true;
+			}
+		} catch (PacketException e) {
+			throw new CommunicationException(e);
+		} catch (DeviceException e) {
+			throw new CommunicationException(e);
+		} finally{
+			device.close();
+		}
+		return false;
+
 	}
 
 }

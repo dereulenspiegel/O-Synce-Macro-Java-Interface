@@ -1,12 +1,5 @@
 package de.akuz.osynce.macro.serial;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.LinkedList;
-import java.util.List;
-
 import gnu.io.CommPortIdentifier;
 import gnu.io.NoSuchPortException;
 import gnu.io.PortInUseException;
@@ -14,10 +7,18 @@ import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
 import gnu.io.UnsupportedCommOperationException;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.LinkedList;
+import java.util.List;
+
 import de.akuz.osynce.macro.serial.interfaces.Command;
-import de.akuz.osynce.macro.serial.interfaces.SerialPortDevice;
 import de.akuz.osynce.macro.serial.interfaces.Packet;
 import de.akuz.osynce.macro.serial.interfaces.PacketListener;
+import de.akuz.osynce.macro.serial.interfaces.SerialPortDevice;
 import de.akuz.osynce.macro.serial.packet.Commands;
 import de.akuz.osynce.macro.serial.packet.PacketException;
 import de.akuz.osynce.macro.serial.packet.ProviderManager;
@@ -32,27 +33,85 @@ import de.akuz.osynce.macro.serial.packet.ProviderManager;
  */
 public class RXTXSerialPortDevice implements SerialPortDevice, SerialPortEventListener{
 	
-	private List<PacketListener> listeners = 
+	/**
+	 * Returns a list of names of available ports on this system
+	 * @return list of port names
+	 */
+	public static List<String> getAvailablePortNames(){
+		List<String> portNames = new LinkedList<String>();
+		@SuppressWarnings("rawtypes")
+		Enumeration ports = CommPortIdentifier.getPortIdentifiers();
+		while(ports.hasMoreElements()){
+			portNames.add(((CommPortIdentifier)ports.nextElement()).getName());
+		}
+		return Collections.unmodifiableList(portNames);
+	}
+	
+	private final List<PacketListener> listeners =
 		new ArrayList<PacketListener>();
 	
 	private String portName;
 	
 	private SerialPort port;
-	
 	private final static String identifier = "O-Synce Macro PC-Link";
-	private final static int timeout = 5000;
 	
+	private final static int timeout = 5000;
 	private final static int baudrate = 9600;
 	private final static int dataBits = SerialPort.DATABITS_8;
 	private final static int stopBits = SerialPort.STOPBITS_1;
+	
 	private final static int parity = SerialPort.PARITY_NONE;
 	
+	public RXTXSerialPortDevice(){
+		
+	}
+
 	public RXTXSerialPortDevice(String portName){
 		this.portName = portName;
 	}
 	
-	public RXTXSerialPortDevice(){
+	@Override
+	public void addPacketListener(PacketListener listener) {
+		if(listener!=null){
+			listeners.add(listener);
+		}
 		
+	}
+
+	@Override
+	public void close() {
+		if (port != null) {
+			port.close();
+			port = null;
+		}
+	}
+	
+	private void notifyExceptionOccured(PacketException e){
+		for(PacketListener l : listeners){
+			l.exceptionOccured(e);
+		}
+	}
+	
+	private void notifyPacketReceived(Packet packet){
+		for(PacketListener l : listeners){
+			l.packetReceived(packet);
+		}
+	}
+
+	private void notifyPacketStarted(Commands command){
+		for(PacketListener l : listeners){
+			l.packetStarted(command);
+		}
+	}
+
+	private void notifyReceivingPayload(int count, int total){
+		for(PacketListener l : listeners){
+			l.receivingPayload(count, total);
+		}
+	}
+
+	public void open() throws DeviceException{
+		open(this.portName);
 	}
 
 	@Override
@@ -62,7 +121,7 @@ public class RXTXSerialPortDevice implements SerialPortDevice, SerialPortEventLi
 		}
 		this.portName = portName;
 		try {
-			CommPortIdentifier portId = 
+			CommPortIdentifier portId =
 				CommPortIdentifier.getPortIdentifier(portName);
 			port = (SerialPort)portId.open(identifier, timeout);
 			port.setSerialPortParams(baudrate, dataBits, stopBits, parity);
@@ -76,17 +135,7 @@ public class RXTXSerialPortDevice implements SerialPortDevice, SerialPortEventLi
 			throw new DeviceException(e);
 		}
 	}
-	
-	public void open() throws DeviceException{
-		open(this.portName);
-	}
 
-	@Override
-	public void close() {
-		port.close();
-		port = null;
-	}
-	
 	/**
 	 * This method reads all available bytes from the serial port and
 	 * parses them into a packet. The parsing is handled by a PacketProvider
@@ -101,7 +150,7 @@ public class RXTXSerialPortDevice implements SerialPortDevice, SerialPortEventLi
 		while((read = port.getInputStream().read())>-1){
 			byte readByte = (byte)read;
 			if(count == 0){
-				packet = 
+				packet =
 					ProviderManager.getInstance()
 					.getEmptyPacket(readByte);
 				notifyPacketStarted(packet.getCommand());
@@ -115,20 +164,14 @@ public class RXTXSerialPortDevice implements SerialPortDevice, SerialPortEventLi
 		return packet;
 	}
 	
-	/**
-	 * Returns a list of names of available ports on this system
-	 * @return list of port names
-	 */
-	public static List<String> getAvailablePortNames(){
-		List<String> portNames = new LinkedList<String>();
-		@SuppressWarnings("rawtypes")
-		Enumeration ports = CommPortIdentifier.getPortIdentifiers();
-		while(ports.hasMoreElements()){
-			portNames.add(((CommPortIdentifier)ports.nextElement()).getName());
+	@Override
+	public void removePacketListener(PacketListener listener) {
+		if(listener!=null){
+			listeners.remove(listener);
 		}
-		return Collections.unmodifiableList(portNames);
+		
 	}
-
+	
 	@Override
 	public Packet sendCommand(Command command) throws PacketException {
 		try {
@@ -144,56 +187,16 @@ public class RXTXSerialPortDevice implements SerialPortDevice, SerialPortEventLi
 			throw pe;
 		}
 	}
-
+	
 	@Override
 	public void sendCommand(Command command, PacketListener listener)
 			throws PacketException {
 		throw new UnsupportedOperationException();
 	}
-
+	
 	@Override
 	public void serialEvent(SerialPortEvent event) {
 		
-	}
-
-	@Override
-	public void addPacketListener(PacketListener listener) {
-		if(listener!=null){
-			listeners.add(listener);
-		}
-		
-	}
-
-	@Override
-	public void removePacketListener(PacketListener listener) {
-		if(listener!=null){
-			listeners.remove(listener);
-		}
-		
-	}
-	
-	private void notifyPacketStarted(Commands command){
-		for(PacketListener l : listeners){
-			l.packetStarted(command);
-		}
-	}
-	
-	private void notifyReceivingPayload(int count, int total){
-		for(PacketListener l : listeners){
-			l.receivingPayload(count, total);
-		}
-	}
-	
-	private void notifyPacketReceived(Packet packet){
-		for(PacketListener l : listeners){
-			l.packetReceived(packet);
-		}
-	}
-	
-	private void notifyExceptionOccured(PacketException e){
-		for(PacketListener l : listeners){
-			l.exceptionOccured(e);
-		}
 	}
 
 }
