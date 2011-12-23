@@ -9,4 +9,7 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ClassPath: libs/macro.jar,
  .
 Export-Package: de.akuz.osynce.macro,
- de.akuz.osynce.macro.interfaces
+ de.akuz.osynce.macro.interfaces,
+ de.akuz.osynce.macro.serial.interfaces,
+ de.akuz.osynce.macro.serial.packet,
+ de.akuz.osynce.macro.serial.payloads
